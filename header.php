@@ -146,27 +146,14 @@ do_action('elementify/before_html');
         // 		'--ele-button-padding'
         // 	);
 
-        // $base = get_theme_mod('elementify_framework_single_post_author_info_border',[
-        //     'font-family'   => 'default',
-        //     'font-weight'   => '400',
-        //     'subsets'       => ['latin'],
-        //     'font-size'     => [
-        //         'desktop'   => '30px',
-        //     ],
-        //     'line-height'   => [
-        //         'desktop'   => '13px',
-        //     ],
-        //     'letter-spacing'=> [
-        //         'desktop'   => '1.3px',
-        //     ],
-        //     'font-style'    => 'normal',
-        //     'text-transform'    => 'none',
-        //     'text-decoration'   => 'none',
-        // ]);
+        $base_responsive = get_theme_mod('footer_bottom_link_colors_responsive',[]);
+        $base = get_theme_mod('footer_bottom_background',[]);
 
-        // echo '<pre>';
-        // print_r($base);
-        // echo '</pre>';
+        echo '<pre>';
+        print_r($base);
+        echo '<br/>';
+        print_r($base_responsive);
+        echo '</pre>';
         ?>
 
         <?php
