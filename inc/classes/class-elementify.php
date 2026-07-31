@@ -70,6 +70,9 @@ class Elementify
 
 		/**
 		 * Adds Custom background panel to customizer.
+		 * Default color matches --ele-light-base-color in style.css / palette
+		 * slug "ele-base" in theme.json — keep these three in sync if the
+		 * brand's base color ever changes.
 		 *
 		 * @see Enable Custom Backgrounds
 		 * @link https://developer.wordpress.org/themes/functionality/custom-backgrounds/#enable-custom-backgrounds
@@ -130,8 +133,18 @@ class Elementify
 				'caption',
 				'script',
 				'style',
+				'navigation-widgets',
 			]
 		);
+
+		/**
+		 * Makes embeds (YouTube, Twitter, etc.) fluid inside .ele-container
+		 * instead of overflowing at fixed widths. Standard for any theme
+		 * pairing classic templates with block-editor content.
+		 *
+		 * @link https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-support/#responsive-embedded-content
+		 */
+		add_theme_support('responsive-embeds');
 
 		// Gutenberg theme support.
 
@@ -150,6 +163,10 @@ class Elementify
 		 * to the block’s wrapper ( alignwide or alignfull ). A theme can opt-in for this feature by calling
 		 * add_theme_support( 'align-wide' ), like we have done below.
 		 *
+		 * Paired with theme.json's settings.layout.contentSize (var(--ele-container-max-width))
+		 * and wideSize ("100%") — this is what actually generates the wide/full CSS widths;
+		 * this add_theme_support call is what exposes the align buttons in the block toolbar.
+		 *
 		 * @see Wide Alignment
 		 * @link https://developer.wordpress.org/block-editor/developers/themes/theme-support/#wide-alignment
 		 */
@@ -164,17 +181,24 @@ class Elementify
 		 * @see https://developer.wordpress.org/block-editor/developers/themes/theme-support/#editor-styles
 		 */
 		add_theme_support('editor-styles');
+
 		/**
+		 * Path to our editor stylesheet.
 		 *
-		 * Path to our custom editor style.
-		 * It allows you to link a custom stylesheet file to the TinyMCE editor within the post edit screen.
+		 * NOTE: this loads the full compiled frontend stylesheet (main.css) into
+		 * the block editor iframe. Since main.css includes header/footer/nav/modal
+		 * chrome that never renders inside the editor canvas, consider splitting
+		 * out a slimmer build/css/editor.css containing just the content-facing
+		 * rules (typography, .entry-content, .ele-button-fill/.ele-button-outline,
+		 * tables, etc.) so block previews match the frontend without paying for
+		 * unused chrome CSS in the editor.
 		 *
-		 * Since we are not passing any parameter to the function,
-		 * it will by default, link the editor-style.css file located directly under the current theme directory.
-		 * In our case since we are passing 'build/css/editor.css' path it will use that.
-		 * You can change the name of the file or path and replace the path here.
+		 * theme.json already supplies color/typography/spacing/border tokens to
+		 * the editor automatically — don't duplicate those here via
+		 * add_theme_support('editor-color-palette') / ('editor-font-sizes'), or
+		 * they'll conflict with the palette/fontSizes defined in theme.json.
 		 *
-		 * @see add_editor_style(
+		 * @see add_editor_style()
 		 * @link https://developer.wordpress.org/reference/functions/add_editor_style/
 		 */
 		add_editor_style('build/css/main.css');
@@ -184,7 +208,11 @@ class Elementify
 
 		/**
 		 * Set the maximum allowed width for any content in the theme,
-		 * like oEmbeds and images added to posts
+		 * like oEmbeds and images added to posts.
+		 *
+		 * Kept in sync with --ele-container-max-width (style.css) and
+		 * settings.layout.contentSize in theme.json — update all three
+		 * together if this value ever changes.
 		 *
 		 * @see Content Width
 		 * @link https://codex.wordpress.org/Content_Width
