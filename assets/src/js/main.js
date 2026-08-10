@@ -5,7 +5,7 @@
  * navigation support for dropdown menus.
  */
 ( function() {
-	const siteNavigation = document.getElementById( 'site-navigation' );
+	const siteNavigation = document.getElementById( 'ele-header-menu-1' );
 
 	// Return early if the navigation doesn't exist.
 	if ( ! siteNavigation ) {
@@ -31,15 +31,18 @@
 		menu.classList.add( 'nav-menu' );
 	}
 
+	const hamburger = button.querySelector( '.ele-hamburger-menu' );
+
 	// Toggle the .toggled class and the aria-expanded value each time the button is clicked.
 	button.addEventListener( 'click', function() {
 		siteNavigation.classList.toggle( 'toggled' );
 
-		if ( button.getAttribute( 'aria-expanded' ) === 'true' ) {
-			button.setAttribute( 'aria-expanded', 'false' );
-		} else {
-			button.setAttribute( 'aria-expanded', 'true' );
+		if ( hamburger ) {
+			hamburger.classList.toggle( 'cross' );
 		}
+
+		const expanded = button.getAttribute( 'aria-expanded' ) === 'true';
+		button.setAttribute( 'aria-expanded', String( ! expanded ) );
 	} );
 
 	// Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
@@ -48,6 +51,11 @@
 
 		if ( ! isClickInside ) {
 			siteNavigation.classList.remove( 'toggled' );
+
+			if ( hamburger ) {
+				hamburger.classList.remove( 'cross' );
+			}
+
 			button.setAttribute( 'aria-expanded', 'false' );
 		}
 	} );
@@ -71,8 +79,10 @@
 
 	/**
 	 * Sets or removes .focus class on an element.
+	 *
+	 * @param {Event} event
 	 */
-	function toggleFocus() {
+	function toggleFocus( event ) {
 		if ( event.type === 'focus' || event.type === 'blur' ) {
 			let self = this;
 			// Move up through the ancestors of the current link until we hit .nav-menu.

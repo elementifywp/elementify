@@ -9,100 +9,96 @@ License: GNU General Public License v2 or later
 # Variables
 -------------------------------------------------------------- */
 :root {
-  --ele-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol";
-  --ele-font-weight: 400;
-  --ele-font-size: 16px;
-  --ele-text-transform: none;
-  --ele-text-decoration: none;
-  --ele-line-height: 1.35;
-  --ele-letter-spacing: 0px;
-  --ele-frame-size: 4px;
-  --ele-container-width-base: calc(90vw - var(--ele-frame-size, 0px) * 2);
-  --ele-container-max-width: 1280px;
-  --ele-container-narrow-width-1: 1024px;
-  --ele-container-narrow-width-2: 750px;
-  --ele-container-width: min(100%, var(--ele-container-width-base));
-  --ele-list-indent: 1.25em;
+	--ele-font-family:
+		-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+		sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	--ele-font-weight: 400;
+	--ele-font-size: 16px;
+	--ele-text-transform: none;
+	--ele-text-decoration: none;
+	--ele-line-height: 1.35;
+	--ele-letter-spacing: normal;
+	--ele-frame-size: 4px;
 
-  --ele-content-v-spacing: 50px;
-  --ele-box-shadow: 0 5px 16px 0 var(--ele-base-300);
-  --ele-border: 1px solid var(--ele-base-300);
+	/* Layout */
+	--ele-container-width-base: calc(90vw - var(--ele-frame-size) * 2);
+	--ele-container-max-width: 1280px;
+	--ele-container-narrow-width-1: 1024px;
+	--ele-container-narrow-width-2: 750px;
+	--ele-container-width: min(100%, var(--ele-container-width-base));
+	--ele-list-indent: 1.25em;
 
-  --ele-transition-slow: 0.5s;
-  --ele-transition-normal: 0.3s;
-  --ele-transition-fast: 0.15s;
+	/* Spacing */
+	--ele-content-block-spacing: 50px; /* vertical rhythm between content blocks */
+	--ele-content-spacing: 1.5em; /* internal spacing within a content block */
 
-  --ele-content-spacing: 1.5em;
-  --ele-transparent: rgba(0, 0, 0, 0);
-  --ele-light-primary-color: #0033ff;
-  --ele-light-primary-active: #335cff;
+	/* Motion */
+	--ele-transition-slow: 0.5s;
+	--ele-transition-normal: 0.3s;
+	--ele-transition-fast: 0.15s;
 
-  --ele-light-accent-color: #181f28;
-  --ele-light-accent-active: #334155;
-  --ele-light-base-color: #ffffff;
-  --ele-light-base-100: #f8fafc;
-  --ele-light-base-200: #f1f5f9;
-  --ele-light-base-300: #e2e8f0;
+	--ele-transparent: transparent;
 
-  --ele-dark-accent-color: #ffffff;
-  --ele-dark-accent-active: #f1f5f9;
-  --ele-dark-base-color: #26262d;
-  --ele-dark-base-100: #32323a;
-  --ele-dark-base-200: #484852;
-  --ele-dark-base-300: #656571;
+	/* Light theme — source values, keyed to match the palette control */
+	--ele-light-primary-color: #0033ff;
+	--ele-light-secondary-color: #335cff;
+	--ele-light-heading-color: #181f28;
+	--ele-light-text-color: #334155;
+	--ele-light-base-300: #e2e8f0;
+	--ele-light-base-200: #f1f5f9;
+	--ele-light-base-100: #ffffff;
 
-  --ele-primary-color: var(--ele-light-primary-color);
-  --ele-primary-active: var(--ele-light-primary-active);
-  --ele-accent-color: var(--ele-light-accent-color);
-  --ele-accent-active: var(--ele-light-accent-active);
-  --ele-base-color: var(--ele-light-base-color);
-  --ele-base-100: var(--ele-light-base-100);
-  --ele-base-200: var(--ele-light-base-200);
-  --ele-base-300: var(--ele-light-base-300);
+	/* Dark theme — source values, keyed to match the palette control */
+	--ele-dark-primary-color: #335cff;
+	--ele-dark-secondary-color: #5c7cff;
+	--ele-dark-heading-color: #ffffff;
+	--ele-dark-text-color: #f1f5f9;
+	--ele-dark-base-300: #656571;
+	--ele-dark-base-200: #484852;
+	--ele-dark-base-100: #18181b;
 
-  --ele-button-box-initial-color: var(--ele-base-color);
-  --ele-button-box-hover-color: var(--ele-base-color);
-  --ele-button-outline-initial-color: var(--ele-accent-color);
-  --ele-button-outline-hover-color: var(--ele-primary-color);
-  --ele-button-box-initial-background: var(--ele-primary-color);
-  --ele-button-box-hover-background: var(--ele-primary-active);
-}
+	/* Active/resolved values — default to light; overridden by [data-theme] below */
+	--ele-primary-color: var(--ele-light-primary-color);
+	--ele-secondary-color: var(--ele-light-secondary-color);
+	--ele-accent-color: var(--ele-secondary-color);
+	--ele-link-color: var(--ele-primary-color);
+	--ele-link-hover-color: var(--ele-secondary-color);
+	--ele-heading-color: var(--ele-light-heading-color);
+	--ele-text-color: var(--ele-light-text-color);
+	--ele-base-300: var(--ele-light-base-300);
+	--ele-base-200: var(--ele-light-base-200);
+	--ele-base-100: var(--ele-light-base-100);
 
-[data-theme="light"] {
-  color-scheme: light;
-  --ele-primary-color: var(--ele-light-primary-color,
-      var(--ele-light-primary-color));
-  --ele-primary-active: var(--ele-light-primary-active,
-      var(--ele-light-primary-active));
-  --ele-accent-color: var(--ele-light-accent-color,
-      var(--ele-light-accent-color));
-  --ele-accent-active: var(--ele-light-accent-active,
-      var(--ele-light-accent-active));
-  --ele-base-color: var(--ele-light-base-color, var(--ele-light-base-color));
-  --ele-base-100: var(--ele-light-base-100, var(--ele-light-base-100));
-  --ele-base-200: var(--ele-light-base-200, var(--ele-light-base-200));
-  --ele-base-300: var(--ele-light-base-300, var(--ele-light-base-300));
+	--ele-box-shadow: 0 5px 16px 0 var(--ele-base-300);
+	--ele-border: 1px solid var(--ele-base-300);
+
+	--ele-button-box-initial-color: var(--ele-base-100);
+	--ele-button-box-hover-color: var(--ele-base-100);
+	--ele-button-outline-initial-color: var(--ele-heading-color);
+	--ele-button-outline-hover-color: var(--ele-primary-color);
+	--ele-button-box-initial-background: var(--ele-primary-color);
+	--ele-button-box-hover-background: var(--ele-secondary-color);
 }
 
 [data-theme="dark"] {
-  color-scheme: dark;
-  --ele-primary-color: var(--ele-dark-primary-color,
-      var(--ele-light-primary-color));
-  --ele-primary-active: var(--ele-dark-primary-active,
-      var(--ele-light-primary-active));
-  --ele-accent-color: var(--ele-dark-accent-color,
-      var(--ele-dark-accent-color));
-  --ele-accent-active: var(--ele-dark-accent-active,
-      var(--ele-dark-accent-active));
-  --ele-base-color: var(--ele-dark-base-color);
-  --ele-base-100: var(--ele-dark-base-100);
-  --ele-base-200: var(--ele-dark-base-200);
-  --ele-base-300: var(--ele-dark-base-300);
+	color-scheme: dark;
+	--ele-primary-color: var(--ele-dark-primary-color);
+	--ele-secondary-color: var(--ele-dark-secondary-color);
+	--ele-accent-color: var(--ele-secondary-color);
+	--ele-link-color: var(--ele-primary-color);
+	--ele-link-hover-color: var(--ele-secondary-color);
+	--ele-heading-color: var(--ele-dark-heading-color);
+	--ele-text-color: var(--ele-dark-text-color);
+	--ele-base-300: var(--ele-dark-base-300);
+	--ele-base-200: var(--ele-dark-base-200);
+	--ele-base-100: var(--ele-dark-base-100);
 
-  --ele-button-box-initial-color: var(--ele-dark-accent-color);
-  --ele-button-box-hover-color: var(--ele-dark-accent-active);
+	--ele-button-box-initial-color: var(--ele-dark-heading-color);
+	--ele-button-box-hover-color: var(--ele-dark-text-color);
+}
+
+[data-theme="light"] {
+	color-scheme: light;
 }
 
 /*--------------------------------------------------------------`
@@ -473,7 +469,7 @@ textarea {
   top: -2px;
   width: 8px;
   height: 5px;
-  border: 2px solid var(--ele-base-color);
+  border: 2px solid var(--ele-base-100);
   border-top: none;
   border-right: none;
   transform: rotate(-45deg);
@@ -500,9 +496,9 @@ textarea {
 .wpforms-container:not(.wpforms-container-full) input[type="radio"]:checked,
 .ff-inherit-theme-style input[type="radio"]:checked {
   border-color: var(--ele-form-selection-field-active-color,
-      var(--ele-primary-active));
+      var(--ele-secondary-color));
   background: var(--ele-form-selection-field-active-color,
-      var(--ele-primary-active));
+      var(--ele-secondary-color));
 }
 
 .ele-checkbox:checked:before,
@@ -642,42 +638,42 @@ h1 {
   --ele-font-weight: 700;
   --ele-font-size: 34px;
   --ele-line-height: 1.5;
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
 }
 
 h2 {
   --ele-font-weight: 700;
   --ele-font-size: 30px;
   --ele-line-height: 1.5;
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
 }
 
 h3 {
   --ele-font-weight: 600;
   --ele-font-size: 24px;
   --ele-line-height: 1.5;
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
 }
 
 h4 {
   --ele-font-weight: 600;
   --ele-font-size: 20px;
   --ele-line-height: 1.5;
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
 }
 
 h5 {
   --ele-font-weight: 600;
   --ele-font-size: 18px;
   --ele-line-height: 1.5;
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
 }
 
 h6 {
   --ele-font-weight: 600;
   --ele-font-size: 16px;
   --ele-line-height: 1.35;
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
 } */
 
 p {
@@ -751,7 +747,7 @@ html {
 }
 
 body {
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
   overflow-x: hidden;
   overflow-wrap: break-word;
   -moz-osx-font-smoothing: grayscale;
@@ -775,7 +771,7 @@ body * {
 }
 
 /* hr {
-    background-color: var(--ele-accent-active);
+    background-color: var(--ele-text-color);
     border: 0;
     height: 1px;
     margin-bottom: 1.5em;
@@ -1064,10 +1060,10 @@ input[type="datetime"]:focus,
 input[type="datetime-local"]:focus,
 input[type="color"]:focus,
 textarea:focus {
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
   outline: none;
   border-color: var(--ele-form-field-border-focus-color,
-      var(--ele-primary-active));
+      var(--ele-secondary-color));
   background-color: var(--has-classic-forms,
       var(--form-field-focus-background));
 }
@@ -1084,7 +1080,7 @@ textarea {
 ## Links
 --------------------------------------------------------------*/
 a:not(.ele-button) {
-  color: var(--ele-link-normal-color, var(--ele-accent-active));
+  color: var(--ele-link-normal-color, var(--ele-text-color));
   transition-duration: 0.3s;
   transition-property: color, background-color, border-color,
     text-decoration-color, fill, stroke;
@@ -1110,7 +1106,7 @@ a:active {
 }
 
 .entry-title a {
-  --ele-link-normal-color: var(--ele-accent-color);
+  --ele-link-normal-color: var(--ele-heading-color);
 }
 
 /*--------------------------------------------------------------
@@ -1248,7 +1244,7 @@ a:active {
   box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
   clip: auto !important;
   clip-path: none;
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
   display: block;
   font-size: 14px;
   font-weight: bold;
@@ -1375,7 +1371,7 @@ a:active {
   content: "";
   height: 2px;
   width: 50px;
-  background: var(--ele-accent-color);
+  background: var(--ele-heading-color);
   bottom: -5px;
 }
 
@@ -1392,8 +1388,8 @@ a:active {
   content: "";
   height: 100%;
   width: 50px;
-  border-left: 2px solid var(--ele-accent-color);
-  border-bottom: 2px solid var(--ele-accent-color);
+  border-left: 2px solid var(--ele-heading-color);
+  border-bottom: 2px solid var(--ele-heading-color);
   bottom: -4px;
   left: 0;
 }
@@ -1478,7 +1474,7 @@ h6 {
 .widget_calendar table th,
 .wp-block-calendar table td,
 .wp-block-calendar table th {
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
   padding: 0.7rem 0 !important;
   text-align: center;
 }
@@ -1589,7 +1585,7 @@ object {
 }
 
 .wp-block-calendar table:where(:not(.has-text-color)) {
-  color: var(--ele-theme-text-color, var(--ele-accent-active));
+  color: var(--ele-theme-text-color, var(--ele-text-color));
 }
 
 /*--------------------------------------------------------------
@@ -2911,7 +2907,7 @@ object {
 # Site Header
 --------------------------------------------------------------*/
 /* .site-header {
-  background-color: var(--ele-base-color);
+  background-color: var(--ele-base-100);
 }
 
 .site-header,
@@ -3089,7 +3085,7 @@ Header: Builder
 
 .ele-site-header .ele-header-row::after,
 .ele-site-header .ele-header-sticky.ele-item-is-fixed::after {
-  background-color: var(--ele-base-color);
+  background-color: var(--ele-base-100);
   z-index: 1;
 }
 
@@ -3249,13 +3245,13 @@ Header: Logo
   --ele-font-weight: 700;
   --ele-font-size: 30px;
   --ele-line-height: 1.5;
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
   text-decoration: none;
   display: var(--ele-display, block);
 }
 
 .ele-site-identity .ele-site-title:hover {
-  color: var(--ele-primary-active);
+  color: var(--ele-secondary-color);
 }
 
 .ele-site-identity .ele-site-title a {
@@ -3266,7 +3262,7 @@ Header: Logo
 .ele-site-identity .ele-site-description {
   --ele-font-weight: 500;
   --ele-font-size: 13px;
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
   display: var(--ele-display, block);
 }
 
@@ -3338,7 +3334,7 @@ Header: Logo
 # html #1
 --------------------------------------------------------------*/
 .ele-header-html-1-wrap {
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
   gap: 5px;
 }
 
@@ -3347,12 +3343,79 @@ Header: Logo
 }
 
 .ele-header-html-1-wrap li {
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
 }
 
 /*--------------------------------------------------------------
 # Primary Menu
 --------------------------------------------------------------*/
+/* Navigation
+--------------------------------------------- */
+.main-navigation {
+	display: block;
+	width: 100%;
+}
+
+.main-navigation ul {
+	display: none;
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+.main-navigation ul ul {
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+	float: left;
+	position: absolute;
+	top: 100%;
+	left: -999em;
+	z-index: 99999;
+}
+
+.main-navigation ul ul ul {
+	left: -999em;
+	top: 0;
+}
+
+.main-navigation ul ul li:hover > ul,
+.main-navigation ul ul li.focus > ul {
+	display: block;
+	left: auto;
+}
+
+.main-navigation ul ul a {
+	width: 200px;
+}
+
+.main-navigation ul li:hover > ul,
+.main-navigation ul li.focus > ul {
+	left: auto;
+}
+
+.main-navigation li {
+	position: relative;
+}
+
+.main-navigation a {
+	display: block;
+	text-decoration: none;
+}
+
+/* Small menu. */
+.menu-toggle,
+.main-navigation.toggled ul {
+	display: block;
+}
+
+@media screen and (min-width: 37.5em) {
+	.menu-toggle {
+		display: none;
+	}
+
+	.main-navigation ul {
+		display: flex;
+	}
+}
 .ele-header-menu-1-wrap nav ul li a.ele-submenu-icon,
 .ele-header-menu-2-wrap nav ul li a.ele-submenu-icon,
 .ele-header-menu-3-wrap nav ul li a.ele-submenu-icon,
@@ -3390,7 +3453,7 @@ nav .ele-submenu-icon {
   --ele-letter-spacing: 0.05em;
   /* --ele-menu-item-padding: calc(var(--ele-menu-items-spacing, 25px) / 2); */
   --ele-menu-item-padding: 0 calc(var(--ele-menu-items-spacing, 25px) / 2);
-  --ele-menu-initial-color: var(--ele-accent-color);
+  --ele-menu-initial-color: var(--ele-heading-color);
   --ele-menu-hover-color: var(--ele-primary-color);
   --ele-menu-active-color: var(--ele-primary-color);
   --ele-menu-item-pseudo-color: var(--ele-primary-color);
@@ -3405,8 +3468,8 @@ nav .ele-submenu-icon {
 .ele-header-menu-1-wrap nav[data-layout="4"] .ele-main-menu li>a:not(.ele-main-menu > li .children a),
 .ele-header-menu-2-wrap nav[data-layout="4"] .ele-main-menu li>a:not(.ele-main-menu > li .children a),
 .ele-footer-menu-wrap nav[data-layout="4"] .ele-main-menu li>a:not(.ele-main-menu > li .children a) {
-  --ele-menu-hover-color: var(--ele-base-color);
-  --ele-menu-active-color: var(--ele-base-color);
+  --ele-menu-hover-color: var(--ele-base-100);
+  --ele-menu-active-color: var(--ele-base-100);
 }
 
 .ele-main-menu li>a.ele-menu-link:not(.ele-main-menu > li .sub-menu a),
@@ -3706,7 +3769,7 @@ nav .ele-submenu-icon {
 .ele-main-menu li.current-menu-item > a .caret svg path,
 .ele-main-menu li.current_page_item > a .caret svg path,
 .ele-main-menu li:focus-within > a .caret svg path {
-  fill: var(--ele-primary-active);
+  fill: var(--ele-secondary-color);
 } */
 
 .ele-main-menu li li .caret {
@@ -3728,13 +3791,13 @@ nav .ele-submenu-icon {
   border-radius: var(--ele-dropdown-border-radius, 0);
   width: var(--ele-dropdown-menu-width, 200px);
   background-color: var(--ele-dropdown-background-color,
-      var(--ele-accent-color));
+      var(--ele-heading-color));
   box-shadow: var(--ele-dropdown-menu-shadow);
   transition: all var(--ele-submenu-transition, var(--ele-transition-normal)) ease-in-out;
 }
 
 .ele-main-menu li:hover ul li a {
-  --ele-menu-initial-color: var(--ele-base-color);
+  --ele-menu-initial-color: var(--ele-base-100);
   --ele-menu-hover-color: var(--ele-primary-color);
   --ele-menu-active-color: var(--ele-primary-color);
   color: var(--ele-menu-initial-color);
@@ -3742,7 +3805,7 @@ nav .ele-submenu-icon {
 
 .ele-main-menu li:hover ul li a:hover {
   background-color: var(--ele-dropdown-background-color,
-      var(--ele-accent-color));
+      var(--ele-heading-color));
 }
 
 .ele-main-menu li:hover ul li a {
@@ -3930,8 +3993,8 @@ nav .ele-submenu-icon {
   content: "";
   height: 8px;
   width: 8px;
-  border-bottom: 1px solid var(--ele-accent-color);
-  border-right: 1px solid var(--ele-accent-color);
+  border-bottom: 1px solid var(--ele-heading-color);
+  border-right: 1px solid var(--ele-heading-color);
   transform: rotate(45deg);
   top: 3px;
   left: 0;
@@ -4162,12 +4225,12 @@ nav .ele-submenu-icon {
 
 .ele-hero-section .entry-header .archive-description p {
   margin: 0;
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
 }
 
 .ele-hero-section .entry-header .entry-excerpt,
 .entry-content {
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
 }
 
 .author[data-prefix="blog"] .ele-hero-section .ele-author-bio-avatar {
@@ -4187,7 +4250,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-breadcrumb-trail .trail-items .ele-separator {
-  color: var(--ele-link-normal-color, var(--ele-accent-active));
+  color: var(--ele-link-normal-color, var(--ele-text-color));
 }
 
 .ele-breadcrumb-trail .trail-items .ele-separator svg {
@@ -4209,7 +4272,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-breadcrumb-trail .trail-items li.trail-end {
-  color: var(--ele-link-normal-color, var(--ele-accent-active));
+  color: var(--ele-link-normal-color, var(--ele-text-color));
 }
 
 .ele-breadcrumb-trail .trail-items li.trail-begin .ele-svg-icon:not(.ele-separator .ele-svg-icon) {
@@ -4265,7 +4328,7 @@ nav .ele-submenu-icon {
   font-weight: 500;
   letter-spacing: 0.1em;
   z-index: 1;
-  background-color: var(--ele-primary-active);
+  background-color: var(--ele-secondary-color);
   color: var(--ele-base-100);
 }
 
@@ -4350,8 +4413,8 @@ nav .ele-submenu-icon {
   right: 30px;
   bottom: 50px;
   left: 30px;
-  border-top: 1px solid var(--ele-base-color);
-  border-bottom: 1px solid var(--ele-base-color);
+  border-top: 1px solid var(--ele-base-100);
+  border-bottom: 1px solid var(--ele-base-100);
   transform: scale(0, 1);
   transform-origin: 0 0;
   position: absolute;
@@ -4371,8 +4434,8 @@ nav .ele-submenu-icon {
   right: 50px;
   bottom: 30px;
   left: 50px;
-  border-right: 1px solid var(--ele-base-color);
-  border-left: 1px solid var(--ele-base-color);
+  border-right: 1px solid var(--ele-base-100);
+  border-left: 1px solid var(--ele-base-100);
   transform: scale(1, 0);
   transform-origin: 100% 0;
   position: absolute;
@@ -4507,7 +4570,7 @@ nav .ele-submenu-icon {
 # Social Share
 --------------------------------------------------------------*/
 .ele-inline-arrow {
-  background: var(--ele-social-share-label-color, var(--ele-accent-active));
+  background: var(--ele-social-share-label-color, var(--ele-text-color));
   width: 32px;
   display: block;
   height: 1px;
@@ -4521,7 +4584,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-social-share-wrap>label {
-  color: var(--ele-social-share-label-color, var(--ele-accent-active));
+  color: var(--ele-social-share-label-color, var(--ele-text-color));
   margin: 0;
 }
 
@@ -4554,12 +4617,12 @@ nav .ele-submenu-icon {
   display: block;
   height: 1px;
   transition: all 0.3s ease 0s;
-  background: var(--ele-social-share-label-color, var(--ele-accent-active));
+  background: var(--ele-social-share-label-color, var(--ele-text-color));
 }
 
 .ele-social-share-wrap:hover .ele-inline-arrow:after {
   width: 32px;
-  background: var(--ele-social-share-label-color, var(--ele-accent-active));
+  background: var(--ele-social-share-label-color, var(--ele-text-color));
   transition: all 0.3s ease 0s;
   opacity: 1;
 }
@@ -4602,8 +4665,8 @@ nav .ele-submenu-icon {
 .ele-footer-social-wrap[data-layout="2"] .ele-social-share,
 .ele-author-socials[data-layout="2"] .ele-social-share {
   --ele-item-gap: 0;
-  --ele-social-share-normal-color: var(--ele-accent-color);
-  --ele-social-share-hover-color: var(--ele-accent-color);
+  --ele-social-share-normal-color: var(--ele-heading-color);
+  --ele-social-share-hover-color: var(--ele-heading-color);
   border-top: 1px solid var(--ele-social-share-normal-color, var(--ele-base-300));
   border-inline-start: 1px solid var(--ele-social-share-normal-color, var(--ele-base-300));
 }
@@ -4656,7 +4719,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-author-bio-container .ele-author-bio-name {
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
   width: fit-content;
 }
 
@@ -4742,7 +4805,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-author-bio-container .ele-author-avatar-link::before {
-  background-color: var(--ele-primary-active);
+  background-color: var(--ele-secondary-color);
   z-index: 2;
   opacity: 0;
   transition:
@@ -4877,7 +4940,7 @@ nav .ele-submenu-icon {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--ele-primary-active);
+  background-color: var(--ele-secondary-color);
   opacity: 0;
   transition: all ease 0.25s;
 }
@@ -4907,14 +4970,14 @@ nav .ele-submenu-icon {
   font-weight: 500;
   text-transform: uppercase;
   opacity: 0.8;
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
 }
 
 .ele-post-navigation-wrap .item-title {
   font-size: 14px;
   font-weight: 700;
   word-break: break-word;
-  color: var(--ele-link-normal-color, var(--ele-accent-color));
+  color: var(--ele-link-normal-color, var(--ele-heading-color));
 }
 
 .ele-post-navigation-wrap .nav-links a:hover .item-title {
@@ -5008,7 +5071,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-post-navigation-wrap[data-layout="2"] .nav-links>span {
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
   background: var(--ele-base-200);
   padding: 15px;
   top: 48%;
@@ -5087,7 +5150,7 @@ Comments
   margin: 0;
   padding: 0;
   list-style-type: none;
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
 }
 
 .ele-comments-wrap .comment-respond .comment-reply-title {
@@ -5111,7 +5174,7 @@ Comments
 
 .ele-comments-wrap .comment-form [class*="comment-form"] label {
   display: flex;
-  color: var(--form-text-initial-color, var(--ele-accent-active));
+  color: var(--form-text-initial-color, var(--ele-text-color));
   margin-bottom: var(--has-classic-forms, 0.5em);
 }
 
@@ -5133,8 +5196,8 @@ Comments
 }
 
 .ele-comments-wrap .comment-body:hover .reply a {
-  background: var(--ele-primary-active);
-  color: var(--ele-base-color);
+  background: var(--ele-secondary-color);
+  color: var(--ele-base-100);
   transition: all 0.3s ease 0s;
   border-radius: 3px;
 }
@@ -5204,7 +5267,7 @@ Comments
 }
 
 .comment-content a {
-  color: var(--ele-primary-active);
+  color: var(--ele-secondary-color);
   text-decoration: underline;
 }
 
@@ -5278,7 +5341,7 @@ Related Posts
 
 .ele-related-posts-wrap[data-layout="2"] .ele-related-posts-items.swiper .swiper-button-prev,
 .ele-related-posts-wrap[data-layout="2"] .ele-related-posts-items.swiper .swiper-button-next {
-  color: var(--ele-related-posts-nav-icon-color, var(--ele-base-color));
+  color: var(--ele-related-posts-nav-icon-color, var(--ele-base-100));
   transform: scale(2);
   transition: all 0.3s ease 0s;
   opacity: 0;
@@ -5325,8 +5388,8 @@ Related Posts
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent;
   background: linear-gradient(to right,
-      var(--ele-accent-color),
-      var(--ele-primary-active));
+      var(--ele-heading-color),
+      var(--ele-secondary-color));
 }
 
 .ele-posts-wrap[data-layout][data-cards="simple"] article,
@@ -5363,7 +5426,7 @@ Related Posts
 .ele-related-posts-items[data-layout][data-cards="boxed"] article,
 .ele-posts-wrap[data-layout][data-cards="cover"] article {
   box-shadow: var(--ele-box-shadow);
-  background-color: var(--ele-base-color);
+  background-color: var(--ele-base-100);
   border-radius: 3px;
   border-color: var(--ele-base-300);
 }
@@ -5373,7 +5436,7 @@ Related Posts
 .ele-related-posts-wrap[data-layout] .ele-column-content .ele-card-content {
   align-items: var(--alignment, left);
   text-align: var(--alignment, left);
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
 }
 
 .ele-posts-wrap[data-layout] .ele-column-content .ele-featured-image-wrap,
@@ -5504,7 +5567,7 @@ Related Posts
   padding: var(--ele-column-inner-spacing);
   background: linear-gradient(180deg,
       transparent -5%,
-      var(--ele-base-color) 35%);
+      var(--ele-base-100) 35%);
   border-radius: 3px;
 }
 
@@ -5684,7 +5747,7 @@ Layout 3
 
 .ele-post-metas .ele-post-meta {
   gap: 6px;
-  color: var(--ele-link-normal-color, var(--ele-accent-active));
+  color: var(--ele-link-normal-color, var(--ele-text-color));
 }
 
 .ele-post-metas .ele-post-meta .ele-label-text {
@@ -5731,7 +5794,7 @@ Layout 3
 }
 
 .ele-post-meta>* {
-  color: var(--ele-link-normal-color, var(--ele-accent-active));
+  color: var(--ele-link-normal-color, var(--ele-text-color));
 }
 
 .ele-post-meta .ele-meta-icon {
@@ -5750,7 +5813,7 @@ Layout 3
 
 /* Separator */
 .ele-meta-separator {
-  background-color: var(--ele-link-normal-color, var(--ele-accent-active));
+  background-color: var(--ele-link-normal-color, var(--ele-text-color));
 }
 
 .ele-meta-separator.ele-dash-icon {
@@ -5794,7 +5857,7 @@ Layout 3
 
 .ele-post-taxonomy-wrap .ele-post-metas .ele-button-fill {
   --ele-tax-bg-initial: var(--ele-primary-color);
-  --ele-tax-bg-hover: var(--ele-primary-active);
+  --ele-tax-bg-hover: var(--ele-secondary-color);
   --ele-tax-border: 0px;
 }
 
@@ -5828,11 +5891,11 @@ Layout 3
     padding-left: 0.375em;
 } */
 .entry-content ul>li::marker {
-  color: var(--ele-primary-active);
+  color: var(--ele-secondary-color);
 }
 
 .entry-content code {
-  color: var(--ele-primary-active);
+  color: var(--ele-secondary-color);
   font-weight: 600;
 }
 
@@ -5855,7 +5918,7 @@ Layout 3
   .wp-block-file__button,
   .wp-block-button__link,
   .wp-block-read-more):hover {
-  color: var(--ele-primary-active);
+  color: var(--ele-secondary-color);
 }
 
 .wp-block-social-links:not(.is-style-logos-only) .wp-social-link,
@@ -5865,7 +5928,7 @@ Layout 3
 
 .ele-posts-wrap .ele-post-content>*:not(a),
 .ele-related-posts-items .ele-post-content>*:not(a) {
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
 }
 
 .wp-block-latest-comments,
@@ -5882,8 +5945,8 @@ Pagination
 .wp-block-query-pagination,
 .wp-block-query-pagination-numbers {
   --ele-pagination-initial-color: var(--ele-primary-color);
-  --ele-pagination-active-color: var(--ele-base-color);
-  --ele-pagination-accent-color: var(--ele-primary-color);
+  --ele-pagination-active-color: var(--ele-base-100);
+  --ele-pagination-heading-color: var(--ele-primary-color);
   --ele-pagination-border-radius: 3px;
   --ele-button-min-height: 40px;
   --ele-font-size: 0.875rem;
@@ -5908,8 +5971,8 @@ Pagination
 }
 
 .ele-pagination-wrap .nav-links[data-pagination-type="numbered"] a:hover {
-  border-color: var(--ele-pagination-accent-color);
-  color: var(--ele-pagination-accent-color);
+  border-color: var(--ele-pagination-heading-color);
+  color: var(--ele-pagination-heading-color);
 }
 
 .ele-pagination-wrap .nav-links .ele-pagination-prev-btn,
@@ -5966,8 +6029,8 @@ Pagination
 .ele-pagination-wrap .page-numbers.current,
 .post-page-numbers.current,
 .page-numbers.current {
-  background: var(--ele-pagination-accent-color);
-  border-color: var(--ele-pagination-accent-color);
+  background: var(--ele-pagination-heading-color);
+  border-color: var(--ele-pagination-heading-color);
   color: var(--ele-pagination-active-color);
 }
 
@@ -6016,7 +6079,7 @@ Pagination
 
 .ele-sidebar .widget,
 .widget-area .widget {
-  color: var(--ele-theme-text-color, var(--ele-accent-active));
+  color: var(--ele-theme-text-color, var(--ele-text-color));
   border-radius: 3px;
   border-color: var(--ele-base-300);
 }
@@ -6037,10 +6100,10 @@ Pagination
 }
 
 [data-link-type="3"] a:hover {
-  color: var(--ele-link-hover-color, var(--ele-base-color));
+  color: var(--ele-link-hover-color, var(--ele-base-100));
   background-size: 100% 100%;
-  background-image: linear-gradient(var(--ele-link-normal-color, var(--ele-accent-active)),
-      var(--ele-link-normal-color, var(--ele-accent-active)));
+  background-image: linear-gradient(var(--ele-link-normal-color, var(--ele-text-color)),
+      var(--ele-link-normal-color, var(--ele-text-color)));
   transition: all 0.3s ease 0s;
 }
 
@@ -6088,8 +6151,8 @@ Pagination
 .footer-bar {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
-  background-color: var(--ele-base-color);
-  color: var(--ele-accent-active);
+  background-color: var(--ele-base-100);
+  color: var(--ele-text-color);
 }
 
 /* link hover effect */
@@ -6142,7 +6205,7 @@ Pagination
 .ele-link-type-3 #page .wp-block-table a:hover,
 .ele-link-type-3 #page .ele-link-styles:hover,
 .ele-link-type-3 .ele-sidebar a:hover {
-  color: var(--has-link-decoration-effect, var(--ele-base-color));
+  color: var(--has-link-decoration-effect, var(--ele-base-100));
   background-size: var(--has-link-decoration-effect, 100% 100%);
   background-image: var(--has-link-decoration-effect,
       linear-gradient(var(--ele-primary-color), var(--ele-primary-color)));
@@ -6212,7 +6275,7 @@ Pagination
 .entry-content blockquote {
   border-left-color: var(--ele-base-300);
   border-left-width: 0.25rem;
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
   font-style: italic;
   font-weight: 500;
   margin-bottom: 1.6em;
@@ -6289,7 +6352,7 @@ figure.wp-block-pullquote blockquote p {
 }
 
 .entry-content figcaption {
-  color: var(--ele-accent-color);
+  color: var(--ele-heading-color);
   font-size: 0.875em;
   line-height: 1.4285714;
   margin-top: 0.8571429em;
@@ -6335,7 +6398,7 @@ fieldset .wc-stripe-elements-field {
   height: var(--ele-form-field-height, 40px);
   font-family: inherit;
   font-size: var(--ele-form-field-font-size, var(--ele-font-size));
-  color: var(--ele-form-field-initial-color, var(--ele-accent-active));
+  color: var(--ele-form-field-initial-color, var(--ele-text-color));
   padding: var(--ele-form-field-padding, 0 12px);
   border-width: var(--ele-form-field-border-width, 1px);
   border-style: var(--ele-form-field-border-style, solid);
@@ -6362,7 +6425,7 @@ fieldset .wc-stripe-elements-field:focus {
   outline: none;
   color: var(--ele-form-text-focus-color, var(--ele-theme-text-color));
   border-color: var(--ele-form-field-border-focus-color,
-      var(--ele-primary-active));
+      var(--ele-secondary-color));
   background-color: var(--ele-form-field-background-focus-color,
       var(--ele-base-200));
 }
@@ -6385,7 +6448,7 @@ form textarea {
 .wp-block-calendar table td#today,
 .wp-block-calendar table th#today {
   background-color: var(--ele-primary-color);
-  color: var(--ele-base-color);
+  color: var(--ele-base-100);
 }
 
 [data-form-layout="2"] input:not(.submit),
@@ -6397,7 +6460,7 @@ form textarea {
 # Footer
 --------------------------------------------------------------*/
 .site-footer .ele-copyright {
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
 }
 
 /* 
@@ -6406,7 +6469,7 @@ form textarea {
   transition: all 0.25s ease;
 }
 .site-footer .ele-copyright a:hover {
-  color: var(--ele-primary-active);
+  color: var(--ele-secondary-color);
 } */
 
 /*--------------------------------------------------------------
@@ -6503,9 +6566,9 @@ form textarea {
 }
 
 .ele-preloader-wrap {
-  --ele-preloader-background: var(--ele-accent-color);
+  --ele-preloader-background: var(--ele-heading-color);
   --ele-preloader-primary: var(--ele-primary-color);
-  --ele-preloader-accent: var(--ele-base-color);
+  --ele-preloader-accent: var(--ele-base-100);
   position: fixed;
   top: 0;
   left: 0;
@@ -6750,17 +6813,17 @@ form textarea {
 }
 
 .ele-off-canvas .ele-modal-inner::after {
-  background-color: var(--ele-base-color);
+  background-color: var(--ele-base-100);
 }
 
 .ele-off-canvas .ele-modal-inner {
-  --ele-modal-action-initial: var(--ele-accent-color);
+  --ele-modal-action-initial: var(--ele-heading-color);
   --ele-modal-action-hover: var(--ele-primary-color);
   box-shadow: rgba(44, 62, 80, 0.35) 0px 0px 70px 0px;
 }
 
 .ele-off-canvas .ele-modal-inner article.post {
-  background-color: var(--ele-base-color);
+  background-color: var(--ele-base-100);
 }
 
 .ele-off-canvas[data-toggle-behaviour="drawer-right"] .ele-modal-inner {
@@ -7047,7 +7110,7 @@ form textarea {
   border-left: 1px solid rgba(0, 0, 0, 0.3);
   z-index: 9999999;
   transform: rotate(45deg);
-  background: var(--ele-base-color);
+  background: var(--ele-base-100);
   top: -6px;
   right: 8px;
   opacity: 1;
@@ -7062,7 +7125,7 @@ form textarea {
   width: 20px;
   right: auto;
   left: -8px;
-  background: var(--ele-base-color);
+  background: var(--ele-base-100);
   line-height: 20px;
   border-radius: 50px;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.2);
@@ -7215,12 +7278,12 @@ form textarea {
 .ele-header-theme-switch-wrap a:hover,
 .ele-header-theme-switch-wrap a:focus,
 .ele-header-theme-switch-wrap a:active {
-  color: var(--ele-theme-switch-color, var(--ele-accent-color));
+  color: var(--ele-theme-switch-color, var(--ele-heading-color));
 } */
 #ele-theme-color-scheme {
   position: relative;
   isolation: isolate;
-  color: var(--ele-link-normal-color, var(--ele-accent-active));
+  color: var(--ele-link-normal-color, var(--ele-text-color));
 }
 
 #ele-theme-color-scheme .toggle-circle {
@@ -7523,7 +7586,7 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
 
 .swiper-slide .ele-hero-content>* {
   margin-bottom: var(--ele-card-items-spacing, 20px);
-  color: var(--ele-accent-active);
+  color: var(--ele-text-color);
 }
 
 .swiper-slide-active .ele-hero-content {

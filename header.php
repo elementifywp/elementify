@@ -146,11 +146,18 @@ do_action('elementify/before_html');
         // 		'--ele-button-padding'
         // 	);
 
-        $base_responsive = get_theme_mod('footer_bottom_link_colors_responsive',[]);
-        $base = get_theme_mod('footer_bottom_background',[]);
+// Use below code for the gradient color
+//         background-image: linear-gradient(135deg, rgb(6,147,227) 0%, rgb(69,23,111) 100%);
+// background-clip: text;
+// -webkit-background-clip: text;
+// color: transparent;
+// -webkit-text-fill-color: transparent;
+
+        $base_responsive = get_theme_mod('elementify_framework_color_accent');
+        $base = get_theme_mod('elementify_framework_breadcrumb_home_icon');
 
         echo '<pre>';
-        print_r($base);
+        //print_r($base);
         echo '<br/>';
         print_r($base_responsive);
         echo '</pre>';

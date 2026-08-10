@@ -190,62 +190,56 @@ if (! function_exists('elementify_site_identify')) {
 /*--------------------------------------------------------------
 # Primary Navigation
 --------------------------------------------------------------*/
-if (! function_exists('elementify_primary_navigation')) {
-    /**
-     * Display Primary Navigation
-     *
-     * @return  string HTML display
-     * @since   1.0.0
-     */
-    function elementify_primary_navigation()
-    {
+if ( ! function_exists( 'elementify_primary_navigation' ) ) {
+	/**
+	 * Display Primary Navigation
+	 *
+	 * @return  string HTML display
+	 * @since   1.0.0
+	 */
+	function elementify_primary_navigation() {
 
-        // $default_values     = get_elementify_theme_mods();
-        //$menu_caret         = elementify_get_theme_mod_new('elementify_header_menu_caret', $default_values['customizer']['toggle']['on'] );
-        $main_navigation    = ['main-navigation ele-position-fixed----- ele-position-absolute ele-top-100 ele-top-0----- ele-left-0 ele-z-20 ele-w-100 ele-h-100vh'];
-        $menu_class         = ['ele-main-menu ele-list-style-none ele-p-0 ele-m-0 ele-d-flex ele-flex-column ele-flex-lg-row'];
+		// $default_values  = get_elementify_theme_mods();
+		// $menu_caret      = elementify_get_theme_mod_new( 'elementify_header_menu_caret', $default_values['customizer']['toggle']['on'] );
+		$main_navigation = array( 'main-navigation', 'ele-left-0', 'ele-z-20' );
+		$menu_class      = array( 'ele-main-menu', 'ele-list-style-none', 'ele-p-0', 'ele-m-0', 'ele-d-flex', 'ele-flex-column', 'ele-flex-lg-row' );
 
-        // if ( $menu_caret['lg'] == 'on' ) {
-        $menu_class[]   = 'have-caret';
-        // }
+		// if ( $menu_caret['lg'] == 'on' ) {
+		$menu_class[] = 'have-caret';
+		// }
 
-        $main_navigation[] = 'main-navigation-sm ele-position-sm-relative ele-top-sm-auto ele-left-sm-auto ele-h-sm-auto';
-        $menu_class[]      = 'ele-flex-sm-wrap';
+		$main_navigation[] = 'main-navigation-sm';
+		$main_navigation[] = 'ele-position-sm-relative';
+		$main_navigation[] = 'ele-top-sm-auto';
+		$main_navigation[] = 'ele-left-sm-auto';
+		$main_navigation[] = 'ele-h-sm-auto';
 
+		$menu_class[] = 'ele-flex-sm-wrap';
+		$menu_class[] = 'ele-flex-sm-row';
+		$menu_class[] = 'ele-align-items-md-center';
+		?>
 
-        $menu_class[]   = 'ele-flex-lg-row';
-        $menu_class[]   = 'ele-flex-sm-wrap ele-flex-sm-row ele-align-items-md-center';
-
-        // Header Transition
-        // $settings   = elementify_customizer_controls_io();
-        // if ( isset( $settings['header_transition'] ) ) {
-        //     $main_navigation[] = $settings['header_transition'];
-        // }
-    ?>
-
-        <nav id="site-navigation" class="<?php echo esc_attr(implode(' ', $main_navigation)); ?>"
-            aria-label="<?php esc_attr_e('Horizontal', 'elementify'); ?>" role="navigation">
-
-            <?php
-            wp_nav_menu(
-                array(
-                    'theme_location'    => 'menu-1',
-                    'menu_id'            => 'primary-menu',
-                    'menu_class'          => esc_attr(implode(' ', $menu_class)),
-                    'container_class'     => 'primary-menu-container',
-                    'items_wrap'          => '<ul id="primary-menu-list" class="%2$s">%3$s</ul>',
-                    'fallback_cb'         => 'elementify_menu_fallback',
-                )
-            );
-            ?>
-        </nav>
-
-        <div class="ele-trigger-menu ele-d-block ele-z-30 ele-d-sm-none">
-            <div class="ele-hamburger-menu"><span></span><span></span><span></span><span></span></div>
-        </div>
-
-<?php
-    }
+		<nav id="ele-header-menu-1" class="<?php echo esc_attr( implode( ' ', $main_navigation ) ); ?>" data-layout="1" role="navigation">
+			<?php
+			wp_nav_menu(
+				array(
+					'theme_location' => 'menu-1',
+					'menu_id'         => 'primary-menu',
+					'menu_class'      => implode( ' ', $menu_class ) . ' ele-dropdown-reveal-fade',
+					'container'       => false,
+					'items_wrap'      => '<ul id="primary-menu" class="%2$s">%3$s</ul>',
+					'fallback_cb'     => 'elementify_menu_fallback',
+				)
+			);
+			?>
+			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+				<div class="ele-trigger-menu ele-d-block ele-z-30 ele-d-sm-none">
+					<div class="ele-hamburger-menu"><span></span><span></span><span></span><span></span></div>
+				</div>
+			</button>
+		</nav>
+		<?php
+	}
 }
 
 /*--------------------------------------------------------------
@@ -262,7 +256,6 @@ if (! function_exists('elementify_menu_fallback')) {
     function elementify_menu_fallback()
     {
         $output  = '';
-        $output .= '<div class="primary-menu-container">';
         $output .= '<ul id="primary-menu-list" class="ele-main-menu ele-d-flex ele-flex-wrap ele-list-style-none">';
 
         $output .= wp_list_pages(
@@ -273,7 +266,6 @@ if (! function_exists('elementify_menu_fallback')) {
         );
 
         $output .= '</ul>';
-        $output .= '</div>';
 
         // @codingStandardsIgnoreStart
         echo $output;

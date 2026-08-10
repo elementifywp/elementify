@@ -12,7 +12,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
  * navigation support for dropdown menus.
  */
 (function () {
-  var siteNavigation = document.getElementById('site-navigation');
+  var siteNavigation = document.getElementById('ele-header-menu-1');
 
   // Return early if the navigation doesn't exist.
   if (!siteNavigation) {
@@ -34,15 +34,16 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   if (!menu.classList.contains('nav-menu')) {
     menu.classList.add('nav-menu');
   }
+  var hamburger = button.querySelector('.ele-hamburger-menu');
 
   // Toggle the .toggled class and the aria-expanded value each time the button is clicked.
   button.addEventListener('click', function () {
     siteNavigation.classList.toggle('toggled');
-    if (button.getAttribute('aria-expanded') === 'true') {
-      button.setAttribute('aria-expanded', 'false');
-    } else {
-      button.setAttribute('aria-expanded', 'true');
+    if (hamburger) {
+      hamburger.classList.toggle('cross');
     }
+    var expanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', String(!expanded));
   });
 
   // Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
@@ -50,6 +51,9 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     var isClickInside = siteNavigation.contains(event.target);
     if (!isClickInside) {
       siteNavigation.classList.remove('toggled');
+      if (hamburger) {
+        hamburger.classList.remove('cross');
+      }
       button.setAttribute('aria-expanded', 'false');
     }
   });
@@ -86,13 +90,15 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
     /**
      * Sets or removes .focus class on an element.
+     *
+     * @param {Event} event
      */
   } catch (err) {
     _iterator2.e(err);
   } finally {
     _iterator2.f();
   }
-  function toggleFocus() {
+  function toggleFocus(event) {
     if (event.type === 'focus' || event.type === 'blur') {
       var self = this;
       // Move up through the ancestors of the current link until we hit .nav-menu.
