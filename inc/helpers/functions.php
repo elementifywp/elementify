@@ -349,7 +349,7 @@ if (! function_exists('elemetify_pagination')) {
             'after_page_number' => '</span>',
         ];
 
-        printf('<div class="ele-pagination-wrap ele-d-flex ele-flex-wrap ele-align-items-center ele-w-100 ele-pagination-numeric numeric ele-justify-content-center"><nav class="navigation pagination" aria-label="Posts"><h2 class="screen-reader-text">%1$s</h2><div class="nav-links">%2$s</div></nav></div>', esc_html__('Posts navigation', 'elemetify'), wp_kses(paginate_links($args), $allowed_tags));
+        printf('<div class="ele-pagination-wrap"><nav class="navigation pagination" aria-label="Posts"><h2 class="screen-reader-text">%1$s</h2><div class="nav-links ele-d-flex ele-flex-wrap ele-align-items-center ele-w-100 ele-justify-content-center ele-justify-content-md-center ele-justify-content-lg-center" data-pagination-type="numbered" data-pagination-max-pages="2" data-divider="none">%2$s</div></nav></div>', esc_html__('Posts navigation', 'elemetify'), wp_kses(paginate_links($args), $allowed_tags));
     }
 }
 

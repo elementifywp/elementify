@@ -266,8 +266,8 @@ if (! function_exists('elementify_sidebar_area')) {
 	function elementify_sidebar_area()
 	{
 
-		echo '<aside id="secondary" class="widget-area ele-z-1" data-layout="1">';
-		echo '<div class="ele-sidebar" data-sticky="sidebar">';
+		echo '<aside class="widget-area" data-layout="1" data-title-type="1" data-link-type="1">';
+		echo '<div class="ele-sidebar ele-position-relative">';
 
 		/**
 		 * Functions hooked into elementify/sidebar_top action
@@ -284,7 +284,7 @@ if (! function_exists('elementify_sidebar_area')) {
 		do_action('elementify/sidebar_bottom');
 
 		echo '</div><!-- .ele-sidebar -->';
-		echo '</aside><!-- #secondary -->';
+		echo '</aside><!-- .widget-area -->';
 	}
 }
 
@@ -427,7 +427,7 @@ if (! function_exists('elementify_loop_entry_post_card')) {
 |--------------------------------------------------------------------------
 |
 */
-add_action('elementify/loop/post/entry_content', 'elementify_single_post_title_elements', 10);
+// add_action('elementify/loop/post/entry_content', 'elementify_single_post_title_elements', 10);
 add_action('elementify/loop/post/entry_content', 'elementify_single_post_content', 15);
 add_action('elementify/post/after_content', 'elementify_post_after_content_elements', 10);
 if (! function_exists('elementify_single_post_title_elements')) {

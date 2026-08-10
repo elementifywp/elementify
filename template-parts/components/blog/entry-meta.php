@@ -7,7 +7,7 @@
  */
 
 $the_post_id	= get_the_ID();
-$default 		= is_single() ? ['author', 'date', 'category'] : ['category'];
+$default 		= ['author', 'date', 'comment'];
 $metas 			= !empty($args['desktop']) ? $args['desktop'] : $default;
 
 // Check whether the post type is allowed to output post meta.

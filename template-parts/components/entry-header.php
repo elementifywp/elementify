@@ -19,7 +19,7 @@ if (is_singular()) {
 	$blog_enable 	= ['desktop' => true];
 	$search_enable 	= ['desktop' => true];
 	$archive_enable	= ['desktop' => true];
-	$elements 		= ['title'];
+	$elements 		= ['title', 'breadcrumbs'];
 
 	if ($home_enable && is_home() && is_front_page()) {
 		$page_title = true;
@@ -36,11 +36,18 @@ if (is_singular()) {
 }
 
 if ($page_title) : ?>
-<div class="<?php echo esc_attr(implode(' ', $classes)); ?>"
-    data-type="<?php echo esc_attr($header_preset['desktop']); ?>">
+	<div class="<?php echo esc_attr(implode(' ', $classes)); ?>"
+		data-type="<?php echo esc_attr($header_preset['desktop']); ?>">
 
-    <?php
+		<?php
 		if (! empty($elements)) {
+
+			// Remove thumbnail if conditions are met
+			if (($key = array_search('thumbnail', $elements)) !== false) {
+				if (is_singular() && !has_post_thumbnail($post->ID)) {
+					unset($elements[$key]);
+				}
+			}
 
 			if ($header_preset && array_key_exists('desktop', $header_preset) && in_array($header_preset['desktop'], ['2'])) {
 				$container_width = ['desktop'	=> 'default'];
@@ -52,8 +59,8 @@ if ($page_title) : ?>
 			}
 		?>
 
-    <header class="entry-header ele-d-flex ele-flex-column">
-        <?php
+			<header class="entry-header ele-d-flex ele-flex-column">
+				<?php
 				$content_open = false;
 				foreach ($elements as $key => $value) {
 					// thumbnail
@@ -153,13 +160,13 @@ if ($page_title) : ?>
 					}
 				}
 				?>
-    </header><!-- .entry-header -->
+			</header><!-- .entry-header -->
 
-    <?php if ($header_preset && array_key_exists('desktop', $header_preset) && in_array($header_preset['desktop'], ['2'])) {
+		<?php if ($header_preset && array_key_exists('desktop', $header_preset) && in_array($header_preset['desktop'], ['2'])) {
 				echo '</div><!-- .ele-container --->';
 			}
 		} ?>
 
-</div><!-- .ele-hero-section -->
+	</div><!-- .ele-hero-section -->
 <?php
 endif;

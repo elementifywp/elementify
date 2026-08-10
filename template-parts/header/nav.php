@@ -9,7 +9,7 @@
  */
 ?>
 <header id="masthead" class="site-header ele-position-relative ele-w-100 ele-site-header">
-	<div class="ele-header-row ele-position-absolute-before ele-header-row-main ele-d-flex ele-align-items-center ele-position-absolute-after">
+	<div class="ele-header-row ele-position-absolute-before ele-header-row-main ele-d-flex ele-align-items-center ele-position-absolute-after" data-row="main">
 		<div class="ele-container ele-mx-auto ele-position-relative ele-z-10 ele-z-20">
 			<div class="ele-builder-column ele-builder-column-2">
 				<div class="ele-builder-column-items ele-d-flex ele-flex-wrap ele-builder-col-0">
