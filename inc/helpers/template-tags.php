@@ -191,7 +191,7 @@ if (! function_exists('elementify_excerpt_more')) {
 	function elementify_excerpt_more($more = '')
 	{
 		$more = sprintf(
-			'<div class="ele-read-more-wrap"><a class="ele-read-more" href="%1$s">%2$s</a></div><!-- .ele-read-more-wrap -->',
+			'<div class="ele-read-more-wrap ele-button-fill"><a class="ele-read-more ele-button" href="%1$s">%2$s</a></div><!-- .ele-read-more-wrap -->',
 			get_permalink(get_the_ID()),
 			__('Read more', 'elementify')
 		);

@@ -156,11 +156,11 @@ do_action('elementify/before_html');
         $base_responsive = get_theme_mod('elementify_framework_color_accent');
         $base = get_theme_mod('elementify_framework_breadcrumb_home_icon');
 
-        echo '<pre>';
-        //print_r($base);
-        echo '<br/>';
-        print_r($base_responsive);
-        echo '</pre>';
+        // echo '<pre>';
+        // //print_r($base);
+        // echo '<br/>';
+        // print_r($base_responsive);
+        // echo '</pre>';
         ?>
 
         <?php

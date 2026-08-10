@@ -2741,7 +2741,7 @@ object {
 }
 
 .site::after {
-  background-color: var(--ele-base-100);
+  background-color: var(--ele-base-200);
 }
 
 .ele-has-boxed .site {

@@ -11,10 +11,15 @@ $the_post_id   = get_the_ID();
 if (post_password_required() || is_attachment()) {
 	return;
 }
+// add class for now featured images
+$wrapper_classes 	= ['ele-featured-image-wrap ele-overflow-hidden'];
+if (! has_post_thumbnail()) {
+	$wrapper_classes[] = 'ele-unavailable-image';
+}
 ?>
-<div class="ele-featured-image-wrap ele-w-100 ele-unavailable-image ele-boundless">
+<div class="<?php echo esc_attr(implode(' ', $wrapper_classes)); ?>">
 
-	<figure class="ele-featured-image ele-position-relative" data-ratio="4x3">
+	<figure class="ele-featured-image ele-position-relative ele-position-absolute-after" data-ratio="4x3">
 
 		<?php
 		if (is_single() || is_page()) {
@@ -23,7 +28,7 @@ if (post_password_required() || is_attachment()) {
 				$the_post_id,
 				'large',
 				[
-					'class' => 'attachment-featured-large size-featured-image'
+					'class' => 'attachment-featured-large size-featured-image lazyloaded'
 				]
 			);
 		} else { ?>
@@ -34,7 +39,7 @@ if (post_password_required() || is_attachment()) {
 					$the_post_id,
 					'medium',
 					[
-						'class' => 'attachment-featured-large size-featured-image'
+						'class' => 'attachment-featured-large size-featured-image lazyloaded'
 					]
 				);
 				?>

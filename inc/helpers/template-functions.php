@@ -207,7 +207,7 @@ if (! function_exists('elementify_site_content_start')) {
 	{
 		echo '<div id="content" class="site-content ele-position-relative ele-position-absolute-after">';
 		echo '<div class="ele-container ele-mx-auto">';
-		echo '<div id="primary" class="content-area primary">';
+		echo '<div id="primary" class="content-area primary ele-position-relative ele-z-10">';
 	}
 }
 
@@ -363,7 +363,7 @@ if (! function_exists('elementify_loop_entry_post_card')) {
 
 			array_splice($elements, $last_component, 0, $inserted); // splice in at position n
 
-			echo '<div class="ele-d-flex ele-flex-column ele-column-content ele-position-relative ele-h-100 ele-w-100 ele-overflow-hidden">';
+			echo '<div class="ele-d-flex ele-flex-column ele-column-content ele-position-relative ele-h-100 ele-w-100">';
 
 			$content_open = false;
 
@@ -379,7 +379,7 @@ if (! function_exists('elementify_loop_entry_post_card')) {
 				} else {
 					if (! $content_open) {
 						$content_open = true;
-						echo '<div class="ele-card-content ele-d-flex ele-flex-column ele-flex-grow">';
+						echo '<div class="ele-card-content ele-d-flex ele-flex-column ele-justify-content-inherit">';
 					}
 				}
 				// Categories
