@@ -622,7 +622,7 @@ template {
 /*--------------------------------------------------------------
 # Typography
 --------------------------------------------------------------*/
-/* h1 a,
+h1 a,
 h2 a,
 h3 a,
 h4 a,
@@ -634,47 +634,50 @@ h6 a {
   text-decoration: inherit;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--ele-heading-color);
+}
+
 h1 {
   --ele-font-weight: 700;
-  --ele-font-size: 34px;
-  --ele-line-height: 1.5;
-  color: var(--ele-heading-color);
+  --ele-font-size: 2em;     /* scales with user's font-size preference */
+  --ele-line-height: 1.2;
 }
 
 h2 {
   --ele-font-weight: 700;
-  --ele-font-size: 30px;
-  --ele-line-height: 1.5;
-  color: var(--ele-heading-color);
+  --ele-font-size: 1.5em;
+  --ele-line-height: 1.2;
 }
 
 h3 {
-  --ele-font-weight: 600;
-  --ele-font-size: 24px;
-  --ele-line-height: 1.5;
-  color: var(--ele-heading-color);
+  --ele-font-weight: 700;
+  --ele-font-size: 1.17em;
+  --ele-line-height: 1.2;
 }
 
 h4 {
-  --ele-font-weight: 600;
-  --ele-font-size: 20px;
-  --ele-line-height: 1.5;
-  color: var(--ele-heading-color);
+  --ele-font-weight: 700;
+  --ele-font-size: 1em;
+  --ele-line-height: 1.2;
 }
 
 h5 {
-  --ele-font-weight: 600;
-  --ele-font-size: 18px;
-  --ele-line-height: 1.5;
-  color: var(--ele-heading-color);
+  --ele-font-weight: 700;
+  --ele-font-size: 0.83em;
+  --ele-line-height: 1.2;
 }
 
 h6 {
-  --ele-font-weight: 600;
-  --ele-font-size: 16px;
-  --ele-line-height: 1.35;
-  color: var(--ele-heading-color);
-} */
+  --ele-font-weight: 700;
+  --ele-font-size: 0.67em;
+  --ele-line-height: 1.2;
+}
 
 p {
   margin-bottom: var(--content-spacing, 24px);
@@ -928,6 +931,16 @@ blockquote {
 label {
   cursor: pointer;
   margin: 0 0 0.5em 0;
+}
+
+/* Restore heading spacing zeroed out by the reset above. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: var(--ele-content-spacing, 1.5em);
 }
 
 .wp-block-search .wp-block-search__label {
