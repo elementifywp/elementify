@@ -608,37 +608,37 @@ h6 {
 }
 
 h1 {
-  --ele-font-weight: 700;
+  --ele-font-weight: 600;
   --ele-font-size: 2em; /* scales with user's font-size preference */
   --ele-line-height: 1.2;
 }
 
 h2 {
-  --ele-font-weight: 700;
+  --ele-font-weight: 600;
   --ele-font-size: 1.5em;
   --ele-line-height: 1.2;
 }
 
 h3 {
-  --ele-font-weight: 700;
+  --ele-font-weight: 600;
   --ele-font-size: 1.17em;
   --ele-line-height: 1.2;
 }
 
 h4 {
-  --ele-font-weight: 700;
+  --ele-font-weight: 600;
   --ele-font-size: 1em;
   --ele-line-height: 1.2;
 }
 
 h5 {
-  --ele-font-weight: 700;
+  --ele-font-weight: 600;
   --ele-font-size: 0.83em;
   --ele-line-height: 1.2;
 }
 
 h6 {
-  --ele-font-weight: 700;
+  --ele-font-weight: 600;
   --ele-font-size: 0.67em;
   --ele-line-height: 1.2;
 }
@@ -1072,7 +1072,7 @@ textarea {
 ## Links
 --------------------------------------------------------------*/
 a:not(.ele-button) {
-  color: var(--ele-link-normal-color, var(--ele-text-color));
+  color: var(--ele-link-color);
   -webkit-transition-duration: 0.3s;
           transition-duration: 0.3s;
   -webkit-transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
@@ -1087,7 +1087,7 @@ a:not(.ele-button) {
 }
 
 a:not(.ele-button):hover {
-  color: var(--ele-link-hover-color, var(--ele-primary-color));
+  color: var(--ele-link-hover-color);
 }
 
 a:not(.ele-button):focus {
@@ -1100,7 +1100,7 @@ a:active {
 }
 
 .entry-title a {
-  --ele-link-normal-color: var(--ele-heading-color);
+  --ele-link-color: var(--ele-heading-color);
 }
 
 /*--------------------------------------------------------------
@@ -4331,13 +4331,23 @@ nav .ele-submenu-icon {
   text-align: var(--alignment, left);
 }
 
+/* .ele-hero-section[data-type="1"] .entry-header>*:not(:last-child),
+.ele-hero-section[data-type="1"] .entry-header .ele-card-content>*:not(:last-child),
+.ele-hero-section[data-type="2"] .entry-header>*:not(:last-child),
+.ele-hero-section[data-type="2"] .entry-header .ele-card-content>*:not(:last-child),
+.ele-hero-section[data-type="3"] .entry-header>*:not(:last-child),
+.ele-hero-section[data-type="3"] .entry-header .ele-card-content>*:not(:last-child),
+.ele-hero-section[data-type="4"] .entry-header>*:not(:last-child),
+.ele-hero-section[data-type="4"] .entry-header .ele-card-content>*:not(:last-child) {
+  margin-bottom: var(--ele-item-spacing, 20px);
+} */
 .ele-hero-section[data-type="1"] .entry-header > *,
 .ele-hero-section[data-type="1"] .entry-header .ele-card-content > *,
 .ele-hero-section[data-type="2"] .entry-header > *:not(:last-child),
-.ele-hero-section[data-type="2"] .entry-header .ele-card-content > *:not(:last-child),
-.ele-hero-section[data-type="3"] .entry-header > *,
+.ele-hero-section[data-type="2"] .entry-header .ele-card-content > *,
+.ele-hero-section[data-type="3"] .entry-header > *:not(:last-child),
 .ele-hero-section[data-type="3"] .entry-header .ele-card-content > *,
-.ele-hero-section[data-type="4"] .entry-header > *,
+.ele-hero-section[data-type="4"] .entry-header > *:not(:last-child),
 .ele-hero-section[data-type="4"] .entry-header .ele-card-content > * {
   margin-bottom: var(--ele-item-spacing, 20px);
 }
@@ -4369,7 +4379,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-breadcrumb-trail .trail-items .ele-separator {
-  color: var(--ele-link-normal-color, var(--ele-text-color));
+  color: var(--ele-link-color);
 }
 
 .ele-breadcrumb-trail .trail-items .ele-separator svg {
@@ -4391,7 +4401,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-breadcrumb-trail .trail-items li.trail-end {
-  color: var(--ele-link-normal-color, var(--ele-text-color));
+  color: var(--ele-link-color);
 }
 
 .ele-breadcrumb-trail .trail-items li.trail-begin .ele-svg-icon:not(.ele-separator .ele-svg-icon) {
@@ -5182,11 +5192,11 @@ nav .ele-submenu-icon {
   font-size: 14px;
   font-weight: 700;
   word-break: break-word;
-  color: var(--ele-link-normal-color, var(--ele-heading-color));
+  color: var(--ele-link-color, var(--ele-heading-color));
 }
 
 .ele-post-navigation-wrap .nav-links a:hover .item-title {
-  color: var(--ele-link-hover-color, var(--ele-primary-color));
+  color: var(--ele-link-hover-color);
 }
 
 .ele-post-navigation-wrap .item-wrap {
@@ -5967,7 +5977,7 @@ Layout 3
 ----------------------------------------*/
 .ele-posts-wrap .entry-title a:hover,
 .ele-related-posts-items .entry-title a:hover {
-  color: var(--ele-link-hover-color, var(--ele-primary-color));
+  color: var(--ele-link-hover-color);
 }
 
 .entry-title {
@@ -5986,7 +5996,7 @@ Layout 3
 
 .ele-post-metas .ele-post-meta {
   gap: 6px;
-  color: var(--ele-link-normal-color, var(--ele-text-color));
+  color: var(--ele-link-color);
 }
 
 .ele-post-metas .ele-post-meta .ele-label-text {
@@ -6041,7 +6051,7 @@ Layout 3
 }
 
 .ele-post-meta > * {
-  color: var(--ele-link-normal-color, var(--ele-text-color));
+  color: var(--ele-link-color);
 }
 
 .ele-post-meta .ele-meta-icon {
@@ -6063,7 +6073,7 @@ Layout 3
 
 /* Separator */
 .ele-meta-separator {
-  background-color: var(--ele-link-normal-color, var(--ele-text-color));
+  background-color: var(--ele-link-color);
 }
 
 .ele-meta-separator.ele-dash-icon {
@@ -6143,7 +6153,7 @@ Layout 3
     padding-left: 0.375em;
 } */
 .entry-content ul > li::marker {
-  color: var(--ele-secondary-color);
+  color: var(--ele-text-color);
 }
 
 .entry-content code {
@@ -6370,8 +6380,8 @@ Pagination
 [data-link-type="3"] a:hover {
   color: var(--ele-link-hover-color, var(--ele-base-100));
   background-size: 100% 100%;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(var(--ele-link-normal-color, var(--ele-text-color))), to(var(--ele-link-normal-color, var(--ele-text-color))));
-  background-image: linear-gradient(var(--ele-link-normal-color, var(--ele-text-color)), var(--ele-link-normal-color, var(--ele-text-color)));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(var(--ele-link-color)), to(var(--ele-link-color)));
+  background-image: linear-gradient(var(--ele-link-color), var(--ele-link-color));
   -webkit-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
 }
@@ -7665,7 +7675,7 @@ form textarea {
 #ele-theme-color-scheme {
   position: relative;
   isolation: isolate;
-  color: var(--ele-link-normal-color, var(--ele-text-color));
+  color: var(--ele-link-color);
 }
 
 #ele-theme-color-scheme .toggle-circle {
