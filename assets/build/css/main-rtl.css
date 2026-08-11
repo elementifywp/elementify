@@ -901,15 +901,14 @@ label {
 }
 
 /* Restore heading spacing zeroed out by the reset above. */
-h1,
+/* h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
   margin-bottom: var(--ele-content-spacing, 1.5em);
-}
-
+} */
 .wp-block-search .wp-block-search__label {
   font-weight: 400;
 }
@@ -1319,8 +1318,13 @@ a:active {
   max-width: 100%;
 }
 
-.widget ul li:not(:last-child) {
+.widget ul li:not(:last-child),
+.widget .wp-block-latest-comments__comment:not(:last-child) {
   margin-bottom: 10px;
+}
+
+.widget .wp-block-latest-comments__comment:last-child {
+  margin-bottom: 0px;
 }
 
 .widget_block .wp-block-heading,
@@ -1329,8 +1333,9 @@ a:active {
   display: block;
 }
 
-.widget-area {
-  gap: var(--ele-widgets-gap, 10px);
+.widget-area,
+.ele-post-metas {
+  --ele-link-color: var(--ele-text-color);
 }
 
 .widget-area[data-title-type="2"] .widget_block .wp-block-heading,

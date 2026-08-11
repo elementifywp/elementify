@@ -40,7 +40,7 @@ if (! function_exists('elementify_body_classes')) {
 			$classes[] = 'no-sidebar';
 		}
 
-		//$classes[] = 'ele-position-absolute-after';
+		$classes[] = 'ele-button-fill ele-link-type-1';
 
 		return $classes;
 	}
@@ -102,7 +102,7 @@ if (! function_exists('elementify_body_attributes')) {
 		if (! $prefix) {
 			return; // no value
 		}
-		print ' data-prefix="' . esc_attr($prefix) . '" data-sidebar="right"';
+		print ' data-prefix="' . esc_attr($prefix) . '" data-sidebar="right" data-form-label="default"';
 	}
 }
 
@@ -458,16 +458,20 @@ if (! function_exists('elementify_post_after_content_elements')) {
 	 */
 	function elementify_post_after_content_elements()
 	{
+		echo '<div class="ele-post-navigation-wrap" data-layout="1">';
 		the_post_navigation(
 			array(
-				'prev_text' => '<span class="nav-subtitle">' . esc_html__('Previous:', 'elementify') . '</span> <span class="nav-title">%title</span>',
-				'next_text' => '<span class="nav-subtitle">' . esc_html__('Next:', 'elementify') . '</span> <span class="nav-title">%title</span>',
+				'prev_text' => '<span class="nav-title">%title</span>',
+				'next_text' => '<span class="nav-title">%title</span>',
 			)
 		);
+		echo '</div>';
 
 		// If comments are open or we have at least one comment, load up the comment template.
 		if (comments_open() || get_comments_number()) :
+			echo '<div class="ele-comments-wrap" data-module="default">';
 			comments_template();
+			echo '</div>';
 		endif;
 	}
 }
