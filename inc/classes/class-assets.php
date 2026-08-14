@@ -49,17 +49,6 @@ class Assets {
 		 */
 		do_action('elementify/frontend/before_register_scripts');
 
-		$fonts_url = elementify_get_fonts_url();
-		if ( $fonts_url ){
-			require_once ELEMENTIFY_DIR_PATH . '/inc/helpers/wptt-webfont-loader.php';
-			wp_enqueue_style(
-				'elementify-google-fonts',
-				wptt_get_webfont_url( $fonts_url ),
-				[],
-				ELEMENTIFY_VERSION
-			);
-		}
-
 		// Enqueue Styles.
 		wp_enqueue_style( 'elementify-style', get_stylesheet_uri(), [], ELEMENTIFY_VERSION );
 		//wp_style_add_data( 'elementify-style', 'rtl', 'replace' );

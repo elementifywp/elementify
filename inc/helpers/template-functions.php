@@ -40,9 +40,20 @@ if (! function_exists('elementify_body_classes')) {
 			$classes[] = 'no-sidebar';
 		}
 
-		$classes[] = 'ele-button-fill ele-link-type-1';
+		$classes[] = 'ele-button-fill';
+		$classes[] = 'ele-link-type-1';
 
-		return $classes;
+		/**
+		 * Filters the custom body classes added by the theme.
+		 *
+		 * Allows child themes/plugins to add, remove, or alter
+		 * the classes appended by elementify_body_classes().
+		 *
+		 * @param array $classes The array of body classes (including WP core ones).
+		 */
+		$classes = apply_filters('elementify_body_classes', $classes);
+
+		return array_unique($classes); // phpcs:ignore$classes;
 	}
 }
 
@@ -67,10 +78,10 @@ if (! function_exists('elementify_head_meta')) {
 	function elementify_head_meta()
 	{
 ?>
-<meta charset="<?php bloginfo('charset'); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="profile" href="https://gmpg.org/xfn/11">
-<?php
+		<meta charset="<?php bloginfo('charset'); ?>">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="profile" href="https://gmpg.org/xfn/11">
+	<?php
 	}
 }
 
@@ -125,8 +136,8 @@ if (! function_exists('elementify_skip_link')) {
 	function elementify_skip_link()
 	{
 	?>
-<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'elementify'); ?></a>
-<?php
+		<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'elementify'); ?></a>
+		<?php
 	}
 }
 
@@ -529,8 +540,8 @@ if (! function_exists('elementify_comments_element')) {
 				? get_theme_mod('elementify_framework_single_post_comments_form_position', ['desktop' => 'default'])
 				: get_theme_mod('elementify_framework_single_page_comments_form_position', ['desktop' => 'default']);
 		?>
-<h2 class="comments-title">
-    <?php
+			<h2 class="comments-title">
+				<?php
 				$elementify_comment_count = get_comments_number();
 				if (1 == $elementify_comment_count) {
 					echo esc_html__('One Comment', 'elementify');
@@ -539,18 +550,18 @@ if (! function_exists('elementify_comments_element')) {
 					printf(esc_html__('%s Comments', 'elementify'), $elementify_comment_count);
 				}
 				?>
-</h2><!-- .comments-title -->
+			</h2><!-- .comments-title -->
 
-<?php
+			<?php
 			if ($position['desktop'] === 'above') {
 				comment_form();
 			}
 			?>
 
-<?php the_comments_navigation(); ?>
+			<?php the_comments_navigation(); ?>
 
-<ol class="comment-list">
-    <?php
+			<ol class="comment-list">
+				<?php
 				wp_list_comments(
 					array(
 						'style'      => 'ol',
@@ -558,16 +569,16 @@ if (! function_exists('elementify_comments_element')) {
 					)
 				);
 				?>
-</ol><!-- .comment-list -->
+			</ol><!-- .comment-list -->
 
-<?php
+			<?php
 			the_comments_navigation();
 
 			// If comments are closed and there are comments, let's leave a little note, shall we?
 			if (! comments_open()) :
 			?>
-<p class="no-comments"><?php esc_html_e('Comments are closed.', 'elementify'); ?></p>
-<?php
+				<p class="no-comments"><?php esc_html_e('Comments are closed.', 'elementify'); ?></p>
+		<?php
 			endif;
 
 			if ($position['desktop'] === 'default') {
@@ -595,23 +606,23 @@ if (! function_exists('elementify_404_conent')) {
 	function elementify_404_conent()
 	{
 		?>
-<div class="page-content ele-d-grid ele-align-items-initial" data-columns="1" data-columns-md="2" data-columns-lg="2">
+		<div class="page-content ele-d-grid ele-align-items-initial" data-columns="1" data-columns-md="2" data-columns-lg="2">
 
-    <div
-        class="ele-column ele-card-content ele-d-flex ele-flex-column ele-justify-content-initial ele-align-items-initial">
-        <h6 class="entry-sub-title">ERROR CODE: 404</h6><!-- .entry-title -->
-        <h1 class="entry-title">OOOPS!!</h1><!-- .entry-title -->
-        <p><?php esc_html_e('This is not the page you are looking for', 'elementify'); ?>
-        </p>
-    </div>
-    <div class="ele-column ele-featured-image-wrap ele-overflow-hidden">
-        <figure class="ele-featured-image ele-position-relative ele-position-absolute-after" data-ratio="4x3">
-            <img class="post-thumbnail ele-d-block"
-                src="<?php echo esc_url(get_template_directory_uri() . '/assets/build/images/404.webp'); ?>">
-        </figure><!-- .ele-featured-image -->
-    </div>
+			<div
+				class="ele-column ele-card-content ele-d-flex ele-flex-column ele-justify-content-initial ele-align-items-initial">
+				<h6 class="entry-sub-title">ERROR CODE: 404</h6><!-- .entry-title -->
+				<h1 class="entry-title">OOOPS!!</h1><!-- .entry-title -->
+				<p><?php esc_html_e('This is not the page you are looking for', 'elementify'); ?>
+				</p>
+			</div>
+			<div class="ele-column ele-featured-image-wrap ele-overflow-hidden">
+				<figure class="ele-featured-image ele-position-relative ele-position-absolute-after" data-ratio="4x3">
+					<img class="post-thumbnail ele-d-block"
+						src="<?php echo esc_url(get_template_directory_uri() . '/assets/build/images/404.webp'); ?>">
+				</figure><!-- .ele-featured-image -->
+			</div>
 
-</div>
+		</div>
 
 <?php
 	}

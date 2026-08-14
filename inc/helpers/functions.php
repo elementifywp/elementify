@@ -383,33 +383,6 @@ if (! function_exists('elementify_breadcrumb')) {
 }
 
 /*--------------------------------------------------------------
-# Google Fonts URL
---------------------------------------------------------------*/
-if (! function_exists('elementify_get_fonts_url')) {
-
-    /**
-     * Get font url
-     *
-     * @return string
-     */
-    function elementify_get_fonts_url()
-    {
-
-        $font_families = array(
-            'Josefin+Sans:wght@100;200;300;400;500;600;700',
-            'Nanum+Myeongjo:wght@400;700;800'
-        );
-
-        $fonts_url = add_query_arg(array(
-            'family' => implode('&family=', $font_families),
-            'display' => 'swap',
-        ), 'https://fonts.googleapis.com/css2');
-
-        return esc_url_raw($fonts_url);
-    }
-}
-
-/*--------------------------------------------------------------
 # Add svg icon for the menu item if they have submenu items.
 --------------------------------------------------------------*/
 if (! function_exists('elementify_submenu_icon')) {

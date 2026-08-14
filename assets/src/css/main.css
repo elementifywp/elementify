@@ -23,8 +23,7 @@ License: GNU General Public License v2 or later
 	/* Layout */
 	--ele-container-width-base: calc(90vw - var(--ele-frame-size) * 2);
 	--ele-container-max-width: 1280px;
-	--ele-container-narrow-width-1: 1024px;
-	--ele-container-narrow-width-2: 750px;
+	--ele-container-narrow-width: 750px;
 	--ele-container-width: min(100%, var(--ele-container-width-base));
 	--ele-list-indent: 1.25em;
 
@@ -991,7 +990,7 @@ input[type="submit"],
 .ele-button-fill .wp-block-file__button,
 .ele-button-fill .wp-block-read-more {
   --ele-button-border: 0px;
-  background-color: var(--ele-button-box-initial-background);
+  background: var(--ele-button-box-initial-background);
   color: var(--ele-button-box-initial-color);
   gap: 5px;
   font-size: var(--ele-font-size);
@@ -1009,8 +1008,8 @@ input[type="submit"],
 .ele-button-fill .wp-element-button:hover,
 .ele-button-fill .wp-block-file__button:hover,
 .ele-button-fill .wp-block-read-more:hover {
-  transform: var(--button-transform, none);
-  background-color: var(--ele-button-box-hover-background);
+  transform: var(--ele-button-transform, none);
+  background: var(--ele-button-box-hover-background);
   color: var(--ele-button-box-hover-color);
 }
 
@@ -1028,7 +1027,7 @@ input[type="submit"],
 .ele-button-outline .wp-block-read-more {
   background-color: var(--ele-transparent);
   color: var(--ele-button-outline-initial-color);
-  --ele-button-border: 1px solid;
+  --ele-button-border: 1px solid var(--ele-button-outline-initial-color);
 }
 
 .ele-button-outline button:hover,
@@ -1045,8 +1044,8 @@ input[type="submit"],
 .ele-button-outline .wp-block-read-more:hover {
   background-color: var(--ele-transparent);
   color: var(--ele-button-outline-hover-color);
-  transform: var(--button-transform, none);
-  --ele-button-border: 1px solid;
+  transform: var(--ele-button-transform, none);
+  --ele-button-border: 1px solid var(--ele-button-outline-hover-color);
 }
 
 .ele-button-outline .ele-button svg:not(.ele-button svg[fill="none"]):not(.ele-header-theme-switch-wrap .ele-button svg) {
@@ -2743,13 +2742,13 @@ object {
 .ele-header-search-enable .ele-modal .ele-modal-content {
   width: var(--ele-container-width);
   max-width: var(--ele-container-max-width);
-  padding: 0 var(--content-h-gap, 10px);
+  padding: 0 var(--ele-content-h-gap, 10px);
 }
 
 .ele-header-row::before,
 .ele-footer-row::before {
-  width: calc(var(--ele-container-width) - 2 * var(--content-h-gap, 10px));
-  max-width: calc(var(--ele-container-max-width) - 2 * var(--content-h-gap, 10px));
+  width: calc(var(--ele-container-width) - 2 * var(--ele-content-h-gap, 10px));
+  max-width: calc(var(--ele-container-max-width) - 2 * var(--ele-content-h-gap, 10px));
   margin: 0 auto;
 }
 
@@ -2758,7 +2757,7 @@ object {
 }
 
 .ele-container-narrow {
-  --ele-container-max-width: var(--ele-container-narrow-width-2);
+  max-width: var(--ele-container-narrow-width);
 }
 
 .ele-container-wide,
@@ -2767,29 +2766,24 @@ object {
   --ele-container-max-width: 100%;
 }
 
-[data-sidebar="left"] .site-content>.ele-container-narrow,
-[data-sidebar="right"] .site-content>.ele-container-narrow {
-  --ele-container-max-width: var(--ele-container-narrow-width-1);
-}
-
 .site-content>.ele-container {
-  padding: 40px var(--content-h-gap, 15px);
+  padding: 40px var(--ele-content-h-gap, 15px);
 }
 
 .ele-container-no-gaps .site-content>.ele-container {
-  --content-h-gap: 0px;
-  --content-v-gap: 0px;
+  --ele-content-h-gap: 0px;
+  --ele-content-v-gap: 0px;
 }
 
 /* .site-content > .ele-container-boxed {
-    --content-v-gap: 15px;
-    --content-h-gap: 15px;
+    --ele-content-v-gap: 15px;
+    --ele-content-h-gap: 15px;
 } */
 [data-prefix="single-post"][data-sidebar="none"] .ele-container-boxed .ele-featured-image-wrap.ele-boundless,
 [data-prefix="single-page"][data-sidebar="none"] .ele-container-boxed .ele-featured-image-wrap.ele-boundless {
-  width: calc(100% + var(--content-h-gap, 15px) * 2);
-  margin-left: calc(var(--content-h-gap, 15px) * -1);
-  margin-right: calc(var(--content-h-gap, 15px) * -1);
+  width: calc(100% + var(--ele-content-h-gap, 15px) * 2);
+  margin-left: calc(var(--ele-content-h-gap, 15px) * -1);
+  margin-right: calc(var(--ele-content-h-gap, 15px) * -1);
 }
 
 [data-prefix="single-post"][data-sidebar="none"] .ele-featured-image-wrap.ele-alignwide,
@@ -2815,7 +2809,7 @@ object {
 [data-prefix="single-page"][data-sidebar="none"] .ele-container-boxed .ele-featured-image-wrap.ele-boundless:first-child {
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
-  margin-top: calc(var(--content-v-gap, 50px) * -1);
+  margin-top: calc(var(--ele-content-v-gap, 50px) * -1);
 }
 
 .site-content {
@@ -2998,7 +2992,7 @@ object {
 .ele-has-transparent-header .site-header.ele-header-contain {
   top: var(--ele-transition-header-offset, 10px);
   width: var(--ele-container-width);
-  padding: 0 var(--content-h-gap, 10px);
+  padding: 0 var(--ele-content-h-gap, 10px);
 }
 
 .ele-site-header .ele-header-sticky.ele-item-is-fixed[data-shrink="true"] .ele-header-row {
@@ -5386,7 +5380,7 @@ Related Posts
 }
 
 .ele-related-posts-wrap .ele-related-posts-items .ele-post-taxonomy-wrap {
-  --button-transform: none;
+  --ele-button-transform: none;
 }
 
 [data-prefix="single-post"] .ele-related-posts-wrap[data-module="separated"] .ele-related-posts-items[data-layout][data-cards="boxed"] article {
@@ -5933,11 +5927,11 @@ Layout 3
   content: "`";
 }
 
-.entry-content a:not(.wp-element-button,
+/* .entry-content a:not(.wp-element-button,
   .wp-block-file__button,
   .wp-block-button__link,
   .wp-block-read-more) {
-  color: var(--ele-primary-color);
+  color: var(--ele-link-color);
   transition: all 0.25s ease;
   font-weight: 500;
   text-decoration: underline;
@@ -5947,8 +5941,8 @@ Layout 3
   .wp-block-file__button,
   .wp-block-button__link,
   .wp-block-read-more):hover {
-  color: var(--ele-secondary-color);
-}
+  color: var(--ele-link-hover-color);
+} */
 
 .wp-block-social-links:not(.is-style-logos-only) .wp-social-link,
 .wp-block-social-links.is-style-logos-only .wp-social-link {
@@ -7459,12 +7453,12 @@ form textarea {
 }
 
 .ele-footer-row>.ele-container {
-  padding-top: var(--content-v-gap, 20px);
-  padding-bottom: var(--content-v-gap, 20px);
+  padding-top: var(--ele-content-v-gap, 20px);
+  padding-bottom: var(--ele-content-v-gap, 20px);
 }
 
 [data-row="top"].ele-footer-row>.ele-container {
-  --content-v-gap: 40px;
+  --ele-content-v-gap: 40px;
 }
 
 .ele-builder-column-items[data-direction="column"] {
@@ -7502,7 +7496,7 @@ form textarea {
 
 .ele-container,
 .ele-header-search-enable .ele-modal .ele-modal-content {
-  padding: 0 var(--content-h-gap, 15px);
+  padding: 0 var(--ele-content-h-gap, 15px);
   width: 100%;
 }
 
@@ -7690,7 +7684,7 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
 }
 
 .ele-hero-slider-section .ele-container {
-  --content-h-gap: 0px;
+  --ele-content-h-gap: 0px;
 }
 
 .ele-hero-slider-section .ele-swiper-container .ele-svg-icon {
@@ -7839,7 +7833,7 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
   }
 
   .site-content>.ele-container {
-    padding: 40px var(--content-h-gap, 10px);
+    padding: 40px var(--ele-content-h-gap, 10px);
   }
 
   .ele-post-navigation-wrap .nav-previous a .post-thumbnail,
@@ -7857,13 +7851,13 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
   .ele-container-contain,
   .ele-header-search-enable .ele-modal .ele-modal-content {
     width: var(--ele-container-width);
-    padding: 0 var(--content-h-gap, 10px);
+    padding: 0 var(--ele-content-h-gap, 10px);
   }
 
   .ele-header-row::before,
   .ele-footer-row::before {
-    width: calc(var(--ele-container-width) - 2 * var(--content-h-gap, 10px));
-    padding: 0 var(--content-h-gap, 10px);
+    width: calc(var(--ele-container-width) - 2 * var(--ele-content-h-gap, 10px));
+    padding: 0 var(--ele-content-h-gap, 10px);
   }
 }
 
@@ -8296,8 +8290,8 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
   }
 
   /*  .site-content > .ele-container {
-    padding-top: var(--content-v-gap, 20px);
-    padding-bottom: var(--content-v-gap, 20px);
+    padding-top: var(--ele-content-v-gap, 20px);
+    padding-bottom: var(--ele-content-v-gap, 20px);
   }*/
 
   .ele-posts-wrap.ele-d-grid[data-layout] {
@@ -9544,8 +9538,8 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
   }
 
   .site-content>.ele-container {
-    padding-top: var(--content-v-gap, 50px);
-    padding-bottom: var(--content-v-gap, 50px);
+    padding-top: var(--ele-content-v-gap, 50px);
+    padding-bottom: var(--ele-content-v-gap, 50px);
   }
 
   .ele-posts-wrap.ele-d-grid[data-layout] {
