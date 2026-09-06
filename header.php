@@ -153,12 +153,12 @@ do_action('elementify/before_html');
 // color: transparent;
 // -webkit-text-fill-color: transparent;
 
-        $base_responsive = get_theme_mod('elementify_framework_css_transition_fast');
+        $base_responsive = get_theme_mod('elementify_framework_archive_pagination_prev_icon');
         $base = get_theme_mod('elementify_framework_breadcrumb_home_icon');
 
-        echo '<pre>';
-        print_r($base_responsive);
-        echo '</pre>';
+        // echo '<pre>';
+        // print_r($base_responsive);
+        // echo '</pre>';
         ?>
 
         <?php

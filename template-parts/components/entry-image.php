@@ -28,7 +28,7 @@ if (! has_post_thumbnail()) {
 				$the_post_id,
 				'large',
 				[
-					'class' => 'attachment-featured-large size-featured-image lazyloaded'
+					'class' => 'attachment-featured-large size-featured-image'
 				]
 			);
 		} else { ?>
@@ -39,7 +39,7 @@ if (! has_post_thumbnail()) {
 					$the_post_id,
 					'medium',
 					[
-						'class' => 'attachment-featured-large size-featured-image lazyloaded'
+						'class' => 'attachment-featured-large size-featured-image'
 					]
 				);
 				?>

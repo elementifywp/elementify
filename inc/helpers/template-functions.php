@@ -411,7 +411,7 @@ if (! function_exists('elementify_loop_entry_post_card')) {
 				}
 				// Read More
 				if ($value == 'more') {
-					echo elementify_excerpt_more(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					get_template_part('template-parts/components/entry-read-more');
 				}
 				// Tags
 				if ($value == 'tags') {

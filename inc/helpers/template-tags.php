@@ -124,58 +124,72 @@ if (! function_exists('elementify_posted_by')) {
 if (! function_exists('elementify_the_excerpt')) {
 
 	/**
-	 * Get the trimmed version of post excerpt.
+	 * Output a trimmed excerpt for the current post.
 	 *
-	 * This is for modifing manually entered excerpts,
-	 * NOT automatic ones WordPress will grab from the content.
+	 * Prints a manually entered excerpt when one exists. Otherwise builds an
+	 * excerpt from the post content and truncates it to at most
+	 * $trim_character_count characters, cutting on the nearest word boundary so
+	 * words are never split. The tail (optionally a "read more" link) is appended
+	 * only when the text is actually shortened.
 	 *
-	 * It will display the first given characters ( e.g. 100 ) characters of a manually entered excerpt,
-	 * but instead of ending on the nth( e.g. 100th ) character,
-	 * it will truncate after the closest word.
+	 * Requires the mbstring extension for correct multibyte handling.
 	 *
-	 * @param int $trim_character_count Charter count to be trimmed
-	 * @param string $tail excerpt ending
-	 * @param bool $link excerpt ending enable/disale link
+	 * @param int    $trim_character_count Maximum characters. Less than 1 falls back to the_excerpt().
+	 * @param string $tail                 Appended after truncation (e.g. '…').
+	 * @param bool   $link                 Whether to wrap $tail in a link to the post.
 	 *
-	 * @return bool|string
+	 * @return void
 	 */
 	function elementify_the_excerpt($trim_character_count = 0, $tail = '...', $link = false)
 	{
-		global $post;
-		$post_ID = $post->ID;
+		$post = get_post();
 
-		if (empty($post_ID)) {
-			return null;
+		if (! $post) {
+			return;
 		}
 
-		if (has_excerpt() || 0 === $trim_character_count) {
+		$trim_character_count = (int) $trim_character_count;
+
+		// Respect a manually entered excerpt, and the "no trimming" case.
+		if (has_excerpt($post) || $trim_character_count < 1) {
 			the_excerpt();
 			return;
 		}
 
-		if ($link) {
-			$tail = sprintf(
-				' <a class="ele-link" href="%1$s">%2$s</a>',
-				esc_url(get_the_permalink()),
-				esc_html($tail)
-			);
+		// Render blocks/shortcodes, then reduce to normalized plain text.
+		$text = strip_shortcodes($post->post_content);
+		$text = apply_filters('the_content', $text);
+		$text = str_replace(']]>', ']]&gt;', $text);
+		$text = wp_strip_all_tags($text, true); // Strips tags + <script>/<style>, breaks to spaces.
+		$text = trim(preg_replace('/\s+/', ' ', $text));
+
+		if ('' === $text) {
+			return;
 		}
 
-		$post_content = $post->post_content;
-		$post_content = apply_filters('the_content', $post_content);
-		$post_content = preg_replace('@\[caption[^\]]*?\].*?\[\/caption]@si', '', $post_content);
-		$post_content = preg_replace('@<script[^>]*?>.*?</script>@si', '', $post_content);
-		$post_content = preg_replace('@<style[^>]*?>.*?</style>@si', '', $post_content);
-		$post_content = preg_replace(' (\[.*?\])', '', $post_content);
-		$post_content = strip_shortcodes($post_content);
-		$post_content = strip_tags($post_content);
+		// Only truncate — and only append the tail — when the text exceeds the limit.
+		if (mb_strlen($text) > $trim_character_count) {
+			$text = mb_substr($text, 0, $trim_character_count);
 
-		$post_content = substr($post_content, 0, $trim_character_count);
-		$post_content = substr($post_content, 0, strrpos($post_content, ' '));
-		$post_content = trim(preg_replace('/\s+/', ' ', $post_content));
-		$post_content = $post_content . $tail;
+			// Step back to the last whole word, but keep the hard cut when there
+			// are no spaces (single long word, or a language without word spaces).
+			$last_space = mb_strrpos($text, ' ');
+			if ($last_space > 0) {
+				$text = mb_substr($text, 0, $last_space);
+			}
 
-		echo wpautop($post_content); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$text = rtrim($text);
+
+			$text .= $link
+				? sprintf(
+					' <a class="ele-link" href="%1$s">%2$s</a>',
+					esc_url(get_the_permalink($post)),
+					esc_html($tail)
+				)
+				: $tail;
+		}
+
+		echo wpautop($text); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 

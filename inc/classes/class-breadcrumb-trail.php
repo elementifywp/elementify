@@ -116,7 +116,7 @@ class Breadcrumb_Trail {
             'browse_tag'      => 'h2',
             'list_tag'        => 'ul',
             'item_tag'        => 'li',
-            'item_sept'       => '<svg class="separator" width="8" height="8" viewBox="0 0 8 8"><path d="M2,6.9L4.8,4L2,1.1L2.6,0l4,4l-4,4L2,6.9z"></path></svg>',
+            'item_sept'       => '<svg class="ele-svg-icon" width="15" height="15" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>',
             'show_on_front'   => true,
             'network'         => false,
             'show_title'      => true,
@@ -197,7 +197,7 @@ class Breadcrumb_Trail {
 
                 // Wrap the item with its itemprop.
                 $item = ! empty( $matches )
-                    ? preg_replace( '/(<a.*?)([\'"])>/i', '$1$2 itemprop=$2item$2 class="ele-position-relative ele-position-absolute-after">', $item )
+                    ? preg_replace( '/(<a.*?)([\'"])>/i', '$1$2 itemprop=$2item$2 class="ele-d-inline-flex ele-position-relative ele-position-absolute-after">', $item )
                     : sprintf( '<span itemprop="item">%s</span>', $item );
 
                 // Add list item classes.

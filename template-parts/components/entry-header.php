@@ -12,7 +12,7 @@ $header_preset 	= ['desktop'	=> '1'];
 if (is_singular()) {
 	$page_title 	= true;
 	$classes[] 		= 'ele-hero-single-post';
-	$elements 		= is_single() ? ['title', 'post-meta', 'thumbnail'] : ['title'];
+	$elements 		= is_single() ? ['title','breadcrumbs', 'post-meta', 'thumbnail'] : ['title', 'breadcrumbs'];
 } else {
 	$classes[] 		= 'ele-hero-archive-posts';
 	$home_enable 	= false;
