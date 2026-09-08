@@ -47,7 +47,7 @@
 		 Multiple valid text domains can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="elementify-framework"/>
+			<property name="text_domain" type="array" value="elementify"/>
 		</properties>
 	</rule>
 
@@ -79,7 +79,7 @@
 		 Multiple valid prefixes can be provided as a comma-delimited list. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="blank_theme, Elementify" />
+			<property name="prefixes" type="array" value="elementify, Elementify" />
 		</properties>
 	</rule>
 
@@ -91,7 +91,7 @@
 	-->
 
 
-	<config name="testVersion" value="5.6-"/>
+	<config name="testVersion" value="7.4-"/>
 	<rule ref="PHPCompatibilityWP">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
 	</rule>
