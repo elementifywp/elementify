@@ -5710,12 +5710,25 @@ Related Posts
   z-index: 1;
 }
 
+.ele-posts-wrap[data-layout][data-cards=cover] .ele-column,
+.ele-related-posts-items[data-layout][data-cards=cover] .ele-column,
+.ele-posts-wrap[data-layout][data-cards=boxed] .ele-column,
+.ele-related-posts-items[data-layout][data-cards=boxed] .ele-column {
+  overflow: hidden;
+}
+
 .ele-posts-wrap[data-layout][data-cards=boxed] .ele-column-content,
 .ele-posts-wrap[data-layout][data-cards=cover] .ele-column-content,
 .ele-related-posts-items[data-layout][data-cards=boxed] .ele-column-content,
 .ele-related-posts-items[data-layout][data-cards=cover] .ele-column-content {
   padding: var(--ele-column-inner-spacing, 30px);
   border-radius: 3px;
+}
+
+.ele-posts-wrap[data-cards=boxed] .ele-column-content > .ele-featured-image-wrap.ele-boundless:first-child,
+.ele-related-posts-items[data-cards=boxed] .ele-column-content > .ele-featured-image-wrap.ele-boundless:first-child {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 .ele-posts-wrap[data-layout][data-cards=boxed] article,
@@ -6802,6 +6815,7 @@ form textarea {
 # Footer
 --------------------------------------------------------------*/
 .site-footer .ele-copyright {
+  --ele-link-color:var(--ele-primary-color);
   color: var(--ele-text-color);
 }
 
