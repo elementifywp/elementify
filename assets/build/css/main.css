@@ -67,7 +67,7 @@ License: GNU General Public License v2 or later
   --ele-border: 1px solid var(--ele-base-300);
   --ele-button-box-initial-color: var(--ele-base-100);
   --ele-button-box-hover-color: var(--ele-base-100);
-  --ele-button-outline-initial-color: var(--ele-heading-color);
+  --ele-button-outline-initial-color: var(--ele-text-color);
   --ele-button-outline-hover-color: var(--ele-primary-color);
   --ele-button-box-initial-background: var(--ele-primary-color);
   --ele-button-box-hover-background: var(--ele-secondary-color);
@@ -3102,9 +3102,9 @@ Header: Builder
 }
 
 .ele-header-row .ele-builder-column .ele-builder-col-0 {
-  -webkit-box-pack: var(--ele-col-justify-content, flex-start);
-      -ms-flex-pack: var(--ele-col-justify-content, flex-start);
-          justify-content: var(--ele-col-justify-content, flex-start);
+  -webkit-box-pack: var(--ele-justify-content, flex-start);
+      -ms-flex-pack: var(--ele-justify-content, flex-start);
+          justify-content: var(--ele-justify-content, flex-start);
 }
 
 .ele-header-row .ele-builder-column .ele-builder-col-0[data-direction=column] {
@@ -3112,15 +3112,15 @@ Header: Builder
 }
 
 .ele-header-row .ele-builder-column .ele-builder-col-1 {
-  -webkit-box-pack: var(--ele-col-justify-content, center);
-      -ms-flex-pack: var(--ele-col-justify-content, center);
-          justify-content: var(--ele-col-justify-content, center);
+  -webkit-box-pack: var(--ele-justify-content, center);
+      -ms-flex-pack: var(--ele-justify-content, center);
+          justify-content: var(--ele-justify-content, center);
 }
 
 .ele-header-row .ele-builder-column .ele-builder-col-2 {
-  -webkit-box-pack: var(--ele-col-justify-content, flex-end);
-      -ms-flex-pack: var(--ele-col-justify-content, flex-end);
-          justify-content: var(--ele-col-justify-content, flex-end);
+  -webkit-box-pack: var(--ele-justify-content, flex-end);
+      -ms-flex-pack: var(--ele-justify-content, flex-end);
+          justify-content: var(--ele-justify-content, flex-end);
 }
 
 .ele-header-row .ele-builder-column .ele-builder-column-items {
@@ -3144,9 +3144,9 @@ Header: Builder
 }
 
 .ele-header-row[data-row=sidebar] .ele-modal-inner {
-  -webkit-box-align: var(--ele-col-justify-content, start);
-      -ms-flex-align: var(--ele-col-justify-content, start);
-          align-items: var(--ele-col-justify-content, start);
+  -webkit-box-align: var(--ele-justify-content, start);
+      -ms-flex-align: var(--ele-justify-content, start);
+          align-items: var(--ele-justify-content, start);
 }
 
 .ele-header-row .ele-builder-column {
@@ -4857,7 +4857,7 @@ nav .ele-submenu-icon {
 
 .ele-social-share li a {
   gap: 4px;
-  padding: 10px 25px;
+  /* padding: 10px 25px; */
   width: var(--icon-container-size);
   height: var(--icon-container-size);
   /* transition:
@@ -5588,6 +5588,7 @@ Related Posts
   margin-bottom: 1.5rem;
   position: relative;
   z-index: 9;
+  color: var(--ele-heading-color);
 }
 
 .ele-related-posts-wrap .ele-column-content .ele-featured-image-wrap {
@@ -7828,7 +7829,7 @@ form textarea {
 }
 
 .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items {
-  padding: 1em 0;
+  padding: var(--ele-col-gap, 1em) 0;
 }
 
 .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items:first-child {
@@ -7940,11 +7941,11 @@ form textarea {
 
 .ele-header-row .ele-builder-column .ele-builder-col-2[data-direction=column] {
   --ele-col-items-align: end;
-  --ele-col-justify-content: center;
+  --ele-justify-content: center;
 }
 
 .ele-header-row .ele-builder-column .ele-builder-col-0[data-direction=column] {
-  --ele-col-justify-content: center;
+  --ele-justify-content: center;
 }
 
 .ele-modal .ele-modal-actions .ele-close-modal:hover svg,
@@ -7983,15 +7984,15 @@ form textarea {
 }
 
 .ele-footer-row .ele-builder-column .ele-builder-col-element > div {
-  -webkit-box-pack: var(--ele-col-justify-content, start);
-      -ms-flex-pack: var(--ele-col-justify-content, start);
-          justify-content: var(--ele-col-justify-content, start);
+  -webkit-box-pack: var(--ele-justify-content, start);
+      -ms-flex-pack: var(--ele-justify-content, start);
+          justify-content: var(--ele-justify-content, start);
+  text-align: var(--ele-justify-content, start);
 }
 
-.ele-footer-row .ele-builder-column .ele-builder-col-element > div[class*=ele-footer-widget-] {
-  text-align: var(--ele-col-justify-content, start);
-}
-
+/* .ele-footer-row .ele-builder-column .ele-builder-col-element > div[class*="ele-footer-widget-"] {
+	text-align: var(--ele-justify-content, start);
+} */
 .ele-site-footer div[class*=ele-footer-widget-] .widget-area > * {
   width: 100%;
 }
@@ -8821,12 +8822,12 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
     max-width: var(--ele-col-12-w);
   }
   .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items:nth-child(odd) {
-    -webkit-padding-end: 1em;
-            padding-inline-end: 1em;
+    -webkit-padding-end: var(--ele-col-gap, 1em);
+            padding-inline-end: var(--ele-col-gap, 1em);
   }
   .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items:nth-child(even) {
-    -webkit-padding-start: 1em;
-            padding-inline-start: 1em;
+    -webkit-padding-start: var(--ele-col-gap, 1em);
+            padding-inline-start: var(--ele-col-gap, 1em);
   }
   .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items:not(:last-child):before {
     border-bottom: none;
@@ -9426,7 +9427,7 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
     margin-left: var(--ele-col-12-w);
   }
   .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items {
-    padding: 0 1em;
+    padding: 0 var(--ele-col-gap, 1em);
   }
   .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items:first-child {
     -webkit-padding-start: 0;
@@ -10071,7 +10072,7 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
     margin-left: var(--ele-col-12-w);
   }
   .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items {
-    padding: 0 1em;
+    padding: 0 var(--ele-col-gap, 1em);
   }
   .ele-site-footer [class~=ele-builder-column] > .ele-builder-column-items:first-child {
     -webkit-padding-start: 0;
