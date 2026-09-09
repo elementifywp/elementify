@@ -33,6 +33,8 @@ module.exports = function( grunt ) {
 					'!package.json',
 					'!package-lock.json',
 					'!yarn.lock',
+					'!pnpm-lock.yaml',
+					'!pnpm-workspace.yaml',
 					'!composer.json',
 					'!composer.lock',
 					'!phpcs.xml',

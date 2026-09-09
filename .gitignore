@@ -5,9 +5,15 @@
 # Log files
 *.log
 
-# Build artifact
+# Build artifacts
 .grunt
+elementify/
+elementify.zip
 
-# local
+# Dependencies
 node_modules/
 vendor
+
+# Lock files from other package managers (this project uses pnpm)
+package-lock.json
+yarn.lock
