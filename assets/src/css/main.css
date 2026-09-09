@@ -7205,6 +7205,9 @@ form textarea {
 	--ele-link-color:var(--ele-primary-color);
 	color: var(--ele-text-color);
 }
+.site-footer .ele-footer-button-1-wrap {
+	--ele-link-color:var(--ele-text-color);
+}
 
 /* 
 .site-footer .ele-copyright a {

@@ -6816,6 +6816,10 @@ form textarea {
   color: var(--ele-text-color);
 }
 
+.site-footer .ele-footer-button-1-wrap {
+  --ele-link-color:var(--ele-text-color);
+}
+
 /* 
 .site-footer .ele-copyright a {
   color: var(--ele-primary-color);
