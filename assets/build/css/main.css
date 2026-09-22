@@ -3404,50 +3404,39 @@ Footer: Site Logo & Description.
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  text-align: var(--horizontal-alignment);
+  gap: var(--ele-flex-gap, 20px);
 }
 
-.ele-site-footer [data-builder-element=site_logo] .site-branding:not([data-logo=top]) {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+/* .ele-site-footer [data-builder-element="site_logo"] .site-branding:not([data-logo="top"]) {
+	align-items: center;
 }
 
-.ele-site-footer [data-builder-element=site_logo] .site-branding[data-logo=top] {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+.ele-site-footer [data-builder-element="site_logo"] .site-branding[data-logo="top"] {
+	flex-direction: column;
 }
 
-.ele-site-footer [data-builder-element=site_logo] .site-branding[data-logo=right] {
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
+.ele-site-footer [data-builder-element="site_logo"] .site-branding[data-logo="right"] {
+	flex-direction: row-reverse;
+} */
+/* .ele-site-footer [data-builder-element="site_logo"] .site-branding[data-logo="top"] .site-description,
+.ele-site-footer [data-builder-element="site_logo"] .site-description:not(:only-child) {
+	margin-top: 0.3em;
 }
 
-.ele-site-footer [data-builder-element=site_logo] .site-branding[data-logo=top] .site-description,
-.ele-site-footer [data-builder-element=site_logo] .site-description:not(:only-child) {
-  margin-top: 0.3em;
+.ele-site-footer [data-builder-element="site_logo"] .site-branding[data-logo="left"] .site-title-container {
+	margin-inline-start: 1em;
 }
 
-.ele-site-footer [data-builder-element=site_logo] .site-branding[data-logo=left] .site-title-container {
-  -webkit-margin-start: 1em;
-          margin-inline-start: 1em;
-}
-
-.ele-site-footer [data-builder-element=site_logo] .site-branding[data-logo=right] .site-title-container {
-  -webkit-margin-end: 1em;
-          margin-inline-end: 1em;
-}
-
+.ele-site-footer [data-builder-element="site_logo"] .site-branding[data-logo="right"] .site-title-container {
+	margin-inline-end: 1em;
+} */
 .ele-site-footer [data-builder-element=site_logo] .site-logo-container {
   position: relative;
   line-height: 0;
   height: var(--ele-logo-shrink-height, var(--ele-logo-max-height, 50px));
   -webkit-transition: none;
   transition: none;
+  overflow: hidden;
 }
 
 .ele-site-footer [data-builder-element=site_logo] .site-logo-container img,
@@ -3480,6 +3469,12 @@ Footer: Site Logo & Description.
   color: var(--ele-text-color);
   margin-bottom: 0;
   white-space: nowrap;
+}
+
+.ele-site-footer [data-builder-element=site_logo] .site-title-container {
+  -webkit-box-pack: var(--ele-v-align, center);
+      -ms-flex-pack: var(--ele-v-align, center);
+          justify-content: var(--ele-v-align, center);
 }
 
 /*.site-header.is-horizontal.is-scrolled .nav-bar .ele-custom-logo img.custom-logo,*/
@@ -6607,7 +6602,7 @@ Pagination
 
 [data-builder-element=contact] .ele-contact-icon {
   /* width: var(--theme-icon-size, 30px);
-  height: var(--theme-icon-size, 30px); */
+     height: var(--theme-icon-size, 30px); */
   padding: var(--ele-icon-inner-spacing, 10px);
   background-color: var(--ele-base-300);
   border-radius: 50%;
@@ -6960,6 +6955,34 @@ form textarea {
 
 .site-footer .ele-footer-button-1-wrap {
   --ele-link-color: var(--ele-text-color);
+}
+
+.ele-builder-col-element [data-position=top] {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: var(--ele-h-align, start);
+      -ms-flex-align: var(--ele-h-align, start);
+          align-items: var(--ele-h-align, start);
+  text-align: var(--ele-h-align, start);
+}
+
+.ele-builder-col-element [data-position=right] {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  --ele-justify-content: var(--ele-h-align, start);
+  text-align: var(--ele-justify-content);
+}
+
+.ele-builder-col-element [data-position=left] {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  --ele-justify-content: var(--ele-h-align, start);
 }
 
 /* 
@@ -9115,6 +9138,34 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
     width: 200px;
   }
   /*--------------------------------------------------------------
+  # Footer Builder
+  --------------------------------------------------------------*/
+  .ele-builder-col-element [data-position-md=top] {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: var(--ele-h-align, start);
+        -ms-flex-align: var(--ele-h-align, start);
+            align-items: var(--ele-h-align, start);
+    text-align: var(--ele-h-align, start);
+  }
+  .ele-builder-col-element [data-position-md=right] {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+    --ele-justify-content: var(--ele-h-align, start);
+    text-align: var(--ele-justify-content);
+  }
+  .ele-builder-col-element [data-position-md=left] {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    --ele-justify-content: var(--ele-h-align, start);
+  }
+  /*--------------------------------------------------------------
      # Text Alignment
      --------------------------------------------------------------*/
   .ele-text-md-left {
@@ -9723,13 +9774,41 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
     width: 200px;
   }
   /*--------------------------------------------------------------
-   # Header Builder
-   --------------------------------------------------------------*/
+  # Header Builder
+  --------------------------------------------------------------*/
   .ele-header-row .ele-builder-row-desktop {
     display: block;
   }
   .ele-header-row .ele-builder-row-mobile {
     display: none;
+  }
+  /*--------------------------------------------------------------
+  # Footer Builder
+  --------------------------------------------------------------*/
+  .ele-builder-col-element [data-position-lg=top] {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: var(--ele-h-align, start);
+        -ms-flex-align: var(--ele-h-align, start);
+            align-items: var(--ele-h-align, start);
+    text-align: var(--ele-h-align, start);
+  }
+  .ele-builder-col-element [data-position-lg=right] {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+    --ele-justify-content: var(--ele-h-align, start);
+    text-align: var(--ele-justify-content);
+  }
+  .ele-builder-col-element [data-position-lg=left] {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    --ele-justify-content: var(--ele-h-align, start);
   }
   /*--------------------------------------------------------------
      # Text Alignment
