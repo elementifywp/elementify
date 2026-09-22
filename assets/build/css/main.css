@@ -3399,11 +3399,6 @@ Header: Logo
 Footer: Site Logo & Description.
 ----------------------------------*/
 .ele-site-footer [data-builder-element=site_logo] .site-branding {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
   gap: var(--ele-flex-gap, 20px);
 }
 
@@ -5536,6 +5531,7 @@ Comments
   grid-column-gap: 20px;
   grid-row-gap: 1.5em;
   --content-spacing: 0;
+  --ele-form-field-height: 40px;
 }
 
 .ele-comments-wrap .comment-form [class*=comment-form] label {
@@ -6625,6 +6621,23 @@ Pagination
   min-height: 100vh;
 }
 
+.ele-search-form {
+  gap: 10px;
+}
+
+.ele-search-form input[type=search] {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ele-search-form button[type=submit] {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  white-space: nowrap;
+}
+
 /*.have-toolbar.has-sticky-footer {*/
 /*    min-height: calc(100vh - 46px);*/
 /*}*/
@@ -6887,8 +6900,7 @@ fieldset .wc-stripe-elements-field {
      -moz-appearance: none;
           appearance: none;
   width: var(--ele-form-field-width, 100%);
-  height: var(--ele-form-field-height, 40px);
-  font-family: inherit;
+  height: var(--ele-form-field-height, auto);
   font-size: var(--ele-form-field-font-size, var(--ele-font-size));
   color: var(--ele-form-field-initial-color, var(--ele-text-color));
   padding: var(--ele-form-field-padding, 0 12px);
@@ -6897,6 +6909,14 @@ fieldset .wc-stripe-elements-field {
   border-color: var(--ele-form-field-border-initial-color, var(--ele-base-300));
   border-radius: var(--ele-form-field-border-radius, 3px);
   background-color: var(--ele-form-field-initial-background, var(--ele-base-200));
+  font-family: var(--ele-font-family);
+  font-weight: var(--ele-font-weight);
+  font-style: var(--ele-font-style, inherit);
+  line-height: var(--ele-line-height);
+  letter-spacing: var(--ele-letter-spacing);
+  text-transform: var(--ele-text-transform);
+  -webkit-text-decoration: var(--ele-text-decoration);
+          text-decoration: var(--ele-text-decoration);
 }
 
 select:focus,
