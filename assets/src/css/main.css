@@ -3153,7 +3153,7 @@ Header: Builder
 .ele-header-row .ele-builder-column {
 	display: grid;
 	grid-template-columns: var(--ele-header-template-columns);
-	gap: var(--ele-cols-gap, 10px);
+	/* gap: var(--ele-cols-gap, 10px); */
 }
 
 .ele-header-main > .ele-container {
@@ -3301,7 +3301,7 @@ Header: Social Icon
 
 /*
 Header: Logo
-/*----------------------------------*/
+----------------------------------*/
 .ele-header-logo-wrap .ele-site-branding .ele-site-logo,
 .ele-footer-logo-wrap .ele-site-branding .ele-site-logo {
 	display: inline-block;
@@ -3387,6 +3387,82 @@ Header: Logo
 }
 
 /*
+Header: Site Logo & Description.
+----------------------------------*/
+.ele-site-header [data-builder-element="logo"] .site-branding,
+.ele-site-header [data-builder-element="site_logo"] .site-branding {
+	gap: var(--ele-flex-gap, 20px);
+}
+
+.ele-site-header [data-builder-element="logo"] .site-logo-container,
+.ele-site-header [data-builder-element="site_logo"] .site-logo-container {
+	position: relative;
+	line-height: 0;
+	height: var(--ele-logo-shrink-height, var(--ele-logo-max-height, 50px));
+	transition: none;
+	overflow: hidden;
+}
+
+.ele-site-header [data-builder-element="logo"] .site-logo-container img,
+.ele-site-header [data-builder-element="logo"] .site-logo-container svg,
+.ele-site-header
+	[data-builder-element="logo"]
+	.site-logo-container
+	picture,
+.ele-site-header [data-builder-element="site_logo"] .site-logo-container img,
+.ele-site-header [data-builder-element="site_logo"] .site-logo-container svg,
+.ele-site-header
+	[data-builder-element="site_logo"]
+	.site-logo-container
+	picture {
+	height: inherit;
+	vertical-align: initial;
+}
+
+.ele-site-header [data-builder-element="logo"] .site-logo-container img,
+.ele-site-header [data-builder-element="site_logo"] .site-logo-container img {
+	width: auto;
+	max-width: initial;
+	object-fit: contain;
+}
+
+.ele-site-header [data-builder-element="logo"] .site-title,
+.ele-site-header [data-builder-element="logo"] .ele-site-title,
+.ele-site-header [data-builder-element="site_logo"] .site-title,
+.ele-site-header [data-builder-element="site_logo"] .ele-site-title {
+	display: block;
+	margin-bottom: 0;
+	color: var(--ele-heading-color);
+	text-decoration: none;
+}
+
+.ele-site-header [data-builder-element="logo"] .site-title a,
+.ele-site-header [data-builder-element="logo"] .ele-site-title a,
+.ele-site-header [data-builder-element="site_logo"] .site-title a,
+.ele-site-header [data-builder-element="site_logo"] .ele-site-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.ele-site-header [data-builder-element="logo"] .site-description,
+.ele-site-header [data-builder-element="logo"] .ele-site-description,
+.ele-site-header [data-builder-element="site_logo"] .site-description,
+.ele-site-header [data-builder-element="site_logo"] .ele-site-description {
+	color: var(--ele-text-color);
+	margin-bottom: 0;
+	white-space: nowrap;
+}
+
+.ele-site-header [data-builder-element="logo"] .site-title-container,
+.ele-site-header [data-builder-element="site_logo"] .site-title-container {
+	justify-content: var(--ele-v-align, center);
+}
+[data-builder-element="social"] .ele-meta-icon {
+	height: var(--ele-font-size);
+	width: var(--ele-font-size);
+}
+
+/*
 Footer: Site Logo & Description.
 ----------------------------------*/
 .ele-site-footer [data-builder-element="site_logo"] .site-branding {
@@ -3442,19 +3518,22 @@ Footer: Site Logo & Description.
 	object-fit: contain;
 }
 
-.ele-site-footer [data-builder-element="site_logo"] .site-title {
+.ele-site-footer [data-builder-element="site_logo"] .site-title,
+.ele-site-footer [data-builder-element="site_logo"] .ele-site-title {
 	display: block;
 	margin-bottom: 0;
 	color: var(--ele-heading-color);
 	text-decoration: none;
 }
 
-.ele-site-footer [data-builder-element="site_logo"] .site-title a {
+.ele-site-footer [data-builder-element="site_logo"] .site-title a,
+.ele-site-footer [data-builder-element="site_logo"] .ele-site-title a {
 	color: inherit;
 	text-decoration: none;
 }
 
-.ele-site-footer [data-builder-element="site_logo"] .site-description {
+.ele-site-footer [data-builder-element="site_logo"] .site-description,
+.ele-site-footer [data-builder-element="site_logo"] .ele-site-description {
 	color: var(--ele-text-color);
 	margin-bottom: 0;
 	white-space: nowrap;

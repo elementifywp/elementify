@@ -153,7 +153,7 @@ do_action('elementify/before_html');
 // color: transparent;
 // -webkit-text-fill-color: transparent;
 
-        $base_responsive = get_theme_mod('elementify_framework_footer_search_button_icon');
+        $base_responsive = get_theme_mod('elementify_framework_header_logo_image');
         $base = get_theme_mod('elementify_framework_breadcrumb_home_icon');
 
         // echo '<pre>';
