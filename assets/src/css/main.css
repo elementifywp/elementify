@@ -6246,6 +6246,7 @@ Related Posts
 .ele-posts-wrap[data-layout][data-cards="cover"] .ele-column-content,
 .ele-related-posts-items[data-layout][data-cards="boxed"] .ele-column-content,
 .ele-related-posts-items[data-layout][data-cards="cover"] .ele-column-content {
+	box-sizing: border-box;
 	padding: var(--ele-column-inner-spacing, 30px);
 	border-radius: 3px;
 }
@@ -7843,14 +7844,15 @@ form textarea {
 	height: 100%;
 }
 
-.ele-off-canvas .ele-modal-inner::after {
+/* .ele-off-canvas .ele-modal-inner::after {
 	background-color: var(--ele-base-100);
-}
+} */
 
 .ele-off-canvas .ele-modal-inner {
 	--ele-modal-action-initial: var(--ele-heading-color);
 	--ele-modal-action-hover: var(--ele-primary-color);
 	box-shadow: rgba(44, 62, 80, 0.35) 0px 0px 70px 0px;
+
 }
 
 .ele-off-canvas .ele-modal-inner article.post {
@@ -7979,6 +7981,10 @@ form textarea {
 	cursor: pointer;
 	display: block;
 	color: var(--ele-modal-action-initial, rgba(255, 255, 255, 0.5));
+}
+
+.ele-modal .ele-model-inner-content {
+	background: var(--ele-base-100);
 }
 
 .ele-modal .ele-modal-content {
@@ -8591,6 +8597,17 @@ form textarea {
 	.ele-builder-column
 	.ele-builder-col-0[data-direction="column"] {
 	--ele-justify-content: center;
+}
+
+.ele-header-row {
+    z-index: 9;
+    position: relative;
+}
+.ele-header-row + .ele-header-row {
+    z-index: 8;
+}
+.ele-header-row + .ele-header-row + .ele-header-row {
+    z-index: 7;
 }
 
 .ele-modal .ele-modal-actions .ele-close-modal:hover svg,
