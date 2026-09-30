@@ -40,130 +40,157 @@ if (! function_exists('bizness_get_nav_menus')) {
 /*--------------------------------------------------------------
 # Site Title
 --------------------------------------------------------------*/
-if (! function_exists('elementify_site_title')) {
+if ( ! function_exists( 'elementify_site_title' ) ) {
     /**
-     * Displays the site title
+     * Displays the site title dynamically.
      *
-     * @param array   $args Arguments for displaying the site logo either as an image or text.
-     * @param boolean $echo Echo or return the HTML.
-     * @return string $html Compiled HTML based on our arguments.
+     * @param array   $args  Arguments for displaying the site title.
+     * @param boolean $echo  Echo or return the HTML.
+     * @return string $html  Compiled HTML based on our arguments.
      * @since 1.0.0
      */
-    function elementify_site_title($args = array(), $echo = true)
-    {
+    function elementify_site_title( $args = array(), $echo = true ) {
+        // Allow dynamic text, otherwise fallback to bloginfo
+        $default_text = get_bloginfo( 'name' );
 
-        $defaults   = array(
+        $defaults = array(
             'title'       => '<a href="%1$s">%2$s</a>',
             'title_class' => 'ele-site-title',
             'wrapper'     => '<div class="%1$s" itemprop="name">%2$s</div>',
-            'condition'   => (is_front_page() || is_home()) && ! is_page(),
+            'text'        => $default_text, // NEW: Allows overriding the text
+            'condition'   => ( is_front_page() || is_home() ) && ! is_page(),
         );
-        $args       = wp_parse_args($args, $defaults);
+
+        $args = wp_parse_args( $args, $defaults );
 
         /**
          * Filters the arguments for `elementify_site_title()`.
-         *
-         * @param array  $args     Parsed arguments.
-         * @param array  $defaults Function's default arguments.
          */
-        $args       = apply_filters('elementify_site_title_args', $args, $defaults);
-        $contents   = sprintf($args['title'], esc_url(get_home_url(null, '/')), esc_html(get_bloginfo('name')));
-        $classname  = $args['title_class'];
-        $wrap       = $args['wrapper'];
-        $html       = sprintf($wrap, $classname, $contents);
+        $args = apply_filters( 'elementify_site_title_args', $args, $defaults );
+
+        $home_url = esc_url( get_home_url( null, '/' ) );
+        $title_text = esc_html( $args['text'] );
+        
+        $contents  = sprintf( $args['title'], $home_url, $title_text );
+        $classname = esc_attr( $args['title_class'] );
+        $wrap      = $args['wrapper']; // Wrapper is usually safe from sprintf if controlled by dev
+        
+        $html = sprintf( $wrap, $classname, $contents );
 
         /**
-         * Filters the arguments for `elementify_site_title()`.
-         *
-         * @param string $html      Compiled html based on our arguments.
-         * @param array  $args      Parsed arguments.
-         * @param string $classname Class name based on current view, home or single.
-         * @param string $contents  HTML for site title or logo.
+         * Filters the final HTML for `elementify_site_title()`.
          */
-        $html = apply_filters('elementify_site_title', $html, $args, $classname, $contents);
+        $html = apply_filters( 'elementify_site_title_html', $html, $args, $classname, $contents );
 
-        if (! $echo) {
+        if ( ! $echo ) {
             return $html;
         }
 
-        echo $html; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
+        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 }
 
 /*--------------------------------------------------------------
 # Site Description
 --------------------------------------------------------------*/
-if (! function_exists('elementify_site_description')) {
+if ( ! function_exists( 'elementify_site_description' ) ) {
     /**
-     * Displays the site description.
+     * Displays the site description dynamically.
      *
-     * @param   boolean $echo Echo or return the html.
-     * @return  string $html The HTML to display.
-     * @since   1.0.0
+     * @param array   $args  Arguments for displaying the site description.
+     * @param boolean $echo  Echo or return the HTML.
+     * @return string $html  The HTML to display.
+     * @since 1.0.0
      */
-    function elementify_site_description($echo = true)
-    {
-        $description    = get_bloginfo('description');
-        $wrapper        = '<p class="ele-site-description" itemprop="description">%s</p><!-- .ele-site-description -->';
-        $html           = sprintf($wrapper, esc_html($description));
+    function elementify_site_description( $args = array(), $echo = true ) {
+        $default_text = get_bloginfo( 'description' );
+
+        $defaults = array(
+            'class'   => 'ele-site-description',
+            'wrapper' => '<p class="%1$s" itemprop="description">%2$s</p>',
+            'text'    => $default_text, // NEW: Allows overriding the text
+        );
+
+        $args = wp_parse_args( $args, $defaults );
 
         /**
-         * Filters the html for the site description.
-         *
-         * @param string $html         The HTML to display.
-         * @param string $description  Site description via `bloginfo()`.
-         * @param string $wrapper      The format used in case you want to reuse it in a `sprintf()`.
+         * Filters the arguments for `elementify_site_description()`.
          */
-        $html = apply_filters('elementify_site_description', $html, $description, $wrapper);
+        $args = apply_filters( 'elementify_site_description_args', $args, $defaults );
 
-        if (! $echo) {
+        $description_text = esc_html( $args['text'] );
+        $classname = esc_attr( $args['class'] );
+        $wrap      = $args['wrapper'];
+
+        $html = sprintf( $wrap, $classname, $description_text );
+
+        /**
+         * Filters the final HTML for `elementify_site_description()`.
+         */
+        $html = apply_filters( 'elementify_site_description_html', $html, $args, $classname, $description_text );
+
+        if ( ! $echo ) {
             return $html;
         }
 
-        echo $html; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 }
 
 /*--------------------------------------------------------------
 # Site Logo
 --------------------------------------------------------------*/
-if (! function_exists('elementify_site_logo')) {
+if ( ! function_exists( 'elementify_site_logo' ) ) {
     /**
-     * Displays the site logo.
+     * Displays the site logo dynamically.
      *
-     * @param   boolean $echo Echo or return the $html.
-     * @return  void $html The HTML to display.
-     * @since   1.0.0
+     * @param array   $args  Arguments for displaying the site logo.
+     * @param boolean $echo  Echo or return the HTML.
+     * @return string $html  The HTML to display.
+     * @since 1.0.0
      */
-    function elementify_site_logo($echo = true)
-    {
+    function elementify_site_logo( $args = array(), $echo = true ) {
+        $defaults = array(
+            'class'       => 'ele-site-logo',
+            'wrapper'     => '<div class="%1$s">%2$s</div>',
+            'logo_id'     => get_theme_mod( 'custom_logo' ), // NEW: Allows passing a specific logo ID
+            'logo_size'   => 'full', // NEW: Allows dynamic image sizes (e.g., 'thumbnail', 'medium')
+            'fallback'    => '', // NEW: HTML to show if no logo is set
+        );
 
-        if (! has_custom_logo()) {
-            return;
-        }
-        $logo               = wp_kses_post(get_custom_logo());
-        $logo_class         = 'ele-site-logo';
-        $wrapper            = '<div class="%1$s">%2$s</div>';
-        $html               = sprintf($wrapper, $logo_class, $logo);
+        $args = wp_parse_args( $args, $defaults );
 
         /**
-         * Filters the html for the site description.
-         *
-         * @param string $html         The HTML to display.
-         * @param string $description  Site description via `bloginfo()`.
-         * @param string $wrapper      The format used in case you want to reuse it in a `sprintf()`.
+         * Filters the arguments for `elementify_site_logo()`.
          */
-        $html = apply_filters('elementify_site_logo', $html, $logo, $wrapper);
+        $args = apply_filters( 'elementify_site_logo_args', $args, $defaults );
 
-        if (! $echo) {
+        // If no logo ID is provided or set, return fallback or empty
+        if ( empty( $args['logo_id'] ) ) {
+            $html = $args['fallback'];
+        } else {
+            // Get logo HTML, optionally with a specific size
+            $logo_html = wp_get_attachment_image( $args['logo_id'], $args['logo_size'], false, array( 'class' => 'custom-logo' ) );
+            $logo_html = wp_kses_post( $logo_html );
+            
+            $classname = esc_attr( $args['class'] );
+            $wrap      = $args['wrapper'];
+            
+            $html = sprintf( $wrap, $classname, $logo_html );
+        }
+
+        /**
+         * Filters the final HTML for `elementify_site_logo()`.
+         */
+        $html = apply_filters( 'elementify_site_logo_html', $html, $args, $classname );
+
+        if ( ! $echo ) {
             return $html;
         }
 
-        echo $html; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 }
-
 /*--------------------------------------------------------------
 # Site Identity
 --------------------------------------------------------------*/
