@@ -341,10 +341,24 @@ if ( ! function_exists( 'elementify_collapsible_menu_fallback' ) ) {
 --------------------------------------------------------------*/
 /**
  * Gets the SVG code for a given icon.
+ *
+ * @param string $group Icon set to look in, e.g. 'ui'.
+ * @param string $icon  Icon name within the group, e.g. 'chevron-left'.
+ * @param int    $size  Width and height of the icon in pixels.
+ * @return string The inline SVG markup, or an empty string when unknown.
  */
 function elementify_get_the_svg( $group, $icon, $size ) {
 	return Svg_Icons::get_svg( $group, $icon, $size );
 }
+
+/**
+ * Echo the SVG code for a given icon.
+ *
+ * @param string $group Icon set to look in, e.g. 'ui'.
+ * @param string $icon  Icon name within the group, e.g. 'chevron-left'.
+ * @param int    $size  Width and height of the icon in pixels.
+ * @return void
+ */
 function elementify_the_svg( $group, $icon, $size ) {
 	echo Svg_Icons::get_svg( $group, $icon, $size ); //phpcs:ignore WordPress.Security.EscapeOutput
 }
@@ -454,7 +468,9 @@ if ( ! function_exists( 'elementify_submenu_icon' ) ) {
 	 *
 	 * @param string  $item_output The menu item's starting HTML output.
 	 * @param WP_Post $item        Menu item data object.
-	 * @return string
+	 * @param int     $depth       Depth of the menu item, relative to its parent.
+	 * @param object  $args        Menu arguments, from wp_nav_menu().
+	 * @return string The item output, with the arrow appended when the item has children.
 	 */
 	function elementify_submenu_icon( $item_output, $item, $depth, $args ) {
 		$has_children = in_array( 'menu-item-has-children', $item->classes );
@@ -476,11 +492,15 @@ if ( ! function_exists( 'elementify_submenu_icon' ) ) {
 --------------------------------------------------------------*/
 if ( ! function_exists( 'elementify_submenu_classes' ) ) {
 	/**
-	 * Filters a menu item's starting output.
+	 * Filters the CSS classes of a submenu's sub-menu element.
 	 *
-	 * Append the dropdown arrow to links with submenus.
+	 * Adds `ele-transition-normal` to any `sub-menu` class, enabling the
+	 * theme's submenu open/close transition.
 	 *
-	 * @return string
+	 * @param array  $classes The submenu's CSS classes.
+	 * @param object $args    Menu arguments, from wp_nav_menu().
+	 * @param int    $depth   Depth of the submenu, relative to its parent.
+	 * @return array The classes, with the transition class added.
 	 */
 	function elementify_submenu_classes( $classes, $args, $depth ) {
 		foreach ( $classes as $key => $class ) {
@@ -656,16 +676,18 @@ if ( ! function_exists( 'elementify_html_attributes' ) ) {
 	}
 }
 
-/**
- * Always show footer widgets for customize builder
- *
- * @param bool   $active
- * @param string $section
- *
- * @return bool
- */
 if ( ! function_exists( 'elementify_footer_widgets_show' ) ) {
 
+	/**
+	 * Always show footer widgets for customize builder
+	 *
+	 * Forces a Customizer section active when its id belongs to a footer
+	 * widgets area, so the builder never hides those panels.
+	 *
+	 * @param bool            $active  Whether the section is currently active.
+	 * @param WP_Customize_Section $section The section being tested.
+	 * @return bool Whether the section should be active.
+	 */
 	function elementify_footer_widgets_show( $active, $section ) {
 		if ( strpos( $section->id, 'widgets-footer-' ) ) {
 			$active = true;
@@ -730,9 +752,29 @@ if ( ! function_exists( 'elementify_get_post_id' ) ) {
 
 
 
+/**
+ * Page menu walker that marks the current page and its ancestors.
+ *
+ * Wraps each page in an <li> whose classes come from the core `page_css_class`
+ * filter, and gives the anchor an `ele-menu-link` class.
+ */
 class Elementify_Walker_Page_Menu extends Walker_Page {
 
-	// Modify the start of each element (each link) to add the custom class
+	/**
+	 * Render the opening markup for a single page link.
+	 *
+	 * Appends an <li> carrying the core `current_page_item`,
+	 * `current_page_parent` and `current_page_ancestor` classes, followed by
+	 * an anchor with the `ele-menu-link` class. Appends the page date when
+	 * $args['show_date'] is set.
+	 *
+	 * @param string  $output       Walker output, passed by reference and appended to.
+	 * @param WP_Post $page         The page being rendered.
+	 * @param int     $depth        Depth of the page, relative to its parent.
+	 * @param array   $args         Menu arguments, including an optional 'show_date' key.
+	 * @param int     $current_page ID of the page currently being viewed, if any.
+	 * @return void
+	 */
 	function start_el( &$output, $page, $depth = 0, $args = [], $current_page = 0 ) {
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 

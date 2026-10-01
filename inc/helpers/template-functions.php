@@ -12,6 +12,8 @@ add_filter( 'body_class', 'elementify_body_classes' );
 if ( ! function_exists( 'elementify_pingback_header' ) ) {
 	/**
 	 * Add a pingback url auto-discovery header for single posts, pages, or attachments.
+	 *
+	 * @return void
 	 */
 	function elementify_pingback_header() {
 		if ( is_singular() && pings_open() ) {
@@ -72,6 +74,11 @@ if ( ! function_exists( 'elementify_head_meta' ) ) {
 
 	/**
 	 * Add custom data in the head tag on the front end.
+	 *
+	 * Outputs the charset meta, a responsive viewport meta and an XFN profile
+	 * link.
+	 *
+	 * @return void
 	 */
 	function elementify_head_meta() {
 		?>
@@ -86,6 +93,8 @@ if ( ! function_exists( 'elementify_wp_head' ) ) {
 
 	/**
 	 * Prints scripts or data in the head tag on the front end.
+	 *
+	 * @return void
 	 */
 	function elementify_wp_head() {
 		wp_head();
@@ -96,6 +105,12 @@ if ( ! function_exists( 'elementify_body_attributes' ) ) {
 
 	/**
 	 * Body tag attributes
+	 *
+	 * Prints the data attributes main.css keys the content layout off: a
+	 * context prefix ('single-post', 'single-page' or 'blog'), the sidebar
+	 * position, and the default form label.
+	 *
+	 * @return void
 	 */
 	function elementify_body_attributes() {
 
@@ -116,6 +131,11 @@ if ( ! function_exists( 'elementify_wp_body_open' ) ) {
 
 	/**
 	 * Triggered after the opening body tag.
+	 *
+	 * Fires core's wp_body_open action, which plugins hook to inject markup
+	 * directly after the opening <body> tag.
+	 *
+	 * @return void
 	 */
 	function elementify_wp_body_open() {
 		wp_body_open();
@@ -126,6 +146,10 @@ if ( ! function_exists( 'elementify_skip_link' ) ) {
 
 	/**
 	 * Skip to content links.
+	 *
+	 * Prints the visually hidden "Skip to content" link that targets #primary.
+	 *
+	 * @return void
 	 */
 	function elementify_skip_link() {
 		?>
@@ -148,6 +172,11 @@ if ( ! function_exists( 'elementify_header' ) ) {
 
 	/**
 	 * Site main header content.
+	 *
+	 * Loads template-parts/header/nav.php, which renders the branding and
+	 * navigation markup.
+	 *
+	 * @return void
 	 */
 	function elementify_header() {
 
@@ -161,7 +190,7 @@ if ( ! function_exists( 'elementify_header_separator' ) ) {
 	 * Add header separator div
 	 *
 	 * @since   1.0.0
-	 * @return  string HTML display
+	 * @return void
 	 */
 	function elementify_header_separator() {
 		echo '<div class="ele-after-header"></div>';
@@ -173,8 +202,11 @@ if ( ! function_exists( 'elementify_header_site_overlay' ) ) {
 	/**
 	 * Add site overlay div after header
 	 *
+	 * Prints the transition overlay that main.css animates on header change.
+	 * Not currently hooked; the add_action() call is commented out above.
+	 *
 	 * @since   1.0.0
-	 * @return  string HTML display
+	 * @return void
 	 */
 	function elementify_header_site_overlay() {
 		$overlay_div = [ 'ele-site-overlay' ];
@@ -203,6 +235,11 @@ if ( ! function_exists( 'elementify_site_content_start' ) ) {
 
 	/**
 	 * Site Content Start
+	 *
+	 * Opens the #content, .ele-container and #primary wrapper divs that
+	 * elementify_site_content_end() closes.
+	 *
+	 * @return void
 	 */
 	function elementify_site_content_start() {
 		echo '<div id="content" class="site-content ele-position-relative ele-position-absolute-after">';
@@ -215,6 +252,10 @@ if ( ! function_exists( 'elementify_before_content_hero' ) ) {
 
 	/**
 	 * page header
+	 *
+	 * Loads template-parts/components/entry-header.php above the content area.
+	 *
+	 * @return void
 	 */
 	function elementify_before_content_hero() {
 		get_template_part( 'template-parts/components/entry-header' );
@@ -225,6 +266,11 @@ if ( ! function_exists( 'elementify_site_content_end' ) ) {
 
 	/**
 	 * Site Content End
+	 *
+	 * Closes #primary, loads the sidebar, then closes .ele-container and
+	 * #content.
+	 *
+	 * @return void
 	 */
 	function elementify_site_content_end() {
 		echo '</div><!-- #primary -->';
@@ -238,6 +284,12 @@ if ( ! function_exists( 'elementify_set_post_class' ) ) {
 
 	/**
 	 * Post class
+	 *
+	 * Adds the theme's column and text-alignment classes to a post's class
+	 * list. Not currently hooked; the add_filter() call is commented out above.
+	 *
+	 * @param array $classes The post's CSS classes.
+	 * @return array The filtered post classes.
 	 */
 	function elementify_set_post_class( $classes ) {
 		$classes[] = 'ele-column'; // add a custom class to highlight this row in the table
@@ -259,6 +311,12 @@ if ( ! function_exists( 'elementify_sidebar_area' ) ) {
 
 	/**
 	 * Sidebar Area
+	 *
+	 * Opens the widget area, fires the elementify/sidebar_top and
+	 * elementify/sidebar_bottom actions around the sidebar-1 widget area, then
+	 * closes it.
+	 *
+	 * @return void
 	 */
 	function elementify_sidebar_area() {
 
@@ -298,6 +356,10 @@ if ( ! function_exists( 'elementify_posts_wrapper_start' ) ) {
 
 	/**
 	 * Posts wrapper Start
+	 *
+	 * Opens the #main element that holds the loop's entry cards.
+	 *
+	 * @return void
 	 */
 	function elementify_posts_wrapper_start() {
 		echo '<main id="main" class="site-main ele-posts-wrap ele-d-grid ele-align-items-initial" data-layout="3" data-cards="simple">';
@@ -308,6 +370,10 @@ if ( ! function_exists( 'elementify_posts_wrapper_end' ) ) {
 
 	/**
 	 * Posts wrapper End
+	 *
+	 * Closes the #main element opened by elementify_posts_wrapper_start().
+	 *
+	 * @return void
 	 */
 	function elementify_posts_wrapper_end() {
 		echo '</main><!-- #main -->';
@@ -318,6 +384,10 @@ if ( ! function_exists( 'elementify_posts_pagination' ) ) {
 
 	/**
 	 * Posts navigation
+	 *
+	 * Renders the archive pagination via elemetify_pagination().
+	 *
+	 * @return void
 	 */
 	function elementify_posts_pagination() {
 		elemetify_pagination();
@@ -328,6 +398,10 @@ if ( ! function_exists( 'elementify_loop_entry_thumbnail' ) ) {
 
 	/**
 	 * Entry Thumbnail
+	 *
+	 * Loads template-parts/components/entry-image.php for the loop entry.
+	 *
+	 * @return void
 	 */
 	function elementify_loop_entry_thumbnail() {
 
@@ -339,6 +413,25 @@ if ( ! function_exists( 'elementify_loop_entry_post_card' ) ) {
 
 	/**
 	 * Entry Post Card
+	 *
+	 * Renders a loop entry as a card by walking an ordered list of component
+	 * keys and loading the matching template part for each:
+	 *
+	 *   thumbnail - entry-image.php, printed outside the card content wrapper
+	 *   title     - entry-title.php
+	 *   metas     - entry-meta.php
+	 *   excerpt   - entry-content.php
+	 *   more      - entry-read-more.php
+	 *   cats      - entry-cats.php
+	 *   tags      - entry-tags.php
+	 *   div1      - an inline entry divider
+	 *   ghost     - an inline spacer element
+	 *
+	 * The list is hard-coded and a 'ghost' spacer is spliced in before the last
+	 * component. Everything after 'thumbnail' is wrapped in a single card
+	 * content div.
+	 *
+	 * @return void
 	 */
 	function elementify_loop_entry_post_card() {
 
@@ -421,6 +514,11 @@ if ( ! function_exists( 'elementify_single_post_title_elements' ) ) {
 
 	/**
 	 * Post Title
+	 *
+	 * Loads template-parts/components/entry-header.php for the single post.
+	 * Not currently hooked; the add_action() call is commented out above.
+	 *
+	 * @return void
 	 */
 	function elementify_single_post_title_elements() {
 		get_template_part( 'template-parts/components/entry-header' );
@@ -430,6 +528,11 @@ if ( ! function_exists( 'elementify_single_post_content' ) ) {
 
 	/**
 	 * Post Content
+	 *
+	 * Loads template-parts/components/entry-content.php, which prints the post
+	 * body through the_content().
+	 *
+	 * @return void
 	 */
 	function elementify_single_post_content() {
 		get_template_part( 'template-parts/components/entry-content' );
@@ -440,6 +543,11 @@ if ( ! function_exists( 'elementify_post_after_content_elements' ) ) {
 
 	/**
 	 * Single post after content
+	 *
+	 * Prints previous/next post navigation, then loads the comments template
+	 * when comments are open or the post already has comments.
+	 *
+	 * @return void
 	 */
 	function elementify_post_after_content_elements() {
 		echo '<div class="ele-post-navigation-wrap" data-layout="1">';
@@ -473,6 +581,11 @@ if ( ! function_exists( 'elementify_page_after_content_elements' ) ) {
 
 	/**
 	 * Single page after content
+	 *
+	 * Loads the comments template when comments are open or the page already
+	 * has comments.
+	 *
+	 * @return void
 	 */
 	function elementify_page_after_content_elements() {
 
@@ -502,6 +615,14 @@ if ( ! function_exists( 'elementify_comments_element' ) ) {
 
 	/**
 	 * Comment section elements.
+	 *
+	 * Prints the comment count, comment navigation and comment list. The
+	 * comment form's position (above or below the list) is read from the
+	 * elementify_framework_single_{post,page}_comments_form_position theme
+	 * mod, which is a per-breakpoint array; only its 'desktop' value is used
+	 * here. With no comments at all, only the form is printed.
+	 *
+	 * @return void
 	 */
 	function elementify_comments_element() {
 
@@ -573,6 +694,11 @@ if ( ! function_exists( 'elementify_404_conent' ) ) {
 
 	/**
 	 * 404 page content.
+	 *
+	 * Prints the error heading, message and the bundled 404 image from
+	 * assets/build/images/404.webp.
+	 *
+	 * @return void
 	 */
 	function elementify_404_conent() {
 		?>
@@ -610,6 +736,10 @@ if ( ! function_exists( 'elementify_footer' ) ) {
 
 	/**
 	 * Site footer content.
+	 *
+	 * Loads template-parts/footer/copyright.php.
+	 *
+	 * @return void
 	 */
 	function elementify_footer() {
 		get_template_part( 'template-parts/footer/copyright' );

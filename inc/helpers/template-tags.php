@@ -57,6 +57,7 @@ if ( ! function_exists( 'elementify_the_post_thumbnail' ) ) {
 	 * @param int    $post_id               Post ID.
 	 * @param string $size                  The registered image size.
 	 * @param array  $additional_attributes Additional attributes.
+	 * @return void
 	 */
 	function elementify_the_post_thumbnail( $post_id, $size = 'medium', $additional_attributes = [] ) {
 		echo elementify_get_the_post_thumbnail( $post_id, $size, $additional_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -213,12 +214,18 @@ if ( ! function_exists( 'elementify_the_post_pagination' ) ) {
 	/**
 	 * Display Post pagination with prev next, first last, to, from
 	 *
+	 * Prints a "Showing X - Y Of Z" summary and First/Last links only when the
+	 * corresponding URL is non-empty; the core paginate_links() output is
+	 * always printed. Set $is_query_param_structure to false for pretty
+	 * permalinks, which changes both the base and the URL format.
+	 *
 	 * @param int      $current_page_no Current page number.
 	 * @param int      $posts_per_page Posts per page.
 	 * @param WP_Query $article_query The query object.
 	 * @param string   $first_page_url First page URL.
 	 * @param string   $last_page_url Last page URL.
 	 * @param bool     $is_query_param_structure Whether to use query parameter structure.
+	 * @return void
 	 */
 	function elementify_the_post_pagination(
 		$current_page_no,
@@ -281,7 +288,8 @@ if ( ! function_exists( 'elementify_is_uploaded_via_wp_admin' ) ) {
 	 * Checks to see if the specified user id has a uploaded the image via wp_admin.
 	 *
 	 * @param string $gravatar_url The gravatar URL.
-	 * @return bool Whether or not the user has a gravatar
+	 * @return bool True when the URL has no query string, which means the avatar
+	 *              is a locally uploaded file rather than a Gravatar request.
 	 */
 	function elementify_is_uploaded_via_wp_admin( $gravatar_url ) {
 		$parsed_url = wp_parse_url( $gravatar_url );
@@ -310,8 +318,11 @@ if ( ! function_exists( 'elementify_has_gravatar' ) ) {
 	 * When constructing the URL, use the parameter d=404.
 	 * This will cause Gravatar to return a 404 error rather than an image if the user hasn't set a picture.
 	 *
+	 * Note: the second path makes a remote request via get_headers(), so this
+	 * function is not safe to call on every comment without caching.
+	 *
 	 * @param string $user_email User email.
-	 * @return bool
+	 * @return bool|int 1 when the avatar exists, 0 when it does not.
 	 */
 	function elementify_has_gravatar( $user_email ) {
 		$gravatar_url = get_avatar_url( $user_email );
@@ -334,6 +345,11 @@ if ( ! function_exists( 'elementify_entry_footer' ) ) :
 
 	/**
 	 * Prints HTML with meta information for the categories, tags and comments.
+	 *
+	 * Only runs on single posts. Prints category and tag links for the 'post'
+	 * post type, then the edit link. Returns early on any other view.
+	 *
+	 * @return void
 	 */
 	function elementify_entry_footer() {
 		if ( ! is_single() ) {
@@ -381,7 +397,10 @@ if ( ! function_exists( 'elementify_post_thumbnail' ) ) :
 	 * Displays an optional post thumbnail.
 	 *
 	 * Wraps the post thumbnail in an anchor element on index views, or a div
-	 * element when on single views.
+	 * element when on single views. Returns early for password-protected posts,
+	 * attachments, and posts without a featured image.
+	 *
+	 * @return void
 	 */
 	function elementify_post_thumbnail() {
 		if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
@@ -421,7 +440,11 @@ if ( ! function_exists( 'wp_body_open' ) ) :
 	/**
 	 * Shim for sites older than 5.2.
 	 *
+	 * Guards against redeclaring the core function, which WordPress added in
+	 * 5.2. Core only fires the wp_body_open action; the theme never binds to it.
+	 *
 	 * @link https://core.trac.wordpress.org/ticket/12563
+	 * @return void
 	 */
 	function wp_body_open() {
 		do_action( 'wp_body_open' );

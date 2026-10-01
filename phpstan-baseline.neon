@@ -103,7 +103,7 @@ parameters:
 			path: inc/classes/class-utils.php
 
 		-
-			message: '#^Method Elementify\\Inc\\Utils\:\:schema_org_definitions\(\) should return string but return statement is missing\.$#'
+			message: '#^Method Elementify\\Inc\\Utils\:\:schema_org_definitions\(\) should return string\|null but return statement is missing\.$#'
 			identifier: return.missing
 			count: 1
 			path: inc/classes/class-utils.php
@@ -167,24 +167,6 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: inc/helpers/functions.php
-
-		-
-			message: '#^Action callback returns string but should not return anything\.$#'
-			identifier: return.void
-			count: 1
-			path: inc/helpers/template-functions.php
-
-		-
-			message: '#^Function elementify_header_separator\(\) should return string but return statement is missing\.$#'
-			identifier: return.missing
-			count: 1
-			path: inc/helpers/template-functions.php
-
-		-
-			message: '#^Function elementify_header_site_overlay\(\) should return string but return statement is missing\.$#'
-			identifier: return.missing
-			count: 1
-			path: inc/helpers/template-functions.php
 
 		-
 			message: '#^Loose comparison using \=\= between ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' and ''cats'' will always evaluate to false\.$#'

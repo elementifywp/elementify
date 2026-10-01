@@ -8,9 +8,21 @@
 
 namespace Elementify\Inc;
 
+/**
+ * Boots the theme's service classes and declares theme support.
+ *
+ * Instantiated once per request from functions.php via
+ * elementify_get_theme_instance(). Booting the singletons here is what wires
+ * up their hooks, so this class is the theme's single entry point.
+ */
 class Elementify {
 
 
+	/**
+	 * Boot the singleton services, then register the theme's own hooks.
+	 *
+	 * @return void
+	 */
 	public function __construct() {
 
 		Assets::get_instance();
@@ -22,6 +34,11 @@ class Elementify {
 		$this->setup_hooks();
 	}
 
+	/**
+	 * Hook theme support registration into `after_setup_theme`.
+	 *
+	 * @return void
+	 */
 	private function setup_hooks() {
 
 		/**
@@ -31,7 +48,14 @@ class Elementify {
 	}
 
 	/**
-	 * Setup theme.
+	 * Declare the theme's WordPress support features.
+	 *
+	 * Covers title-tag, custom logo and background, post thumbnails, the aside
+	 * and gallery post formats, HTML5 markup, automatic feed links, wide and
+	 * full block alignments, and block styles. Also loads the compiled CSS in
+	 * the block editor via add_editor_style(), removes the core block
+	 * patterns, enables the excerpt field for pages, and sets the global
+	 * $content_width to 1280 when nothing has set it already.
 	 *
 	 * @return void
 	 */
