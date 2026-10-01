@@ -7533,7 +7533,7 @@ form textarea {
 /* .ele-off-canvas .ele-modal-inner::after {
 	background-color: var(--ele-base-100);
 } */
-.ele-off-canvas .ele-modal-inner {
+.ele-off-canvas .ele-modal-inner .ele-model-inner-content {
   --ele-modal-action-initial: var(--ele-heading-color);
   --ele-modal-action-hover: var(--ele-primary-color);
   -webkit-box-shadow: rgba(44, 62, 80, 0.35) 0px 0px 70px 0px;
@@ -7663,6 +7663,18 @@ form textarea {
 
 .ele-modal .ele-model-inner-content {
   background: var(--ele-base-100);
+}
+
+.ele-off-canvas.ele-modal.active {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  -webkit-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(1px);
 }
 
 .ele-modal .ele-modal-content {

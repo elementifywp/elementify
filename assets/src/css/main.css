@@ -3406,10 +3406,7 @@ Header: Site Logo & Description.
 
 .ele-site-header [data-builder-element="logo"] .site-logo-container img,
 .ele-site-header [data-builder-element="logo"] .site-logo-container svg,
-.ele-site-header
-	[data-builder-element="logo"]
-	.site-logo-container
-	picture,
+.ele-site-header [data-builder-element="logo"] .site-logo-container picture,
 .ele-site-header [data-builder-element="site_logo"] .site-logo-container img,
 .ele-site-header [data-builder-element="site_logo"] .site-logo-container svg,
 .ele-site-header
@@ -6126,21 +6123,20 @@ Related Posts
 }
 .ele-related-posts-wrap .swiper-button-next,
 .ele-related-posts-wrap .swiper-button-prev {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-    }
-
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
 
 .main-navigation.toggled .ele-main-menu {
-    position: absolute;
-    left: 0;
-    right: 0;
-    background: #fff;
-    top: 100%;
-    padding: 15px;
-    transition: all 0.3s ease 0s;
+	position: absolute;
+	left: 0;
+	right: 0;
+	background: #fff;
+	top: 100%;
+	padding: 15px;
+	transition: all 0.3s ease 0s;
 }
 
 /* .ele-related-posts-wrap[data-layout] .swiper-wrapper .ele-column-content .ele-card-content:last-child {
@@ -7848,11 +7844,10 @@ form textarea {
 	background-color: var(--ele-base-100);
 } */
 
-.ele-off-canvas .ele-modal-inner {
+.ele-off-canvas .ele-modal-inner .ele-model-inner-content {
 	--ele-modal-action-initial: var(--ele-heading-color);
 	--ele-modal-action-hover: var(--ele-primary-color);
 	box-shadow: rgba(44, 62, 80, 0.35) 0px 0px 70px 0px;
-
 }
 
 .ele-off-canvas .ele-modal-inner article.post {
@@ -7985,6 +7980,17 @@ form textarea {
 
 .ele-modal .ele-model-inner-content {
 	background: var(--ele-base-100);
+}
+
+.ele-off-canvas.ele-modal.active {
+	/* From https://css.glass */
+	background: rgba(255, 255, 255, 0.09);
+	border-radius: 16px;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(1px);
 }
 
 .ele-modal .ele-modal-content {
@@ -8600,14 +8606,14 @@ form textarea {
 }
 
 .ele-header-row {
-    z-index: 9;
-    position: relative;
+	z-index: 9;
+	position: relative;
 }
 .ele-header-row + .ele-header-row {
-    z-index: 8;
+	z-index: 8;
 }
 .ele-header-row + .ele-header-row + .ele-header-row {
-    z-index: 7;
+	z-index: 7;
 }
 
 .ele-modal .ele-modal-actions .ele-close-modal:hover svg,
