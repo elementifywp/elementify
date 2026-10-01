@@ -10,14 +10,19 @@ namespace Elementify\Inc;
 use Elementify\Inc\Traits\Singleton;
 
 /**
- * Class Assets.
+ * Enqueues the theme's front-end and Customizer preview styles and scripts.
+ *
+ * Versions and script dependencies come from the `*.asset.php` manifests that
+ * @wordpress/scripts writes next to each file in assets/build.
  */
 class Assets {
 
 	use Singleton;
 
 	/**
-	 * Constructor.
+	 * Register the asset hooks when the singleton is first created.
+	 *
+	 * @return void
 	 */
 	public function __construct() {
 
@@ -25,7 +30,9 @@ class Assets {
 	}
 
 	/**
-	 * Initialize hooks.
+	 * Hook asset enqueueing into the front end and the Customizer preview.
+	 *
+	 * @return void
 	 */
 	private function setup_hooks() {
 
@@ -37,7 +44,16 @@ class Assets {
 	}
 
 	/**
-	 * Enqueue css & js in frontend
+	 * Enqueue the theme stylesheets and main script on the front end.
+	 *
+	 * Loads style.css and the compiled main.css (with its RTL variant), the
+	 * deferred main.js with the translated submenu toggle labels it reads from
+	 * `window.elementifyMenu`, and core's comment-reply script on singular
+	 * views with threaded comments open. Fires the
+	 * `elementify/frontend/before_register_scripts` and
+	 * `elementify/frontend/after_register_scripts` actions around it.
+	 *
+	 * @return void
 	 */
 	public function frontend_assets() {
 
@@ -102,7 +118,15 @@ class Assets {
 	}
 
 	/**
-	 * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
+	 * Enqueue the Customizer preview script.
+	 *
+	 * The script binds handlers so title, tagline and header text colour
+	 * changes preview without a full reload. Fires the
+	 * `elementify/frontend/before_register_customize_preview_scripts` and
+	 * `elementify/frontend/after_register_customize_preview_scripts` actions
+	 * around it.
+	 *
+	 * @return void
 	 */
 	public function customize_preview_assets() {
 
@@ -137,9 +161,10 @@ class Assets {
 	 * Falls back to the theme version when the build has not been run yet, so a
 	 * missing build never triggers PHP warnings on the front end.
 	 *
-	 * @param string $entry Entry path relative to assets/build, without extension (e.g. 'js/main').
-	 *
-	 * @return array{dependencies: string[], version: string} Script dependencies and cache-busting version.
+	 * @param string $entry Entry path relative to assets/build, without the
+	 *                      extension, e.g. 'js/main'.
+	 * @return array{dependencies: string[], version: string} Script dependencies
+	 *                                                        and cache-busting version.
 	 */
 	private function get_asset_meta( $entry ) {
 		$asset_file = ELEMENTIFY_DIR_PATH . '/assets/build/' . $entry . '.asset.php';

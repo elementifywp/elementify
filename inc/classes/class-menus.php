@@ -11,7 +11,7 @@ namespace Elementify\Inc;
 use Elementify\Inc\Traits\Singleton;
 
 /**
- * Class Menus.
+ * Registers the theme's nav menu locations and provides menu lookup helpers.
  */
 class Menus {
 
@@ -19,7 +19,9 @@ class Menus {
 	use Singleton;
 
 	/**
-	 * Constructor.
+	 * Register the menu hooks when the singleton is first created.
+	 *
+	 * @return void
 	 */
 	public function __construct() {
 
@@ -28,7 +30,9 @@ class Menus {
 	}
 
 	/**
-	 * Initialize hooks.
+	 * Hook menu location registration into `init`.
+	 *
+	 * @return void
 	 */
 	private function setup_hooks() {
 
@@ -38,6 +42,12 @@ class Menus {
 		add_action( 'init', [ $this, 'register_menus' ] );
 	}
 
+	/**
+	 * Register the Primary, Secondary, Sidebar and Footer menu locations
+	 * (menu-1 to menu-4).
+	 *
+	 * @return void
+	 */
 	public function register_menus() {
 		register_nav_menus(
 			[
@@ -50,11 +60,11 @@ class Menus {
 	}
 
 	/**
-	 * Get the menu id by menu location.
+	 * Return the ID of the menu assigned to a theme location.
 	 *
-	 * @param string $location
-	 *
-	 * @return integer
+	 * @param string $location Menu location slug, e.g. 'menu-1'.
+	 * @return int|string Menu term ID, or an empty string when no menu is
+	 *                    assigned to the location.
 	 */
 	public function get_menu_id( $location ) {
 
@@ -68,12 +78,14 @@ class Menus {
 	}
 
 	/**
-	 * Get all child menus that has given parent menu id.
+	 * Return the menu items whose parent is the given menu item.
 	 *
-	 * @param array   $menu_array Menu array.
-	 * @param integer $parent_id Parent menu id.
+	 * Only direct children are returned; deeper descendants are not.
 	 *
-	 * @return array Child menu array.
+	 * @param array $menu_array Menu item objects, e.g. from wp_get_nav_menu_items().
+	 * @param int   $parent_id  Menu item ID of the parent (strict integer match
+	 *                          against each item's menu_item_parent).
+	 * @return array Matching child menu item objects, in their original order.
 	 */
 	public function get_child_menu_items( $menu_array, $parent_id ) {
 
