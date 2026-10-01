@@ -7,14 +7,14 @@
  * @package Elementify
  */
 
-$copyright      = __( 'Copyright {copyright} {current_year} {site_title}', 'elementify' );
-$copyright      = str_replace( '{copyright}', '&copy;', $copyright );
-$copyright      = str_replace( '{current_year}', date_i18n( _x( 'Y', 'copyright date format; check date() on php.net', 'elementify' ) ), $copyright );
-$copyright      = str_replace( '{site_title}', get_bloginfo( 'name' ), $copyright );
-$copyright      .= sprintf(
+$copyright  = __( 'Copyright {copyright} {current_year} {site_title}', 'elementify' );
+$copyright  = str_replace( '{copyright}', '&copy;', $copyright );
+$copyright  = str_replace( '{current_year}', date_i18n( _x( 'Y', 'copyright date format; check date() on php.net', 'elementify' ) ), $copyright );
+$copyright  = str_replace( '{site_title}', get_bloginfo( 'name' ), $copyright );
+$copyright .= sprintf(
 /* translators: 1: title. */
 	esc_html__( ' - WordPress Theme by %1$s', 'elementify' ),
-	'<a href="'.esc_url('https://www.elementifythemes.com/').'" rel="nofollow noopener" target="_self">' . esc_html__('Elementify Themes', 'elementify') . '</a>'
+	'<a href="' . esc_url( 'https://www.elementifythemes.com/' ) . '" rel="nofollow noopener" target="_self">' . esc_html__( 'Elementify Themes', 'elementify' ) . '</a>'
 );
 ?>
 <footer id="colophon" class="site-footer ele-site-footer">

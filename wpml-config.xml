@@ -1,0 +1,29 @@
+<wpml-config>
+	<admin-texts>
+		<key name="theme_mods_elementify">
+			<key name="elementify_social_icons">
+				<key name="*"/>
+			</key>
+			<key name="elementify_header_button_text" />
+			<key name="elementify_header_button_url" />
+			<key name="elementify_header_account_login_text" />
+			<key name="elementify_header_account_login_url" />
+			<key name="elementify_header_account_logout_text" />
+			<key name="elementify_header_account_logout_url" />
+			<key name="elementify_header_search_icon_placeholder" />
+			<key name="elementify_header_html_text" />
+			<key name="elementify_footer_copyright_text" />
+			<key name="elementify_footer_button_text" />
+			<key name="elementify_footer_button_url" />
+			<key name="elementify_footer_html_text" />
+
+			<key name="elementify_front_page_services_section_heading" />
+			<key name="elementify_front_page_news_blog_section_heading" />
+			<key name="elementify_front_page_clients_logo_section_heading" />
+			<key name="elementify_front_page_clients_logo_lists">
+				<key name="*"/>
+			</key>
+			<key name="elementify_404_error_image" />
+		</key>
+	</admin-texts>
+</wpml-config>

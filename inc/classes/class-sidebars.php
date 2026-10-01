@@ -43,16 +43,16 @@ class Sidebars {
 	public function register_sidebars() {
 
 		$args = [
-			'sidebar-1'	=> [
+			'sidebar-1' => [
 				'name'          => esc_html__( 'Sidebar', 'elementify' ),
-				'id'            =>'sidebar-1',
+				'id'            => 'sidebar-1',
 				'description'   => esc_html__( 'Add widgets here.', 'elementify' ),
 				'before_widget' => '<div id="%1$s" class="widget %2$s">',
 				'after_widget'  => '</div>',
 				'before_title'  => '<h3 class="widget-title">',
 				'after_title'   => '</h3>',
 			],
-			'popup-1'	=> [
+			'popup-1'   => [
 				'name'          => esc_html__( 'Popup Area', 'elementify-framework' ),
 				'id'            => 'popup-1',
 				'description'   => esc_html__( 'Add widgets here.', 'elementify-framework' ),
@@ -60,12 +60,12 @@ class Sidebars {
 				'after_widget'  => '</div>',
 				'before_title'  => '<h3 class="widget-title">',
 				'after_title'   => '</h3>',
-			]
+			],
 		];
 
 		// Header Widgets Area
-		for ( $i = 1; $i <= 2; $i ++ ) {
-			$args['header-' . $i] = [
+		for ( $i = 1; $i <= 2; $i++ ) {
+			$args[ 'header-' . $i ] = [
 				/* translators: 1: Widget number. */
 				'name'          => sprintf( esc_html__( 'Header Area #%d', 'elementify-framework' ), $i ),
 				'id'            => 'header-' . $i,
@@ -77,8 +77,8 @@ class Sidebars {
 			];
 		}
 		// Footer Widgets Area
-		for ( $i = 1; $i <= 6; $i ++ ) {
-			$args['footer-' . $i] = [
+		for ( $i = 1; $i <= 6; $i++ ) {
+			$args[ 'footer-' . $i ] = [
 				/* translators: 1: Widget number. */
 				'name'          => sprintf( esc_html__( 'Footer Area #%d', 'elementify-framework' ), $i ),
 				'id'            => 'footer-' . $i,
@@ -90,12 +90,12 @@ class Sidebars {
 			];
 		}
 
-        $args	= apply_filters( 'elementify_register_sidebar_args', $args );
+		$args = apply_filters( 'elementify_register_sidebar_args', $args );
 		if ( empty( $args ) ) {
-            return;
-        }
+			return;
+		}
 		foreach ( $args as $key => $sidebar ) {
 			register_sidebar( $sidebar );
-        }
+		}
 	}
 }

@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  js:
+    name: Build and lint JS/CSS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
+      - name: Build output is committed and up to date
+        run: git diff --exit-code -- assets/build
+      - run: pnpm run lint:js
+      - run: pnpm run lint:css
+      - run: pnpm run lint:pkg
+
+  php:
+    name: PHP lint and static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: cs2pr
+      - uses: ramsey/composer-install@v3
+      - run: composer run lint:syntax
+      - run: vendor/bin/phpcs -q --report=checkstyle | cs2pr
+      - run: composer run phpstan -- --no-progress --error-format=github
+
+  e2e:
+    name: E2E (Playwright + wp-env)
+    runs-on: ubuntu-latest
+    needs: js
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run build
+      - run: pnpm run env:start
+      - run: pnpm run test:e2e
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-artifacts
+          path: artifacts/
+          retention-days: 7

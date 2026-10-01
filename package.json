@@ -14,67 +14,59 @@
 	"homepage": "https://github.com/elementifywp/elementify#readme",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/elementifywp/elementify.git"
+		"url": "git+https://github.com/elementifywp/elementify.git"
 	},
 	"bugs": {
 		"url": "https://github.com/elementifywp/elementify/issues"
 	},
 	"engines": {
-		"node": ">=20.6.1"
+		"node": "^22.22.2 || >=24.15.0"
 	},
+	"packageManager": "pnpm@12.8.1",
+	"files": [
+		"*.php",
+		"style.css",
+		"screenshot.png",
+		"readme.txt",
+		"wpml-config.xml",
+		"assets/build",
+		"inc",
+		"languages",
+		"template-parts"
+	],
 	"devDependencies": {
-		"@wordpress/scripts": "^30.8.1",
-		"autoprefixer": "^10.4.20",
-		"babel-loader": "^10.0.0",
-		"clean-webpack-plugin": "^4.0.0",
-		"copy-webpack-plugin": "^13.0.0",
-		"cross-env": "^7.0.3",
-		"css-minimizer-webpack-plugin": "^7.0.0",
-		"eslint-plugin-eslint-comments": "^3.2.0",
-		"eslint-webpack-plugin": "^4.2.0",
-		"grunt": "^1.6.1",
-		"grunt-checktextdomain": "^1.0.1",
-		"grunt-cli": "^1.4.3",
-		"grunt-contrib-clean": "^2.0.1",
-		"grunt-contrib-compress": "^2.0.0",
-		"grunt-contrib-copy": "^1.0.0",
-		"grunt-wp-i18n": "^1.0.3",
-		"grunt-wp-readme-to-markdown": "^2.1.0",
-		"jest-silent-reporter": "^0.6.0",
-		"lint-staged": "^15.4.3",
-		"mini-css-extract-plugin": "^2.9.2",
-		"npm-run-all": "^4.1.5",
-		"postcss": "^8.4.49",
-		"postcss-loader": "^8.1.1",
-		"postcss-preset-env": "^10.1.3",
-		"rtlcss-webpack-plugin": "^4.0.7",
-		"stylelint-webpack-plugin": "^5.0.1",
-		"tailwindcss": "^3.4.15",
-		"webpack-remove-empty-scripts": "^1.0.4"
+		"@playwright/test": "^1.63.0",
+		"@wordpress/babel-preset-default": "^8.56.0",
+		"@wordpress/browserslist-config": "^6.37.0",
+		"@wordpress/e2e-test-utils-playwright": "^2.1.0",
+		"@wordpress/env": "^11.16.0",
+		"@wordpress/postcss-plugins-preset": "^5.56.0",
+		"@wordpress/scripts": "^36.0.0",
+		"@wordpress/stylelint-config": "^26.0.0",
+		"copy-webpack-plugin": "^13.0.1",
+		"cssnano": "^6.1.2",
+		"webpack-remove-empty-scripts": "^1.1.1"
 	},
 	"scripts": {
-		"build:dev": "cross-env NODE_ENV=development npm-run-all 'build:!(dev|prod)'",
-		"build:prod": "cross-env NODE_ENV=production npm-run-all 'build:!(dev|prod)'",
-		"build:js": "npm run clean && wp-scripts build --experimental-modules",
-		"build:pot": "grunt i18n",
-		"start": "npm run clean && wp-scripts start --experimental-modules",
-		"clean": "rm -rf assets/build/*",
-		"lint:all": "npm-run-all --parallel lint:css lint:js lint:php lint:package-json",
-		"lint:css": "wp-scripts lint-style ./assets/src",
-		"lint:css:fix": "npm run lint:css -- --fix ./assets/src",
-		"lint:js": "wp-scripts lint-js ./assets/src",
-		"lint:js:fix": "npm run lint:js -- --fix ./assets/src",
-		"lint:js:report": "npm run lint:js -- --output-file lint-js-report.json --format json .",
-		"lint:php": "php vendor/bin/phpcs",
-		"lint:php:fix": "php vendor/bin/phpcbf",
-		"lint:package-json": "wp-scripts lint-pkg-json --ignorePath .gitignore",
-		"lint:staged": "lint-staged",
-		"release": "grunt release",
-		"readme": "grunt readme",
-		"precommit": "npm-run-all lint:css lint:js lint:php build:pot"
-	},
-	"browserslist": [
-		"last 3 versions",
-		"> 1%"
-	]
+		"build": "wp-scripts build --config ./webpack.config.js",
+		"start": "wp-scripts start --config ./webpack.config.js",
+		"clean": "rm -rf assets/build",
+		"format": "wp-scripts format ./assets/src ./tests",
+		"lint": "pnpm run --parallel \"/^lint:(js|css|pkg|php)$/\"",
+		"lint:js": "wp-scripts lint-js ./assets/src ./tests *.config.js",
+		"lint:js:fix": "pnpm run lint:js --fix",
+		"lint:css": "wp-scripts lint-style \"assets/src/**/*.css\"",
+		"lint:css:fix": "pnpm run lint:css --fix",
+		"lint:pkg": "wp-scripts lint-pkg-json .",
+		"lint:php": "composer run lint",
+		"lint:php:fix": "composer run format",
+		"analyze:php": "composer run phpstan",
+		"i18n:pot": "wp i18n make-pot . languages/elementify.pot --domain=elementify --exclude=assets/build,node_modules,vendor,tests",
+		"env": "wp-env",
+		"env:start": "wp-env start",
+		"env:stop": "wp-env stop",
+		"test:e2e": "wp-scripts test-playwright",
+		"test:e2e:ui": "wp-scripts test-playwright --ui",
+		"release": "pnpm run clean && pnpm run build && pnpm run i18n:pot && wp-scripts plugin-zip"
+	}
 }

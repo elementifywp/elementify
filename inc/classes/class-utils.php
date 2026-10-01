@@ -21,16 +21,16 @@ class Utils {
 	 * @return string
 	 */
 	public static function clsx( ...$args ) {
-		$classNames = array();
+		$classNames = [];
 
 		foreach ( $args as $arg ) {
 			if ( is_string( $arg ) && $arg !== '' ) {
 				$classNames[] = $arg;
-			} else if ( is_array( $arg ) ) {
+			} elseif ( is_array( $arg ) ) {
 				foreach ( $arg as $k => $v ) {
 					if ( is_string( $v ) ) {
 						$classNames[] = $v;
-					} else if ( is_bool( $v ) && $v === true ) {
+					} elseif ( is_bool( $v ) && $v === true ) {
 						$classNames[] = $k;
 					}
 				}
@@ -157,9 +157,12 @@ class Utils {
 	 * @return array
 	 */
 	public static function array_pluck( $key, $arr ) {
-		return array_map( function ( $item ) use ( $key ) {
-			return $item[ $key ];
-		}, $arr );
+		return array_map(
+			function ( $item ) use ( $key ) {
+				return $item[ $key ];
+			},
+			$arr
+		);
 	}
 
 	/**
@@ -271,7 +274,7 @@ class Utils {
 	 * @return string
 	 */
 	public static function customizer_url( $location ) {
-		$query                     = array();
+		$query                     = [];
 		$query['lotta_auto_focus'] = $location;
 
 		return add_query_arg( $query, admin_url( 'customize.php' ) );
@@ -385,5 +388,4 @@ class Utils {
 	public static function microdata( $attributes ) {
 		return self::schema_org_definitions( $attributes );
 	}
-
 }

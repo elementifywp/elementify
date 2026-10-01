@@ -1,25 +1,361 @@
-# <!=Copyright (C) 2025 
-# This file is distributed under the same license as the  package.=!>
+# Copyright (C) 2026 Elementify Themes
+# This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://example.com/support\n"
-"POT-Creation-Date: 2025-03-26T01:30:36.082Z\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
+"Project-Id-Version: Elementify 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/elementify\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Your Team <team@example.com>\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Country: United States\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
-"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
-"X-Poedit-Basepath: ../\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-Bookmarks: \n"
-"X-Textdomain-Support: yes\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-01T06:48:45+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: elementify\n"
+
+#. Theme Name of the theme
+#: style.css
+msgid "Elementify"
+msgstr ""
+
+#. Theme URI of the theme
+#. Author URI of the theme
+#: style.css
+msgid "http://elementifythemes.com/"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Elementify is a sleek and minimalist WordPress blog theme, thoughtfully designed to help you build a visually captivating blog. Whether you’re sharing content about fashion, travel, music, cars, real estate, beauty, design, food, weddings, movies, photography, technology, or personal stories, Elementify adapts beautifully to any niche. With its clean layout, refined typography, and unique styling, the theme puts your content front and center—offering an elegant reading experience your audience will love."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+#: template-parts/footer/copyright.php:17
+msgid "Elementify Themes"
+msgstr ""
+
+#: 404 copy.php:3
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr ""
+
+#: 404 copy.php:13
+msgid "Most Used Categories"
+msgstr ""
+
+#. translators: %1$s: smiley
+#: 404 copy.php:31
+#, php-format
+msgid "Try looking in the monthly archives. %1$s"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:271
+msgid "Browse:"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:272
+msgctxt "breadcrumbs aria label"
+msgid "Breadcrumbs"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:273
+msgid "Home"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:274
+msgid "404 Not Found"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:275
+msgid "Archives"
+msgstr ""
+
+#. Translators: %s is the search query.
+#: inc/classes/class-breadcrumb-trail.php:277
+#, php-format
+msgid "Search results for: %s"
+msgstr ""
+
+#. Translators: %s is the page number.
+#: inc/classes/class-breadcrumb-trail.php:279
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#. Translators: %s is the page number.
+#: inc/classes/class-breadcrumb-trail.php:281
+#, php-format
+msgid "Comment Page %s"
+msgstr ""
+
+#. Translators: Minute archive title. %s is the minute time format.
+#: inc/classes/class-breadcrumb-trail.php:283
+#, php-format
+msgid "Minute %s"
+msgstr ""
+
+#. Translators: Weekly archive title. %s is the week date format.
+#: inc/classes/class-breadcrumb-trail.php:285
+#, php-format
+msgid "Week %s"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:745
+msgctxt "minute and hour archives time format"
+msgid "g:i a"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:762
+msgctxt "minute archives time format"
+msgid "i"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:779
+msgctxt "hour archives time format"
+msgid "g a"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:795
+#: inc/classes/class-breadcrumb-trail.php:824
+#: inc/classes/class-breadcrumb-trail.php:851
+#: inc/classes/class-breadcrumb-trail.php:878
+#: inc/classes/class-breadcrumb-trail.php:1218
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:796
+#: inc/classes/class-breadcrumb-trail.php:852
+#: inc/classes/class-breadcrumb-trail.php:1222
+msgctxt "monthly archives date format"
+msgid "F"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:797
+#: inc/classes/class-breadcrumb-trail.php:1226
+msgctxt "daily archives date format"
+msgid "j"
+msgstr ""
+
+#: inc/classes/class-breadcrumb-trail.php:825
+msgctxt "weekly archives date format"
+msgid "W"
+msgstr ""
+
+#: inc/classes/class-menus.php:46
+msgid "Primary Menu"
+msgstr ""
+
+#: inc/classes/class-menus.php:47
+msgid "Secondary Menu"
+msgstr ""
+
+#: inc/classes/class-menus.php:48
+msgid "Sidebar Menu"
+msgstr ""
+
+#: inc/classes/class-menus.php:49
+msgid "Footer Menu"
+msgstr ""
+
+#: inc/classes/class-sidebars.php:47
+msgid "Sidebar"
+msgstr ""
+
+#: inc/classes/class-sidebars.php:49
+msgid "Add widgets here."
+msgstr ""
+
+#: inc/helpers/template-functions.php:139
+msgid "Skip to content"
+msgstr ""
+
+#: inc/helpers/template-functions.php:547
+msgid "One Comment"
+msgstr ""
+
+#. translators: %s: The count of comments
+#: inc/helpers/template-functions.php:550
+#, php-format
+msgid "%s Comments"
+msgstr ""
+
+#: inc/helpers/template-functions.php:580
+msgid "Comments are closed."
+msgstr ""
+
+#: inc/helpers/template-functions.php:615
+msgid "This is not the page you are looking for"
+msgstr ""
+
+#: inc/helpers/template-tags.php:98
+#, php-format
+msgctxt "post date"
+msgid "Posted on %s"
+msgstr ""
+
+#: inc/helpers/template-tags.php:116
+#, php-format
+msgctxt "post author"
+msgid " by %s"
+msgstr ""
+
+#: inc/helpers/template-tags.php:210
+#: template-parts/components/entry-read-more.php:9
+msgid "Read more"
+msgstr ""
+
+#: inc/helpers/template-tags.php:260
+msgid "First"
+msgstr ""
+
+#: inc/helpers/template-tags.php:268
+msgid "Prev"
+msgstr ""
+
+#: inc/helpers/template-tags.php:269
+msgid "Next"
+msgstr ""
+
+#: inc/helpers/template-tags.php:274
+msgid "Last"
+msgstr ""
+
+#. translators: used between list items, there is a space after the comma
+#: inc/helpers/template-tags.php:353
+#: template-parts/components/blog/entry-meta.php:79
+#: template-parts/components/entry-meta.php:92
+msgid ", "
+msgstr ""
+
+#. translators: 1: list of categories.
+#: inc/helpers/template-tags.php:356
+#, php-format
+msgid "Posted in %1$s"
+msgstr ""
+
+#. translators: used between list items, there is a space after the comma
+#: inc/helpers/template-tags.php:360
+#: template-parts/components/entry-tags.php:23
+msgctxt "list item separator"
+msgid ", "
+msgstr ""
+
+#. translators: 1: list of tags.
+#: inc/helpers/template-tags.php:363
+#, php-format
+msgid "Tagged %1$s"
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers
+#: inc/helpers/template-tags.php:371
+#: template-parts/components/entry-content.php:45
+#: template-parts/components/entry-footer.php:14
+#, php-format
+msgid "Edit <span class=\"screen-reader-text\">%s</span>"
+msgstr ""
+
+#. translators: %s: Name of current post. Only visible to screen readers
+#: template-parts/components/blog/entry-content.php:22
+#: template-parts/components/entry-content.php:23
+#, php-format
+msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr ""
+
+#: template-parts/components/blog/entry-content.php:35
+#: template-parts/components/entry-content.php:36
+msgid "Pages:"
+msgstr ""
+
+#: template-parts/components/blog/entry-image.php:48
+#: template-parts/components/entry-image.php:53
+#, php-format
+msgctxt "sticky post"
+msgid "%1$s "
+msgstr ""
+
+#: template-parts/components/blog/entry-image.php:49
+#: template-parts/components/entry-image.php:54
+msgid "Featured Post"
+msgstr ""
+
+#: template-parts/components/blog/entry-meta.php:31
+#: template-parts/components/entry-meta.php:49
+msgid "Post Author"
+msgstr ""
+
+#. translators: %s: Author name.
+#. translators: %s: Author name link.
+#: template-parts/components/blog/entry-meta.php:43
+#: template-parts/components/entry-meta.php:54
+#, php-format
+msgctxt "Post Author"
+msgid "%s"
+msgstr ""
+
+#: template-parts/components/blog/entry-meta.php:56
+#: template-parts/components/entry-meta.php:69
+msgid "Published Date"
+msgstr ""
+
+#. translators: %s: post date.
+#: template-parts/components/blog/entry-meta.php:62
+#: template-parts/components/entry-meta.php:75
+#, php-format
+msgctxt "Post Date"
+msgid "%s"
+msgstr ""
+
+#: template-parts/components/blog/entry-meta.php:74
+#: template-parts/components/entry-cats.php:19
+#: template-parts/components/entry-meta.php:87
+msgid "Categories"
+msgstr ""
+
+#: template-parts/components/entry-meta.php:106
+msgid "Comments"
+msgstr ""
+
+#. translators: %s: post title
+#: template-parts/components/entry-meta.php:114
+#, php-format
+msgid "No Comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr ""
+
+#: template-parts/components/entry-tags.php:19
+msgid "Tags"
+msgstr ""
+
+#: template-parts/content-none.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#. translators: 1: link to WP admin new post page.
+#: template-parts/content-none.php:24
+#, php-format
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: template-parts/content-none.php:37
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr ""
+
+#: template-parts/content-none.php:44
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+#: template-parts/footer/copyright.php:10
+msgid "Copyright {copyright} {current_year} {site_title}"
+msgstr ""
+
+#: template-parts/footer/copyright.php:12
+msgctxt "copyright date format; check date() on php.net"
+msgid "Y"
+msgstr ""
+
+#. translators: 1: title.
+#: template-parts/footer/copyright.php:16
+#, php-format
+msgid " - WordPress Theme by %1$s"
+msgstr ""

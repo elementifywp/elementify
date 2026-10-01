@@ -1,109 +1,161 @@
 /**
- * File navigation.js.
+ * Primary navigation.
  *
- * Handles toggling the navigation menu for small screens and enables TAB key
- * navigation support for dropdown menus.
+ * - Toggles the small-screen menu panel and keeps aria-expanded in sync.
+ * - Adds a toggle button to every parent item so submenus can be opened by
+ *   touch, mouse and keyboard on small screens.
+ * - Escape closes the innermost open submenu, then the panel, returning focus
+ *   to the control that opened it.
+ * - Closes everything when focus or a click leaves the navigation.
+ *
+ * Large screens keep the CSS :hover / :focus-within dropdowns, so the menu
+ * still works for keyboard users if this script fails to load.
  */
-( function() {
-	const siteNavigation = document.getElementById( 'ele-header-menu-1' );
+( function () {
+	const nav = document.getElementById( 'ele-header-menu-1' );
+	const button = nav && nav.querySelector( '.menu-toggle' );
+	const menu = nav && nav.querySelector( '.ele-main-menu' );
 
-	// Return early if the navigation doesn't exist.
-	if ( ! siteNavigation ) {
+	if ( ! nav || ! button ) {
 		return;
 	}
 
-	const button = siteNavigation.getElementsByTagName( 'button' )[ 0 ];
-
-	// Return early if the button doesn't exist.
-	if ( 'undefined' === typeof button ) {
+	// Hide the toggle when no menu (and no page fallback) is rendered.
+	if ( ! menu ) {
+		button.hidden = true;
 		return;
 	}
 
-	const menu = siteNavigation.getElementsByTagName( 'ul' )[ 0 ];
-
-	// Hide menu toggle button if menu is empty and return early.
-	if ( 'undefined' === typeof menu ) {
-		button.style.display = 'none';
-		return;
-	}
-
-	if ( ! menu.classList.contains( 'nav-menu' ) ) {
-		menu.classList.add( 'nav-menu' );
-	}
+	menu.classList.add( 'nav-menu' );
 
 	const hamburger = button.querySelector( '.ele-hamburger-menu' );
+	const labels = Object.assign(
+		{ expand: 'Show submenu for %s', collapse: 'Hide submenu for %s' },
+		window.elementifyMenu || {}
+	);
+	const desktop = window.matchMedia( '(min-width: 48em)' );
 
-	// Toggle the .toggled class and the aria-expanded value each time the button is clicked.
-	button.addEventListener( 'click', function() {
-		siteNavigation.classList.toggle( 'toggled' );
+	/**
+	 * Opens or closes the small-screen menu panel.
+	 *
+	 * @param {boolean} open Whether the panel should be open.
+	 */
+	function setPanel( open ) {
+		nav.classList.toggle( 'toggled', open );
+		button.setAttribute( 'aria-expanded', String( open ) );
 
 		if ( hamburger ) {
-			hamburger.classList.toggle( 'cross' );
+			hamburger.classList.toggle( 'cross', open );
 		}
 
-		const expanded = button.getAttribute( 'aria-expanded' ) === 'true';
-		button.setAttribute( 'aria-expanded', String( ! expanded ) );
-	} );
-
-	// Remove the .toggled class and set aria-expanded to false when the user clicks outside the navigation.
-	document.addEventListener( 'click', function( event ) {
-		const isClickInside = siteNavigation.contains( event.target );
-
-		if ( ! isClickInside ) {
-			siteNavigation.classList.remove( 'toggled' );
-
-			if ( hamburger ) {
-				hamburger.classList.remove( 'cross' );
-			}
-
-			button.setAttribute( 'aria-expanded', 'false' );
+		if ( ! open ) {
+			closeSubmenus( menu );
 		}
-	} );
-
-	// Get all the link elements within the menu.
-	const links = menu.getElementsByTagName( 'a' );
-
-	// Get all the link elements with children within the menu.
-	const linksWithChildren = menu.querySelectorAll( '.menu-item-has-children > a, .page_item_has_children > a' );
-
-	// Toggle focus each time a menu link is focused or blurred.
-	for ( const link of links ) {
-		link.addEventListener( 'focus', toggleFocus, true );
-		link.addEventListener( 'blur', toggleFocus, true );
-	}
-
-	// Toggle focus each time a menu link with children receive a touch event.
-	for ( const link of linksWithChildren ) {
-		link.addEventListener( 'touchstart', toggleFocus, false );
 	}
 
 	/**
-	 * Sets or removes .focus class on an element.
+	 * Opens or closes one submenu and updates its toggle button.
 	 *
-	 * @param {Event} event
+	 * @param {HTMLElement} item Parent `li` element.
+	 * @param {boolean}     open Whether the submenu should be open.
 	 */
-	function toggleFocus( event ) {
-		if ( event.type === 'focus' || event.type === 'blur' ) {
-			let self = this;
-			// Move up through the ancestors of the current link until we hit .nav-menu.
-			while ( ! self.classList.contains( 'nav-menu' ) ) {
-				// On li elements toggle the class .focus.
-				if ( 'li' === self.tagName.toLowerCase() ) {
-					self.classList.toggle( 'focus' );
-				}
-				self = self.parentNode;
-			}
+	function setSubmenu( item, open ) {
+		const toggle = item.querySelector( ':scope > .ele-submenu-toggle' );
+
+		item.classList.toggle( 'is-open', open );
+
+		if ( toggle ) {
+			toggle.setAttribute( 'aria-expanded', String( open ) );
+			toggle.querySelector( '.screen-reader-text' ).textContent = (
+				open ? labels.collapse : labels.expand
+			).replace( '%s', toggle.dataset.title );
 		}
 
-		if ( event.type === 'touchstart' ) {
-			const menuItem = this.parentNode;
-			event.preventDefault();
-			for ( const link of menuItem.parentNode.children ) {
-				if ( menuItem !== link ) {
-					link.classList.remove( 'focus' );
-				}
-			}
-			menuItem.classList.toggle( 'focus' );
+		if ( ! open ) {
+			closeSubmenus( item );
 		}
 	}
-}() );
+
+	/**
+	 * Closes every open submenu inside an element.
+	 *
+	 * @param {HTMLElement} root Element to search within.
+	 */
+	function closeSubmenus( root ) {
+		root.querySelectorAll( '.is-open' ).forEach( ( item ) =>
+			setSubmenu( item, false )
+		);
+	}
+
+	// Add a toggle button after the link of every item that has a submenu.
+	menu.querySelectorAll(
+		'.menu-item-has-children, .page_item_has_children'
+	).forEach( ( item, index ) => {
+		const link = item.querySelector( ':scope > a' );
+		const submenu = item.querySelector( ':scope > ul' );
+
+		if ( ! link || ! submenu ) {
+			return;
+		}
+
+		submenu.id = submenu.id || `ele-submenu-${ index + 1 }`;
+
+		const toggle = document.createElement( 'button' );
+		toggle.type = 'button';
+		toggle.className = 'ele-submenu-toggle';
+		toggle.dataset.title = link.textContent.trim();
+		toggle.setAttribute( 'aria-controls', submenu.id );
+		toggle.setAttribute( 'aria-expanded', 'false' );
+		toggle.innerHTML =
+			'<span class="screen-reader-text"></span><span class="ele-submenu-toggle-icon" aria-hidden="true"></span>';
+		toggle.querySelector( '.screen-reader-text' ).textContent =
+			labels.expand.replace( '%s', toggle.dataset.title );
+
+		toggle.addEventListener( 'click', () =>
+			setSubmenu( item, ! item.classList.contains( 'is-open' ) )
+		);
+
+		link.after( toggle );
+	} );
+
+	button.addEventListener( 'click', () =>
+		setPanel( ! nav.classList.contains( 'toggled' ) )
+	);
+
+	nav.addEventListener( 'keydown', ( event ) => {
+		if ( event.key !== 'Escape' ) {
+			return;
+		}
+
+		// Close the submenu that contains focus, if any, before the panel.
+		const openItem = event.target.closest( '.is-open' );
+
+		if ( openItem && nav.contains( openItem ) ) {
+			setSubmenu( openItem, false );
+			openItem.querySelector( ':scope > .ele-submenu-toggle' ).focus();
+		} else if ( nav.classList.contains( 'toggled' ) ) {
+			setPanel( false );
+			button.focus();
+		}
+	} );
+
+	// Close everything when keyboard focus moves outside the navigation.
+	nav.addEventListener( 'focusout', ( event ) => {
+		if ( event.relatedTarget && ! nav.contains( event.relatedTarget ) ) {
+			setPanel( false );
+		}
+	} );
+
+	document.addEventListener( 'click', ( event ) => {
+		if ( ! nav.contains( event.target ) ) {
+			setPanel( false );
+		}
+	} );
+
+	// Reset small-screen state when the viewport grows to the desktop layout.
+	desktop.addEventListener( 'change', ( event ) => {
+		if ( event.matches ) {
+			setPanel( false );
+		}
+	} );
+} )();

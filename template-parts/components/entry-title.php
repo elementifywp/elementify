@@ -18,4 +18,3 @@ if ( is_singular() ) {
 		wp_kses_post( get_the_title() )
 	);
 }
-

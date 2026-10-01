@@ -7,11 +7,11 @@
  */
 
 $the_post_id = get_the_ID();
-$default     = array( 'author', 'date', 'comment' );
+$default     = [ 'author', 'date', 'comment' ];
 $metas       = ! empty( $args['desktop'] ) ? $args['desktop'] : $default;
 
 // Check whether the post type is allowed to output post meta.
-if ( in_array( get_post_type( $the_post_id ), array( 'page' ), true ) || empty( $metas ) ) {
+if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $metas ) ) {
 	return;
 }
 
@@ -21,7 +21,7 @@ if ( in_array( get_post_type( $the_post_id ), array( 'page' ), true ) || empty( 
 
 		<?php
 		foreach ( $metas as $key => $value ) {
-			$key++;
+			++$key;
 
 			if ( 'author' === $value ) {
 				// Resolve the author explicitly from the post ID instead of
@@ -39,10 +39,10 @@ if ( in_array( get_post_type( $the_post_id ), array( 'page' ), true ) || empty( 
 						24,
 						'',
 						'',
-						array(
+						[
 							'class'   => 'ele-avatar-icon',
 							'default' => '404',
-						)
+						]
 					);
 					?>
 					<li class="ele-post-meta post-author ele-d-flex ele-flex-wrap ele-align-items-center">
@@ -112,11 +112,11 @@ if ( in_array( get_post_type( $the_post_id ), array( 'page' ), true ) || empty( 
 							wp_kses(
 								/* translators: %s: post title */
 								__( 'No Comment<span class="screen-reader-text"> on %s</span>', 'elementify' ),
-								array(
-									'span' => array(
-										'class' => array(),
-									),
-								)
+								[
+									'span' => [
+										'class' => [],
+									],
+								]
 							),
 							wp_kses_post( get_the_title( $the_post_id ) )
 						)

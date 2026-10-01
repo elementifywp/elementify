@@ -12,24 +12,35 @@
 		"php": ">=7.4"
 	},
 	"require-dev": {
-		"automattic/vipwpcs": "^2.3",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.7",
-		"phpcompatibility/phpcompatibility-wp": "^2.1",
-		"sirbrillig/phpcs-variable-analysis": "^2.8",
-		"wp-coding-standards/wpcs": "^2.3",
-		"wp-cli/i18n-command": "^2.6"
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+		"php-parallel-lint/php-parallel-lint": "^1.4",
+		"phpcompatibility/phpcompatibility-wp": "^3.0",
+		"phpstan/extension-installer": "^1.4",
+		"phpstan/phpstan": "^2.1",
+		"phpstan/phpstan-deprecation-rules": "^2.0",
+		"szepeviktor/phpstan-wordpress": "^2.0",
+		"wp-coding-standards/wpcs": "^3.1"
 	},
 	"config": {
-		"discard-changes": true,
-		"sort-packages": true,
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": true
-		}
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
+		},
+		"platform": {
+			"php": "7.4.33"
+		},
+		"sort-packages": true
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"scripts": {
-		"phpcs": "phpcs",
-		"phpcbf": "phpcbf"
+		"lint": [
+			"@lint:syntax",
+			"@lint:phpcs"
+		],
+		"lint:syntax": "parallel-lint --exclude .git --exclude vendor --exclude node_modules .",
+		"lint:phpcs": "phpcs",
+		"format": "phpcbf",
+		"phpstan": "phpstan analyse --memory-limit=2G"
 	}
 }

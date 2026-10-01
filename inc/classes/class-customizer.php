@@ -20,7 +20,7 @@ class Customizer {
 	 * Constructor.
 	 */
 	public function __construct() {
-		
+
 		$this->setup_hooks();
 	}
 
@@ -51,20 +51,19 @@ class Customizer {
 		if ( isset( $wp_customize->selective_refresh ) ) {
 			$wp_customize->selective_refresh->add_partial(
 				'blogname',
-				array(
+				[
 					'selector'        => '.site-title a',
 					'render_callback' => [ $this, 'customize_partial_blogname' ],
-				)
+				]
 			);
 			$wp_customize->selective_refresh->add_partial(
 				'blogdescription',
-				array(
+				[
 					'selector'        => '.site-description',
 					'render_callback' => [ $this, 'customize_partial_blogdescription' ],
-				)
+				]
 			);
 		}
-
 	}
 
 	/**
@@ -84,5 +83,4 @@ class Customizer {
 	public function customize_partial_blogdescription() {
 		bloginfo( 'description' );
 	}
-	
 }

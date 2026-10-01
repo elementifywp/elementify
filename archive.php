@@ -28,7 +28,7 @@ do_action( 'elementify/before_content' );
 <?php
 /**
  * Functions hooked into elementify/before_content action
- * 
+ *
  * @hooked elementify_posts_wrapper_start - 10
  */
 do_action( 'elementify/content_top' );
@@ -36,16 +36,17 @@ do_action( 'elementify/content_top' );
 
 <?php if ( have_posts() ) : ?>
 
-<?php
+	<?php
 	/**
 	 * Functions hooked into elementify/content/before_loop action
-	 * 
+	 *
 	 * @hooked elementify_posts_page_header - 10
 	 */
-	do_action('elementify/content/before_loop');
+	do_action( 'elementify/content/before_loop' );
 
 	/* Start the Loop */
-	while ( have_posts() ) : the_post();
+	while ( have_posts() ) :
+		the_post();
 
 		/*
 			* Include the Post-Type-specific template for the content.
@@ -59,10 +60,10 @@ do_action( 'elementify/content_top' );
 	/**
 	 * Functions hooked into elementify/content/after_loop action
 	 *
-	 * @hooked elementify_posts_wrapper_end	- 10
-	 * @hooked elementify_posts_pagination 	- 15
+	 * @hooked elementify_posts_wrapper_end - 10
+	 * @hooked elementify_posts_pagination  - 15
 	 */
-	do_action('elementify/content/after_loop');
+	do_action( 'elementify/content/after_loop' );
 
 else :
 
@@ -74,7 +75,7 @@ endif;
 <?php
 /**
  * Functions hooked into elementify/content_bottom action
- * 
+ *
  * @hooked elementify_posts_wrapper_end - 10
  */
 do_action( 'elementify/content_bottom' );
@@ -84,9 +85,10 @@ do_action( 'elementify/content_bottom' );
 /**
  * Functions hooked into elementify/after_content action
  *
- * @hooked elementify_site_content_end	- 10
+ * @hooked elementify_site_content_end  - 10
  */
 do_action( 'elementify/after_content' );
 ?>
 
-<?php get_footer(); ?>
+<?php
+get_footer();
