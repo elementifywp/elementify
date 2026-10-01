@@ -8,7 +8,7 @@
  */
 
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-link-type="2">
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-link-type="1">
 
 <?php
 /**
