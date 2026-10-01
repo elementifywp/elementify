@@ -161,19 +161,13 @@ class Elementify {
 		 */
 		add_theme_support( 'editor-styles' );
 		/**
+		 * Loads the theme stylesheet in the block editor so blocks look the same
+		 * as on the site, plus editor.css, which mirrors the few main.css rules
+		 * that are scoped to front-end-only wrappers (.entry-content, body classes).
 		 *
-		 * Path to our custom editor style.
-		 * It allows you to link a custom stylesheet file to the TinyMCE editor within the post edit screen.
-		 *
-		 * Since we are not passing any parameter to the function,
-		 * it will by default, link the editor-style.css file located directly under the current theme directory.
-		 * In our case since we are passing 'build/css/editor.css' path it will use that.
-		 * You can change the name of the file or path and replace the path here.
-		 *
-		 * @see add_editor_style(
 		 * @link https://developer.wordpress.org/reference/functions/add_editor_style/
 		 */
-		add_editor_style( 'build/css/main.css' );
+		add_editor_style( [ 'assets/build/css/main.css', 'assets/build/css/editor.css' ] );
 
 		// Remove the core block patterns
 		remove_theme_support( 'core-block-patterns' );

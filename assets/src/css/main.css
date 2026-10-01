@@ -1432,6 +1432,17 @@ a:active {
 /*--------------------------------------------------------------
 # Alignments
 --------------------------------------------------------------*/
+
+/*
+ * theme.json sets contentSize to the 750px reading width for the editor.
+ * On the front end the post column already has its own width (it shrinks
+ * next to the sidebar), so constrained block layouts fill that column
+ * instead of centring narrower content inside it.
+ */
+.entry-content {
+	--wp--style--global--content-size: 100%;
+}
+
 .alignleft {
 	display: inline;
 	float: left;
@@ -7667,11 +7678,49 @@ Pagination
 	color: var(--ele-pagination-heading-color);
 }
 
+/* paginate_links() outputs .prev / .next; the -btn classes are kept for compatibility. */
 .ele-pagination-wrap .nav-links .ele-pagination-prev-btn,
-.ele-pagination-wrap .nav-links .ele-pagination-next-btn {
+.ele-pagination-wrap .nav-links .ele-pagination-next-btn,
+.ele-pagination-wrap .nav-links .page-numbers.prev,
+.ele-pagination-wrap .nav-links .page-numbers.next {
 	padding: 0 1.25em;
 	width: auto;
 	gap: 6px;
+	white-space: nowrap;
+}
+
+.ele-pagination-wrap .page-numbers .ele-svg-icon {
+	flex-shrink: 0;
+}
+
+/* Arrows point the other way in right-to-left languages. */
+.rtl .ele-pagination-wrap .page-numbers .ele-svg-icon {
+	transform: scaleX(-1);
+}
+
+/* The "…" gap between page numbers is text, not a button. */
+.ele-pagination-wrap .nav-links .page-numbers.dots {
+	width: auto;
+	border-color: transparent;
+}
+
+@media (max-width: 37.49em) {
+
+	/* Icon-only previous/next on small screens; the label stays for screen readers. */
+	.ele-pagination-wrap .nav-links .page-numbers.prev,
+	.ele-pagination-wrap .nav-links .page-numbers.next {
+		width: 2.5em;
+		padding: 0;
+	}
+
+	.ele-pagination-wrap .ele-pagination-label {
+		position: absolute !important;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
 }
 
 .ele-pagination-wrap .nav-links,

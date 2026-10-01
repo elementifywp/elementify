@@ -364,21 +364,42 @@ if ( ! function_exists( 'elemetify_pagination' ) ) {
 
 		$links = paginate_links(
 			[
-				'before_page_number' => '<span class="ele-btn">',
-				'after_page_number'  => '</span>',
+				'mid_size'           => 1,
+				'prev_text'          => elementify_get_the_svg( 'ui', 'chevron-left', 16 ) . '<span class="ele-pagination-label">' . esc_html__( 'Previous', 'elementify' ) . '</span>',
+				'next_text'          => '<span class="ele-pagination-label">' . esc_html__( 'Next', 'elementify' ) . '</span>' . elementify_get_the_svg( 'ui', 'chevron-right', 16 ),
+				/* translators: Hidden text before a page number in the posts pagination, e.g. "Page 2". */
+				'before_page_number' => '<span class="screen-reader-text">' . esc_html__( 'Page', 'elementify' ) . ' </span>',
 			]
 		);
 
 		// paginate_links() returns null when there is only one page.
 		if ( ! empty( $links ) ) {
 			$allowed_tags = [
-				'span' => [
+				'span'     => [
 					'class'        => [],
 					'aria-current' => [],
 				],
-				'a'    => [
+				'a'        => [
 					'class' => [],
 					'href'  => [],
+				],
+				'svg'      => [
+					'class'           => [],
+					'width'           => [],
+					'height'          => [],
+					'aria-hidden'     => [],
+					'role'            => [],
+					'focusable'       => [],
+					'xmlns'           => [],
+					'viewbox'         => [],
+					'fill'            => [],
+					'stroke'          => [],
+					'stroke-width'    => [],
+					'stroke-linecap'  => [],
+					'stroke-linejoin' => [],
+				],
+				'polyline' => [
+					'points' => [],
 				],
 			];
 

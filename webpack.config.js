@@ -21,7 +21,8 @@ const BUILD_DIR = path.resolve( __dirname, 'assets/build' );
  * entry points and output layout:
  *
  * - assets/src/js/*.js   -> assets/build/js/*.js
- * - assets/src/css/*.css -> assets/build/css/*.css (+ *-rtl.css)
+ * - assets/src/css/*.css -> assets/build/css/*.css (+ *-rtl.css); editor.css is
+ *   loaded only in the block editor
  * - assets/src/images/   -> assets/build/images/
  */
 module.exports = {
@@ -30,6 +31,7 @@ module.exports = {
 		'js/main': path.join( SRC_DIR, 'js/main.js' ),
 		'js/customizer': path.join( SRC_DIR, 'js/customizer.js' ),
 		'css/main': path.join( SRC_DIR, 'css/main.css' ),
+		'css/editor': path.join( SRC_DIR, 'css/editor.css' ),
 	},
 	output: {
 		...defaultConfig.output,

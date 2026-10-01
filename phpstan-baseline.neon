@@ -319,12 +319,6 @@ parameters:
 			path: template-parts/components/entry-header.php
 
 		-
-			message: '#^Variable \$post might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: template-parts/components/entry-header.php
-
-		-
 			message: '#^Variable \$metas in empty\(\) always exists and is not falsy\.$#'
 			identifier: empty.variable
 			count: 1

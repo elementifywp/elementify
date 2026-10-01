@@ -37,6 +37,10 @@ pnpm release               # clean build + make-pot (WP-CLI) + wp-scripts plugin
 
 There is no Sass and no Tailwind (Tailwind was deliberately removed). `assets/src/css/main.css` is about 11k lines of hand-written CSS. It uses `--ele-*` custom properties and `ele-` prefixed utility-like classes. Utility class names in templates only work if `main.css` defines them.
 
+`theme.json` (version 2, because the theme supports WordPress 6.4) drives editor settings and global styles. Its palette, font family, layout widths and shadow are `var(--ele-…, fallback)` references to the `:root` tokens in `main.css`, so the light/dark `[data-theme]` switch also recolours block presets. Core button and link element styles are set to `false`, as Kadence and Blocksy do, so `main.css` controls them. Inside `.entry-content`, `main.css` resets `--wp--style--global--content-size` to `100%`, because the post column next to the sidebar is already narrower than the 750px `contentSize`.
+
+The block editor loads `main.css` plus `editor.css` via `add_editor_style()`. `editor.css` mirrors the few `main.css` rules that are scoped to front-end-only wrappers (the `.ele-button-fill` body class, `.entry-content`). When you change one of those rules, update its mirror.
+
 `postcss.config.js` and `babel.config.js` exist at the project root, so wp-scripts uses them instead of its built-in defaults. `postcss.config.js` therefore has to add cssnano itself for production builds.
 
 ## PHP architecture

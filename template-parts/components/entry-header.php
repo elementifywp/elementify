@@ -12,7 +12,9 @@ $header_preset = [ 'desktop' => '1' ];
 if ( is_singular() ) {
 	$page_title = true;
 	$classes[]  = 'ele-hero-single-post';
-	$elements   = is_single() ? [ 'title', 'breadcrumbs', 'post-meta', 'thumbnail' ] : [ 'title', 'breadcrumbs' ];
+	// Posts also show their meta; every singular view (posts, pages, custom post
+	// types) shows its featured image. 'thumbnail' is dropped below when none is set.
+	$elements = is_single() ? [ 'title', 'breadcrumbs', 'post-meta', 'thumbnail' ] : [ 'title', 'breadcrumbs', 'thumbnail' ];
 } else {
 	$classes[]      = 'ele-hero-archive-posts';
 	$home_enable    = false;
@@ -44,7 +46,7 @@ if ( $page_title ) : ?>
 
 			// Remove thumbnail if conditions are met
 			if ( ( $key = array_search( 'thumbnail', $elements ) ) !== false ) {
-				if ( is_singular() && ! has_post_thumbnail( $post->ID ) ) {
+				if ( is_singular() && ! has_post_thumbnail() ) {
 					unset( $elements[ $key ] );
 				}
 			}
