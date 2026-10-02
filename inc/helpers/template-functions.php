@@ -262,6 +262,31 @@ if ( ! function_exists( 'elementify_before_content_hero' ) ) {
 	}
 }
 
+if ( ! function_exists( 'elementify_archive_title_remove_prefix' ) ) {
+
+	/**
+	 * Remove archive title prefixes (Category:, Tag:, Author:, etc.)
+	 *
+	 * @param string $title The archive title.
+	 * @return string The filtered archive title.
+	 */
+	function elementify_archive_title_remove_prefix( $title ) {
+		$prefixes = array(
+			'/^Category:\s*/i',
+			'/^Tag:\s*/i',
+			'/^Taxonomy:\s*/i',
+			'/^Author:\s*/i',
+			'/^Year:\s*/i',
+			'/^Month:\s*/i',
+			'/^Day:\s*/i',
+			'/^Archives:\s*/i',
+		);
+		$title = preg_replace( $prefixes, '', $title );
+		return trim( wp_strip_all_tags( $title ) );
+	}
+}
+add_filter( 'get_the_archive_title', 'elementify_archive_title_remove_prefix' );
+
 if ( ! function_exists( 'elementify_site_content_end' ) ) {
 
 	/**
