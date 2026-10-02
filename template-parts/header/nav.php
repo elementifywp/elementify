@@ -34,7 +34,7 @@
 									<?php
 									echo $elementify_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 									?>
-																	</p>
+									</p>
 								<?php endif; ?>
 							</div>
 						</div>

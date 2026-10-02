@@ -224,11 +224,39 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 	/**
 	 * Displays the primary navigation: the small-screen toggle and the menu-1 location.
 	 *
+	 * The markup (nav#ele-header-menu-1, .menu-toggle and ul#primary-menu) is
+	 * what assets/src/js/main.js binds to, so callers can change the menu's
+	 * look and behaviour through $args but not those hooks.
+	 *
 	 * @since 1.0.0
 	 *
+	 * @param array $args {
+	 *     Optional. Overrides for the rendered menu.
+	 *
+	 *     @type string          $layout         Value of the nav's data-layout attribute. Default '1'.
+	 *     @type string          $reveal         Dropdown reveal effect, added as `ele-dropdown-reveal-{$reveal}`. Default 'fade'.
+	 *     @type int             $depth          Menu depth passed to wp_nav_menu(); 0 shows all levels. Default 0.
+	 *     @type string          $link_after     Markup appended inside every menu link (e.g. a submenu icon). Default ''.
+	 *     @type string          $menu_class     Classes for the menu `ul`, replacing the theme's default set. Default ''.
+	 *     @type callable|string $fallback_cb    Callback used when no menu is assigned. Default 'elementify_menu_fallback'.
+	 *     @type array           $nav_attributes Extra attributes for the `nav` element, as name => value. Default [].
+	 * }
 	 * @return void
 	 */
-	function elementify_primary_navigation() {
+	function elementify_primary_navigation( $args = [] ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'layout'         => '1',
+				'reveal'         => 'fade',
+				'depth'          => 0,
+				'link_after'     => '',
+				'menu_class'     => '',
+				'fallback_cb'    => 'elementify_menu_fallback',
+				'nav_attributes' => [],
+			]
+		);
+
 		$main_navigation = [ 'main-navigation', 'ele-left-0', 'ele-z-20' ];
 		$menu_class      = [ 'ele-main-menu', 'ele-list-style-none', 'ele-p-0', 'ele-m-0', 'ele-d-flex', 'ele-flex-column', 'ele-flex-lg-row' ];
 
@@ -243,9 +271,16 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 		$menu_class[] = 'ele-flex-sm-wrap';
 		$menu_class[] = 'ele-flex-sm-row';
 		$menu_class[] = 'ele-align-items-md-center';
+
+		$menu_class = '' !== $args['menu_class'] ? $args['menu_class'] : implode( ' ', $menu_class );
+
+		$nav_attributes = '';
+		foreach ( (array) $args['nav_attributes'] as $name => $value ) {
+			$nav_attributes .= sprintf( ' %s="%s"', esc_attr( $name ), esc_attr( $value ) );
+		}
 		?>
 
-		<nav id="ele-header-menu-1" class="<?php echo esc_attr( implode( ' ', $main_navigation ) ); ?>" data-layout="1" aria-label="<?php esc_attr_e( 'Primary menu', 'elementify' ); ?>">
+		<nav id="ele-header-menu-1" class="<?php echo esc_attr( implode( ' ', $main_navigation ) ); ?>" data-layout="<?php echo esc_attr( $args['layout'] ); ?>" aria-label="<?php esc_attr_e( 'Primary menu', 'elementify' ); ?>"<?php echo $nav_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above. ?>>
 			<button type="button" class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
 				<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'elementify' ); ?></span>
 				<span class="ele-trigger-menu ele-d-block ele-z-30" aria-hidden="true">
@@ -257,10 +292,12 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 				[
 					'theme_location' => 'menu-1',
 					'menu_id'        => 'primary-menu',
-					'menu_class'     => implode( ' ', $menu_class ) . ' ele-dropdown-reveal-fade',
+					'menu_class'     => $menu_class . ' ele-dropdown-reveal-' . sanitize_html_class( $args['reveal'] ),
 					'container'      => false,
 					'items_wrap'     => '<ul id="primary-menu" class="%2$s">%3$s</ul>',
-					'fallback_cb'    => 'elementify_menu_fallback',
+					'link_after'     => $args['link_after'],
+					'depth'          => absint( $args['depth'] ),
+					'fallback_cb'    => $args['fallback_cb'],
 				]
 			);
 			?>
