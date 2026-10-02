@@ -3889,7 +3889,7 @@ Header: Site Logo & Description.
 .ele-site-header [data-builder-element="site_logo"] .ele-site-title {
 	display: block;
 	margin-bottom: 0;
-	color: var(--ele-heading-color);
+	/* color: var(--ele-heading-color); */
 	text-decoration: none;
 }
 
