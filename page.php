@@ -19,14 +19,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header();
-?>
 
-<?php
 /**
- * Functions hooked into elementify/before_content action
+ * Renders an Elementor Theme Builder location when one is assigned for this
+ * template, and otherwise falls through to the theme's own markup.
+ *
+ * @see \Elementify\Inc\Elementor::do_content_location()
  */
-do_action( 'elementify/before_content' );
-?>
+if ( ! \Elementify\Inc\Elementor::get_instance()->do_content_location( 'single' ) ) :
+	?>
+
+	<?php
+	/**
+	 * Functions hooked into elementify/before_content action
+	 */
+	do_action( 'elementify/before_content' );
+	?>
 
 <main id="main" class="site-main">
 
@@ -63,13 +71,16 @@ do_action( 'elementify/before_content' );
 
 </main><!-- #main -->
 
-<?php
-/**
- * Functions hooked into elementify/after_content action
- *
- * @hooked elementify_sidebar    - 10
- */
-do_action( 'elementify/after_content' );
-?>
+	<?php
+	/**
+	 * Functions hooked into elementify/after_content action
+	 *
+	 * @hooked elementify_sidebar    - 10
+	 */
+	do_action( 'elementify/after_content' );
+	?>
 
-<?php get_footer(); ?>
+	<?php
+endif;
+
+get_footer();

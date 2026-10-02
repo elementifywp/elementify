@@ -30,6 +30,7 @@ class Elementify {
 		Customizer::get_instance();
 		Menus::get_instance();
 		Sidebars::get_instance();
+		Elementor::get_instance();
 
 		$this->setup_hooks();
 	}

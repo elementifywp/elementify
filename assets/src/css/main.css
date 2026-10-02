@@ -1642,7 +1642,13 @@ h6 {
   margin-bottom: 1.5rem;
 } */
 
-.entry-content p:not(.elementor-widget p) {
+/*
+ * Theme paragraph rhythm, but not inside Elementor widgets, which ship their
+ * own spacing. The complex selector in :not() is what makes this work; the
+ * previous `:not(.elementor-widget p)` could never express "not a descendant
+ * of .elementor-widget" and so matched every paragraph in the entry.
+ */
+.entry-content p:not(.elementor-widget *) {
 	margin-top: 1.25em;
 	margin-bottom: 1.25em;
 }
