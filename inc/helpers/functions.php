@@ -224,9 +224,14 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 	/**
 	 * Displays the primary navigation: the small-screen toggle and the menu-1 location.
 	 *
-	 * The markup (nav#ele-header-menu-1, .menu-toggle and ul#primary-menu) is
-	 * what assets/src/js/main.js binds to, so callers can change the menu's
-	 * look and behaviour through $args but not those hooks.
+	 * The markup (nav.ele-primary-navigation, its .menu-toggle and the menu
+	 * `ul` it controls) is what assets/src/js/main.js binds to, so callers can
+	 * change the menu's look and behaviour through $args but not those hooks.
+	 *
+	 * Safe to call more than once per page (e.g. a header builder printing the
+	 * menu in both its desktop and mobile rows): the first instance keeps the
+	 * ele-header-menu-1 / primary-menu ids, later ones get a numeric suffix so
+	 * ids and aria-controls stay unique.
 	 *
 	 * @since 1.0.0
 	 *
@@ -257,7 +262,14 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 			]
 		);
 
-		$main_navigation = [ 'main-navigation', 'ele-left-0', 'ele-z-20' ];
+		static $instance = 0;
+		++$instance;
+
+		$suffix  = 1 === $instance ? '' : '-' . $instance;
+		$nav_id  = 'ele-header-menu-1' . $suffix;
+		$menu_id = 'primary-menu' . $suffix;
+
+		$main_navigation = [ 'main-navigation', 'ele-primary-navigation', 'ele-left-0', 'ele-z-20' ];
 		$menu_class      = [ 'ele-main-menu', 'ele-list-style-none', 'ele-p-0', 'ele-m-0', 'ele-d-flex', 'ele-flex-column', 'ele-flex-lg-row' ];
 
 		$menu_class[] = 'have-caret';
@@ -280,8 +292,8 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 		}
 		?>
 
-		<nav id="ele-header-menu-1" class="<?php echo esc_attr( implode( ' ', $main_navigation ) ); ?>" data-layout="<?php echo esc_attr( $args['layout'] ); ?>" aria-label="<?php esc_attr_e( 'Primary menu', 'elementify' ); ?>"<?php echo $nav_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above. ?>>
-			<button type="button" class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+		<nav id="<?php echo esc_attr( $nav_id ); ?>" class="<?php echo esc_attr( implode( ' ', $main_navigation ) ); ?>" data-layout="<?php echo esc_attr( $args['layout'] ); ?>" aria-label="<?php esc_attr_e( 'Primary menu', 'elementify' ); ?>"<?php echo $nav_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above. ?>>
+			<button type="button" class="menu-toggle" aria-controls="<?php echo esc_attr( $menu_id ); ?>" aria-expanded="false">
 				<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'elementify' ); ?></span>
 				<span class="ele-trigger-menu ele-d-block ele-z-30" aria-hidden="true">
 					<span class="ele-hamburger-menu"><span></span><span></span><span></span><span></span></span>
@@ -291,10 +303,10 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 			wp_nav_menu(
 				[
 					'theme_location' => 'menu-1',
-					'menu_id'        => 'primary-menu',
+					'menu_id'        => $menu_id,
 					'menu_class'     => $menu_class . ' ele-dropdown-reveal-' . sanitize_html_class( $args['reveal'] ),
 					'container'      => false,
-					'items_wrap'     => '<ul id="primary-menu" class="%2$s">%3$s</ul>',
+					'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
 					'link_after'     => $args['link_after'],
 					'depth'          => absint( $args['depth'] ),
 					'fallback_cb'    => $args['fallback_cb'],
@@ -316,12 +328,15 @@ if ( ! function_exists( 'elementify_menu_fallback' ) ) {
 	 *
 	 * Contains wp_list_pages to display pages created,
 	 *
+	 * @param array $args Optional. wp_nav_menu() arguments; `menu_id` sets the list id. Default [].
 	 * @return  void
 	 * @since   1.0.0
 	 */
-	function elementify_menu_fallback() {
+	function elementify_menu_fallback( $args = [] ) {
+		$menu_id = ! empty( $args['menu_id'] ) ? $args['menu_id'] : 'primary-menu';
+
 		$output  = '';
-		$output .= '<ul id="primary-menu" class="ele-main-menu ele-d-flex ele-flex-wrap ele-list-style-none">';
+		$output .= '<ul id="' . esc_attr( $menu_id ) . '" class="ele-main-menu ele-d-flex ele-flex-wrap ele-list-style-none">';
 
 		$output .= wp_list_pages(
 			[

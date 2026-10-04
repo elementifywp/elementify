@@ -4124,7 +4124,10 @@ Footer: Site Logo & Description.
  * Small screens (< 48em): toggle button opens a full-width panel below the
  * header; submenus expand inline via the toggle buttons main.js adds.
  * Large screens: horizontal menu with :hover / :focus-within dropdowns.
- * Scoped by ID so it wins over the generic .ele-main-menu rules below.
+ * Scoped with :is(#ele-header-menu-1, .ele-primary-navigation): every
+ * instance carries the class (a header may print one per builder row, each
+ * with its own id), and :is() keeps ID-level specificity so these rules
+ * still win over the generic .ele-main-menu rules below.
  */
 #masthead {
 
@@ -4152,18 +4155,18 @@ Footer: Site Logo & Description.
 	display: block;
 }
 
-#ele-header-menu-1 .ele-submenu-toggle {
+:is(#ele-header-menu-1, .ele-primary-navigation) .ele-submenu-toggle {
 	display: none;
 }
 
-#ele-header-menu-1 .menu-toggle:focus-visible,
-#ele-header-menu-1 .ele-submenu-toggle:focus-visible,
-#ele-header-menu-1 .ele-main-menu a:focus-visible {
+:is(#ele-header-menu-1, .ele-primary-navigation) .menu-toggle:focus-visible,
+:is(#ele-header-menu-1, .ele-primary-navigation) .ele-submenu-toggle:focus-visible,
+:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu a:focus-visible {
 	outline: 2px solid var(--ele-primary-color);
 	outline-offset: 2px;
 }
 
-#ele-header-menu-1 .ele-submenu-toggle-icon {
+:is(#ele-header-menu-1, .ele-primary-navigation) .ele-submenu-toggle-icon {
 	display: block;
 	width: 8px;
 	height: 8px;
@@ -4174,17 +4177,17 @@ Footer: Site Logo & Description.
 	transition: transform var(--ele-transition-fast) ease-in-out;
 }
 
-#ele-header-menu-1 .is-open > .ele-submenu-toggle .ele-submenu-toggle-icon {
+:is(#ele-header-menu-1, .ele-primary-navigation) .is-open > .ele-submenu-toggle .ele-submenu-toggle-icon {
 	transform: translateY(2px) rotate(-135deg);
 }
 
 @media (max-width: 47.99em) {
 
-	#ele-header-menu-1 .ele-main-menu {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu {
 		display: none;
 	}
 
-	#ele-header-menu-1.toggled .ele-main-menu {
+	:is(#ele-header-menu-1, .ele-primary-navigation).toggled .ele-main-menu {
 		display: flex;
 		flex-direction: column;
 		flex-wrap: nowrap;
@@ -4200,7 +4203,7 @@ Footer: Site Logo & Description.
 		box-shadow: var(--ele-box-shadow);
 	}
 
-	#ele-header-menu-1 .ele-main-menu li {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
@@ -4209,19 +4212,19 @@ Footer: Site Logo & Description.
 		border-bottom: var(--ele-border);
 	}
 
-	#ele-header-menu-1 .ele-main-menu li:last-child {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li:last-child {
 		border-bottom: 0;
 	}
 
-	#ele-header-menu-1 .ele-main-menu li > a {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li > a {
 		flex: 1;
 		height: auto;
 		padding: 12px 0;
 		color: var(--ele-heading-color);
 	}
 
-	#ele-header-menu-1 .ele-main-menu li.current-menu-item > a,
-	#ele-header-menu-1 .ele-main-menu li.current_page_item > a {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li.current-menu-item > a,
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li.current_page_item > a {
 		color: var(--ele-primary-color);
 	}
 
@@ -4237,7 +4240,7 @@ Footer: Site Logo & Description.
 	 * `color` of their own (see the `currentcolor` below), otherwise they
 	 * vanish against the dark `--ele-base-100`.
 	 */
-	#ele-header-menu-1 .menu-toggle {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .menu-toggle {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -4251,7 +4254,7 @@ Footer: Site Logo & Description.
 		border-radius: 0;
 	}
 
-	#ele-header-menu-1 .ele-submenu-toggle {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-submenu-toggle {
 		display: block;
 		width: 44px;
 		height: 44px;
@@ -4262,7 +4265,7 @@ Footer: Site Logo & Description.
 	}
 
 	/* Submenus expand inline instead of floating. */
-	#ele-header-menu-1 .ele-main-menu ul {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul {
 		display: none;
 		flex-basis: 100%;
 		position: static;
@@ -4276,19 +4279,19 @@ Footer: Site Logo & Description.
 		border-top: var(--ele-border);
 	}
 
-	#ele-header-menu-1 .ele-main-menu li.is-open > ul {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li.is-open > ul {
 		display: block;
 	}
 }
 
 @media (min-width: 48em) {
 
-	#ele-header-menu-1 .menu-toggle {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .menu-toggle {
 		display: none;
 	}
 
 	/* Row layout from the same breakpoint the toggle disappears at. */
-	#ele-header-menu-1 .ele-main-menu {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -4300,7 +4303,7 @@ Footer: Site Logo & Description.
 	 * is only delayed on close, so a submenu is focusable the moment its
 	 * parent gets focus; otherwise a quick Tab skips it mid-fade.
 	 */
-	#ele-header-menu-1 .ele-main-menu ul {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul {
 		display: block;
 		top: 100%;
 		left: 0;
@@ -4315,31 +4318,31 @@ Footer: Site Logo & Description.
 	}
 
 	/* Third level and deeper open to the left: the menu sits on the right of the header. */
-	#ele-header-menu-1 .ele-main-menu ul ul {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul ul {
 		top: -1px;
 		left: auto;
 		right: 100%;
 		margin-top: 0;
 	}
 
-	#ele-header-menu-1 .ele-main-menu li:hover > ul,
-	#ele-header-menu-1 .ele-main-menu li:focus-within > ul {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li:hover > ul,
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li:focus-within > ul {
 		transition-delay: 0s;
 	}
 
-	#ele-header-menu-1 .ele-main-menu ul li a {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a {
 		color: var(--ele-heading-color);
 		border-bottom: var(--ele-border);
 	}
 
-	#ele-header-menu-1 .ele-main-menu ul li:last-child > a {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li:last-child > a {
 		border-bottom: 0;
 	}
 
-	#ele-header-menu-1 .ele-main-menu ul li a:hover,
-	#ele-header-menu-1 .ele-main-menu ul li a:focus-visible,
-	#ele-header-menu-1 .ele-main-menu ul li.current-menu-item > a,
-	#ele-header-menu-1 .ele-main-menu ul li.current_page_item > a {
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a:hover,
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a:focus-visible,
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li.current-menu-item > a,
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li.current_page_item > a {
 		color: var(--ele-primary-color);
 		background-color: var(--ele-base-200);
 	}
