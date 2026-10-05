@@ -9,9 +9,9 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class('ele-column'); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'ele-column' ); ?>>
 
-    <?php
+	<?php
 	/**
 	 * Hook for entry content.
 	 *

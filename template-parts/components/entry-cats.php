@@ -5,10 +5,10 @@
  * @package Elementify
  */
 
-$the_post_id	= get_the_ID();
+$the_post_id = get_the_ID();
 
 // Check whether the post type is allowed to output post categories.
-if ( in_array( get_post_type( $the_post_id ), array( 'page' ), true ) ) {
+if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) ) {
 	return;
 }
 

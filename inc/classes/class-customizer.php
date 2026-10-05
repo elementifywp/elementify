@@ -10,22 +10,24 @@ namespace Elementify\Inc;
 use Elementify\Inc\Traits\Singleton;
 
 /**
- * Class Customizer
+ * Adds postMessage and selective refresh support for the core Customizer settings.
  */
 class Customizer {
 
 	use Singleton;
 
 	/**
-	 * Constructor.
+	 * Register the Customizer hooks when the singleton is first created.
+	 *
+	 * @return void
 	 */
 	public function __construct() {
-		
+
 		$this->setup_hooks();
 	}
 
 	/**
-	 * Initialize hooks.
+	 * Hook Customizer settings registration into `customize_register`.
 	 *
 	 * @return void
 	 */
@@ -40,8 +42,13 @@ class Customizer {
 	/**
 	 * Add postMessage support for site title and description for the Theme Customizer.
 	 *
+	 * Switches the blogname, blogdescription and header_textcolor settings to
+	 * postMessage transport so they preview without a full refresh, and
+	 * registers the matching selective refresh partials when the manager
+	 * supports them.
+	 *
 	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
-	 * @action customize_register
+	 * @return void
 	 */
 	public function customizer( $wp_customize ) {
 		$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
@@ -51,20 +58,19 @@ class Customizer {
 		if ( isset( $wp_customize->selective_refresh ) ) {
 			$wp_customize->selective_refresh->add_partial(
 				'blogname',
-				array(
+				[
 					'selector'        => '.site-title a',
 					'render_callback' => [ $this, 'customize_partial_blogname' ],
-				)
+				]
 			);
 			$wp_customize->selective_refresh->add_partial(
 				'blogdescription',
-				array(
+				[
 					'selector'        => '.site-description',
 					'render_callback' => [ $this, 'customize_partial_blogdescription' ],
-				)
+				]
 			);
 		}
-
 	}
 
 	/**
@@ -84,5 +90,4 @@ class Customizer {
 	public function customize_partial_blogdescription() {
 		bloginfo( 'description' );
 	}
-	
 }

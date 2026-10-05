@@ -17,29 +17,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <?php
-    /**
-     * Functions hooked into elementify/before_footer action
-     *
-     */
-    do_action( 'elementify/before_footer' );
-    ?>
+	/**
+	 * Functions hooked into elementify/before_footer action
+	 */
+	do_action( 'elementify/before_footer' );
+?>
 
 <?php
-    /**
-     * Functions hooked into elementify/footer action
-     *
-     * @hooked elementify_footer - 10
-     */
-    do_action( 'elementify/footer' );
-    ?>
+	/**
+	 * Functions hooked into elementify/footer action
+	 *
+	 * @hooked elementify_footer - 10
+	 */
+	do_action( 'elementify/footer' );
+?>
 
 <?php
-    /**
-     * Functions hooked into elementify/after_footer action
-     *
-     */
-    do_action( 'elementify/after_footer' );
-    ?>
+	/**
+	 * Functions hooked into elementify/after_footer action
+	 */
+	do_action( 'elementify/after_footer' );
+?>
 
 </div><!-- #page -->
 

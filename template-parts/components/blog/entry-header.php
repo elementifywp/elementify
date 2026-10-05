@@ -5,7 +5,7 @@
  * @package Elementify
  */
 
-$the_post_id   = get_the_ID();
+$the_post_id = get_the_ID();
 ?>
 <header class="entry-header">
 	
@@ -15,6 +15,6 @@ $the_post_id   = get_the_ID();
 
 	<?php get_template_part( 'template-parts/components/blog/entry-meta' ); // entry meta ?>
 
-	<?php //get_template_part( 'template-parts/components/blog/entry-meta', '', [ 'desktop' => ['author', 'date', 'category'] ] ); // entry meta ?>
+	<?php // get_template_part( 'template-parts/components/blog/entry-meta', '', [ 'desktop' => ['author', 'date', 'category'] ] ); // entry meta ?>
 
 </header><!-- .entry-header -->

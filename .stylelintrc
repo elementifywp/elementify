@@ -1,7 +1,0 @@
-{
-	"extends": "@wordpress/stylelint-config/scss",
-	"ignoreFiles": [
-		"**/*.js"
-	],
-	"rules": {}
-}

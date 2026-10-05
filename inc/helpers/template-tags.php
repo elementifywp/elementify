@@ -7,11 +7,11 @@
  */
 
 // Exit if accessed directly.
-if (! defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if (! function_exists('elementify_get_the_post_thumbnail')) {
+if ( ! function_exists( 'elementify_get_the_post_thumbnail' ) ) {
 
 	/**
 	 * Gets the thumbnail with Lazy Load.
@@ -23,23 +23,22 @@ if (! function_exists('elementify_get_the_post_thumbnail')) {
 	 *
 	 * @return string
 	 */
-	function elementify_get_the_post_thumbnail($post_id, $size = 'medium', $additional_attributes = [])
-	{
+	function elementify_get_the_post_thumbnail( $post_id, $size = 'medium', $additional_attributes = [] ) {
 		$custom_thumbnail = '';
 
-		if (null === $post_id) {
+		if ( null === $post_id ) {
 			$post_id = get_the_ID();
 		}
 
-		if (has_post_thumbnail($post_id)) {
+		if ( has_post_thumbnail( $post_id ) ) {
 			$default_attributes = [
-				'loading' => 'lazy'
+				'loading' => 'lazy',
 			];
 
-			$attributes = array_merge($additional_attributes, $default_attributes);
+			$attributes = array_merge( $additional_attributes, $default_attributes );
 
 			$custom_thumbnail = wp_get_attachment_image(
-				get_post_thumbnail_id($post_id),
+				get_post_thumbnail_id( $post_id ),
 				$size,
 				false,
 				$attributes
@@ -50,7 +49,7 @@ if (! function_exists('elementify_get_the_post_thumbnail')) {
 	}
 }
 
-if (! function_exists('elementify_the_post_thumbnail')) {
+if ( ! function_exists( 'elementify_the_post_thumbnail' ) ) {
 
 	/**
 	 * Renders Custom Thumbnail with Lazy Load.
@@ -58,128 +57,139 @@ if (! function_exists('elementify_the_post_thumbnail')) {
 	 * @param int    $post_id               Post ID.
 	 * @param string $size                  The registered image size.
 	 * @param array  $additional_attributes Additional attributes.
+	 * @return void
 	 */
-	function elementify_the_post_thumbnail($post_id, $size = 'medium', $additional_attributes = [])
-	{
-		echo elementify_get_the_post_thumbnail($post_id, $size, $additional_attributes); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	function elementify_the_post_thumbnail( $post_id, $size = 'medium', $additional_attributes = [] ) {
+		echo elementify_get_the_post_thumbnail( $post_id, $size, $additional_attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
-if (! function_exists('elementify_posted_on')) {
+if ( ! function_exists( 'elementify_posted_on' ) ) {
 
 	/**
 	 * Prints HTML with meta information for the current post-date/time.
 	 *
 	 * @return void
 	 */
-	function elementify_posted_on()
-	{
-		$year                        = get_the_date('Y');
-		$month                       = get_the_date('n');
-		$day                         = get_the_date('j');
-		$post_date_archive_permalink = get_day_link($year, $month, $day);
+	function elementify_posted_on() {
+		$year                        = get_the_date( 'Y' );
+		$month                       = get_the_date( 'n' );
+		$day                         = get_the_date( 'j' );
+		$post_date_archive_permalink = get_day_link( $year, $month, $day );
 
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 
 		// Post is modified ( when post published time is not equal to post modified time )
-		if (get_the_time('U') !== get_the_modified_time('U')) {
+		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 		}
 
 		$time_string = sprintf(
 			$time_string,
-			esc_attr(get_the_date(DATE_W3C)),
-			esc_attr(get_the_date()),
-			esc_attr(get_the_modified_date(DATE_W3C)),
-			esc_attr(get_the_modified_date())
+			esc_attr( get_the_date( DATE_W3C ) ),
+			esc_attr( get_the_date() ),
+			esc_attr( get_the_modified_date( DATE_W3C ) ),
+			esc_attr( get_the_modified_date() )
 		);
 
 		$posted_on = sprintf(
-			esc_html_x('Posted on %s', 'post date', 'elementify'),
-			'<a href="' . esc_url($post_date_archive_permalink) . '" rel="bookmark">' . $time_string . '</a>'
+			esc_html_x( 'Posted on %s', 'post date', 'elementify' ),
+			'<a href="' . esc_url( $post_date_archive_permalink ) . '" rel="bookmark">' . $time_string . '</a>'
 		);
 
 		echo '<span class="posted-on text-secondary">' . $posted_on . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
-if (! function_exists('elementify_posted_by')) {
+if ( ! function_exists( 'elementify_posted_by' ) ) {
 
 	/**
 	 * Prints HTML with meta information for the current author.
 	 *
 	 * @return void
 	 */
-	function elementify_posted_by()
-	{
+	function elementify_posted_by() {
 		$byline = sprintf(
-			esc_html_x(' by %s', 'post author', 'elementify'),
-			'<span class="author vcard"><a href="' . esc_url(get_author_posts_url(get_the_author_meta('ID'))) . '">' . esc_html(get_the_author()) . '</a></span>'
+			esc_html_x( ' by %s', 'post author', 'elementify' ),
+			'<span class="author vcard"><a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 		);
 
 		echo '<span class="byline text-secondary">' . $byline . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
-if (! function_exists('elementify_the_excerpt')) {
+if ( ! function_exists( 'elementify_the_excerpt' ) ) {
 
 	/**
-	 * Get the trimmed version of post excerpt.
+	 * Output a trimmed excerpt for the current post.
 	 *
-	 * This is for modifing manually entered excerpts,
-	 * NOT automatic ones WordPress will grab from the content.
+	 * Prints a manually entered excerpt when one exists. Otherwise builds an
+	 * excerpt from the post content and truncates it to at most
+	 * $trim_character_count characters, cutting on the nearest word boundary so
+	 * words are never split. The tail (optionally a "read more" link) is appended
+	 * only when the text is actually shortened.
 	 *
-	 * It will display the first given characters ( e.g. 100 ) characters of a manually entered excerpt,
-	 * but instead of ending on the nth( e.g. 100th ) character,
-	 * it will truncate after the closest word.
+	 * Requires the mbstring extension for correct multibyte handling.
 	 *
-	 * @param int $trim_character_count Charter count to be trimmed
-	 * @param string $tail excerpt ending
-	 * @param bool $link excerpt ending enable/disale link
+	 * @param int    $trim_character_count Maximum characters. Less than 1 falls back to the_excerpt().
+	 * @param string $tail                 Appended after truncation (e.g. '…').
+	 * @param bool   $link                 Whether to wrap $tail in a link to the post.
 	 *
-	 * @return bool|string
+	 * @return void
 	 */
-	function elementify_the_excerpt($trim_character_count = 0, $tail = '...', $link = false)
-	{
-		global $post;
-		$post_ID = $post->ID;
+	function elementify_the_excerpt( $trim_character_count = 0, $tail = '...', $link = false ) {
+		$post = get_post();
 
-		if (empty($post_ID)) {
-			return null;
+		if ( ! $post ) {
+			return;
 		}
 
-		if (has_excerpt() || 0 === $trim_character_count) {
+		$trim_character_count = (int) $trim_character_count;
+
+		// Respect a manually entered excerpt, and the "no trimming" case.
+		if ( has_excerpt( $post ) || $trim_character_count < 1 ) {
 			the_excerpt();
 			return;
 		}
 
-		if ($link) {
-			$tail = sprintf(
-				' <a class="ele-link" href="%1$s">%2$s</a>',
-				esc_url(get_the_permalink()),
-				esc_html($tail)
-			);
+		// Render blocks/shortcodes, then reduce to normalized plain text.
+		$text = strip_shortcodes( $post->post_content );
+		$text = apply_filters( 'the_content', $text );
+		$text = str_replace( ']]>', ']]&gt;', $text );
+		$text = wp_strip_all_tags( $text, true ); // Strips tags + <script>/<style>, breaks to spaces.
+		$text = trim( preg_replace( '/\s+/', ' ', $text ) );
+
+		if ( '' === $text ) {
+			return;
 		}
 
-		$post_content = $post->post_content;
-		$post_content = apply_filters('the_content', $post_content);
-		$post_content = preg_replace('@\[caption[^\]]*?\].*?\[\/caption]@si', '', $post_content);
-		$post_content = preg_replace('@<script[^>]*?>.*?</script>@si', '', $post_content);
-		$post_content = preg_replace('@<style[^>]*?>.*?</style>@si', '', $post_content);
-		$post_content = preg_replace(' (\[.*?\])', '', $post_content);
-		$post_content = strip_shortcodes($post_content);
-		$post_content = strip_tags($post_content);
+		// Only truncate — and only append the tail — when the text exceeds the limit.
+		if ( mb_strlen( $text ) > $trim_character_count ) {
+			$text = mb_substr( $text, 0, $trim_character_count );
 
-		$post_content = substr($post_content, 0, $trim_character_count);
-		$post_content = substr($post_content, 0, strrpos($post_content, ' '));
-		$post_content = trim(preg_replace('/\s+/', ' ', $post_content));
-		$post_content = $post_content . $tail;
+			// Step back to the last whole word, but keep the hard cut when there
+			// are no spaces (single long word, or a language without word spaces).
+			$last_space = mb_strrpos( $text, ' ' );
+			if ( $last_space > 0 ) {
+				$text = mb_substr( $text, 0, $last_space );
+			}
 
-		echo wpautop($post_content); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$text = rtrim( $text );
+
+			$text .= $link
+				? sprintf(
+					' <a class="ele-link" href="%1$s">%2$s</a>',
+					esc_url( get_the_permalink( $post ) ),
+					esc_html( $tail )
+				)
+				: $tail;
+		}
+
+		echo wpautop( $text ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
-if (! function_exists('elementify_excerpt_more')) {
+if ( ! function_exists( 'elementify_excerpt_more' ) ) {
 
 	/**
 	 * Filter the "read more" excerpt string link to the post.
@@ -188,29 +198,34 @@ if (! function_exists('elementify_excerpt_more')) {
 	 *
 	 * @return string (Maybe) modified "read more" excerpt string.
 	 */
-	function elementify_excerpt_more($more = '')
-	{
+	function elementify_excerpt_more( $more = '' ) {
 		$more = sprintf(
-			'<div class="ele-read-more-wrap"><a class="ele-read-more" href="%1$s">%2$s</a></div><!-- .ele-read-more-wrap -->',
-			get_permalink(get_the_ID()),
-			__('Read more', 'elementify')
+			'<div class="ele-read-more-wrap"><a class="ele-read-more ele-button" href="%1$s">%2$s</a></div><!-- .ele-read-more-wrap -->',
+			get_permalink( get_the_ID() ),
+			__( 'Read more', 'elementify' )
 		);
 
-		return apply_filters('elementify/excerpt_more', $more);
+		return apply_filters( 'elementify/excerpt_more', $more );
 	}
 }
 
-if (! function_exists('elementify_the_post_pagination')) {
+if ( ! function_exists( 'elementify_the_post_pagination' ) ) {
 
 	/**
 	 * Display Post pagination with prev next, first last, to, from
 	 *
-	 * @param int $current_page_no Current page number.
-	 * @param int $posts_per_page Posts per page.
+	 * Prints a "Showing X - Y Of Z" summary and First/Last links only when the
+	 * corresponding URL is non-empty; the core paginate_links() output is
+	 * always printed. Set $is_query_param_structure to false for pretty
+	 * permalinks, which changes both the base and the URL format.
+	 *
+	 * @param int      $current_page_no Current page number.
+	 * @param int      $posts_per_page Posts per page.
 	 * @param WP_Query $article_query The query object.
-	 * @param string $first_page_url First page URL.
-	 * @param string $last_page_url Last page URL.
-	 * @param bool $is_query_param_structure Whether to use query parameter structure.
+	 * @param string   $first_page_url First page URL.
+	 * @param string   $last_page_url Last page URL.
+	 * @param bool     $is_query_param_structure Whether to use query parameter structure.
+	 * @return void
 	 */
 	function elementify_the_post_pagination(
 		$current_page_no,
@@ -220,19 +235,19 @@ if (! function_exists('elementify_the_post_pagination')) {
 		$last_page_url,
 		bool $is_query_param_structure = true
 	) {
-		$prev_posts = ($current_page_no - 1) * $posts_per_page;
-		$from = 1 + $prev_posts;
-		$to = count($article_query->posts) + $prev_posts;
-		$of = $article_query->found_posts;
+		$prev_posts  = ( $current_page_no - 1 ) * $posts_per_page;
+		$from        = 1 + $prev_posts;
+		$to          = count( $article_query->posts ) + $prev_posts;
+		$of          = $article_query->found_posts;
 		$total_pages = $article_query->max_num_pages;
 
-		$base = ! empty($is_query_param_structure) ? add_query_arg('page', '%#%') : get_pagenum_link(1) . '%_%';
-		$format = ! empty($is_query_param_structure) ? '?page=%#%' : 'page/%#%';
+		$base   = ! empty( $is_query_param_structure ) ? add_query_arg( 'page', '%#%' ) : get_pagenum_link( 1 ) . '%_%';
+		$format = ! empty( $is_query_param_structure ) ? '?page=%#%' : 'page/%#%';
 
-?>
+		?>
 		<div class="mt-0 md:mt-10 mb-10 lg:my-5 flex items-center justify-end posts-navigation">
 			<?php
-			if (1 < $total_pages && !empty($first_page_url)) {
+			if ( 1 < $total_pages && ! empty( $first_page_url ) ) {
 				printf(
 					'<span class="mr-2">Showing %1$s - %2$s Of %3$s</span>',
 					$from,
@@ -242,22 +257,24 @@ if (! function_exists('elementify_the_post_pagination')) {
 			}
 
 			// First Page
-			if (1 !== $current_page_no && ! empty($first_page_url)) {
-				printf('<a class="first-pagination-link btn border border-secondary mr-2" href="%1$s" title="first-pagination-link">%2$s</a>', esc_url($first_page_url), __('First', 'elementify'));
+			if ( 1 !== $current_page_no && ! empty( $first_page_url ) ) {
+				printf( '<a class="first-pagination-link btn border border-secondary mr-2" href="%1$s" title="first-pagination-link">%2$s</a>', esc_url( $first_page_url ), __( 'First', 'elementify' ) );
 			}
 
-			echo paginate_links([
-				'base'      => $base,
-				'format'    => $format,
-				'current'   => $current_page_no,
-				'total'     => $total_pages,
-				'prev_text' => __('Prev', 'elementify'),
-				'next_text' => __('Next', 'elementify'),
-			]);
+			echo paginate_links(
+				[
+					'base'      => $base,
+					'format'    => $format,
+					'current'   => $current_page_no,
+					'total'     => $total_pages,
+					'prev_text' => __( 'Prev', 'elementify' ),
+					'next_text' => __( 'Next', 'elementify' ),
+				]
+			);
 
 			// Last Page
-			if ($current_page_no < $total_pages && !empty($last_page_url)) {
-				printf('<a class="last-pagination-link btn border border-secondary ml-2" href="%1$s" title="last-pagination-link">%2$s</a>', esc_url($last_page_url), __('Last', 'elementify'));
+			if ( $current_page_no < $total_pages && ! empty( $last_page_url ) ) {
+				printf( '<a class="last-pagination-link btn border border-secondary ml-2" href="%1$s" title="last-pagination-link">%2$s</a>', esc_url( $last_page_url ), __( 'Last', 'elementify' ) );
 			}
 			?>
 		</div>
@@ -265,24 +282,24 @@ if (! function_exists('elementify_the_post_pagination')) {
 	}
 }
 
-if (! function_exists('elementify_is_uploaded_via_wp_admin')) {
+if ( ! function_exists( 'elementify_is_uploaded_via_wp_admin' ) ) {
 
 	/**
 	 * Checks to see if the specified user id has a uploaded the image via wp_admin.
 	 *
 	 * @param string $gravatar_url The gravatar URL.
-	 * @return bool Whether or not the user has a gravatar
+	 * @return bool True when the URL has no query string, which means the avatar
+	 *              is a locally uploaded file rather than a Gravatar request.
 	 */
-	function elementify_is_uploaded_via_wp_admin($gravatar_url)
-	{
-		$parsed_url = wp_parse_url($gravatar_url);
-		$query_args = ! empty($parsed_url['query']) ? $parsed_url['query'] : '';
+	function elementify_is_uploaded_via_wp_admin( $gravatar_url ) {
+		$parsed_url = wp_parse_url( $gravatar_url );
+		$query_args = ! empty( $parsed_url['query'] ) ? $parsed_url['query'] : '';
 		// If query args is empty means, user has uploaded gravatar.
-		return empty($query_args);
+		return empty( $query_args );
 	}
 }
 
-if (! function_exists('elementify_has_gravatar')) {
+if ( ! function_exists( 'elementify_has_gravatar' ) ) {
 
 	/**
 	 * If the gravatar is uploaded returns true.
@@ -301,52 +318,58 @@ if (! function_exists('elementify_has_gravatar')) {
 	 * When constructing the URL, use the parameter d=404.
 	 * This will cause Gravatar to return a 404 error rather than an image if the user hasn't set a picture.
 	 *
+	 * Note: the second path makes a remote request via get_headers(), so this
+	 * function is not safe to call on every comment without caching.
+	 *
 	 * @param string $user_email User email.
-	 * @return bool
+	 * @return bool|int 1 when the avatar exists, 0 when it does not.
 	 */
-	function elementify_has_gravatar($user_email)
-	{
-		$gravatar_url = get_avatar_url($user_email);
+	function elementify_has_gravatar( $user_email ) {
+		$gravatar_url = get_avatar_url( $user_email );
 
-		if (elementify_is_uploaded_via_wp_admin($gravatar_url)) {
+		if ( elementify_is_uploaded_via_wp_admin( $gravatar_url ) ) {
 			return true;
 		}
 
-		$gravatar_url = sprintf('%s&d=404', $gravatar_url);
+		$gravatar_url = sprintf( '%s&d=404', $gravatar_url );
 
 		// Make a request to $gravatar_url and get the header
-		$headers = @get_headers($gravatar_url);
+		$headers = @get_headers( $gravatar_url );
 
 		// If request status is 200, which means user has uploaded the avatar on gravatar site
-		return preg_match("|200|", $headers[0]);
+		return preg_match( '|200|', $headers[0] );
 	}
 }
 
-if (! function_exists('elementify_entry_footer')) :
+if ( ! function_exists( 'elementify_entry_footer' ) ) :
 
 	/**
 	 * Prints HTML with meta information for the categories, tags and comments.
+	 *
+	 * Only runs on single posts. Prints category and tag links for the 'post'
+	 * post type, then the edit link. Returns early on any other view.
+	 *
+	 * @return void
 	 */
-	function elementify_entry_footer()
-	{
-		if (! is_single()) {
+	function elementify_entry_footer() {
+		if ( ! is_single() ) {
 			return;
 		}
 
 		// Hide category and tag text for pages.
-		if ('post' === get_post_type()) {
+		if ( 'post' === get_post_type() ) {
 			/* translators: used between list items, there is a space after the comma */
-			$categories_list = get_the_category_list(esc_html__(', ', 'elementify'));
-			if ($categories_list) {
+			$categories_list = get_the_category_list( esc_html__( ', ', 'elementify' ) );
+			if ( $categories_list ) {
 				/* translators: 1: list of categories. */
-				printf('<span class="cat-links">' . esc_html__('Posted in %1$s', 'elementify') . '</span>', $categories_list); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', 'elementify' ) . '</span>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			/* translators: used between list items, there is a space after the comma */
-			$tags_list = get_the_tag_list('', esc_html_x(', ', 'list item separator', 'elementify'));
-			if ($tags_list) {
+			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'elementify' ) );
+			if ( $tags_list ) {
 				/* translators: 1: list of tags. */
-				printf('<span class="tags-links">' . esc_html__('Tagged %1$s', 'elementify') . '</span>', $tags_list); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'elementify' ) . '</span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -354,14 +377,14 @@ if (! function_exists('elementify_entry_footer')) :
 			sprintf(
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */
-					__('Edit <span class="screen-reader-text">%s</span>', 'elementify'),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
+					__( 'Edit <span class="screen-reader-text">%s</span>', 'elementify' ),
+					[
+						'span' => [
+							'class' => [],
+						],
+					]
 				),
-				wp_kses_post(get_the_title())
+				wp_kses_post( get_the_title() )
 			),
 			'<span class="edit-link">',
 			'</span>'
@@ -369,21 +392,23 @@ if (! function_exists('elementify_entry_footer')) :
 	}
 endif;
 
-if (! function_exists('elementify_post_thumbnail')) :
+if ( ! function_exists( 'elementify_post_thumbnail' ) ) :
 	/**
 	 * Displays an optional post thumbnail.
 	 *
 	 * Wraps the post thumbnail in an anchor element on index views, or a div
-	 * element when on single views.
+	 * element when on single views. Returns early for password-protected posts,
+	 * attachments, and posts without a featured image.
+	 *
+	 * @return void
 	 */
-	function elementify_post_thumbnail()
-	{
-		if (post_password_required() || is_attachment() || ! has_post_thumbnail()) {
+	function elementify_post_thumbnail() {
+		if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
 			return;
 		}
 
-		if (is_singular()) :
-		?>
+		if ( is_singular() ) :
+			?>
 
 			<div class="post-thumbnail">
 				<?php the_post_thumbnail(); ?>
@@ -395,30 +420,33 @@ if (! function_exists('elementify_post_thumbnail')) :
 				<?php
 				the_post_thumbnail(
 					'post-thumbnail',
-					array(
+					[
 						'alt' => the_title_attribute(
-							array(
+							[
 								'echo' => false,
-							)
+							]
 						),
-					)
+					]
 				);
 				?>
 			</a>
 
-<?php
+			<?php
 		endif; // End is_singular().
 	}
 endif;
 
-if (! function_exists('wp_body_open')) :
+if ( ! function_exists( 'wp_body_open' ) ) :
 	/**
 	 * Shim for sites older than 5.2.
 	 *
+	 * Guards against redeclaring the core function, which WordPress added in
+	 * 5.2. Core only fires the wp_body_open action; the theme never binds to it.
+	 *
 	 * @link https://core.trac.wordpress.org/ticket/12563
+	 * @return void
 	 */
-	function wp_body_open()
-	{
-		do_action('wp_body_open');
+	function wp_body_open() {
+		do_action( 'wp_body_open' );
 	}
 endif;

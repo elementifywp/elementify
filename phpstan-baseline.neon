@@ -1,0 +1,301 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Function get_day_link invoked with 1 parameter, 3 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Method Elementify\\Inc\\Breadcrumb_Trail\:\:get_post_types_by_slug\(\) with return type void returns list\<WP_Post_Type\> but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Method Elementify\\Inc\\Breadcrumb_Trail\:\:map_rewrite_tags\(\) should return array but return statement is missing\.$#'
+			identifier: return.missing
+			count: 2
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Method Elementify\\Inc\\Breadcrumb_Trail\:\:trail\(\) should return string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$args$#'
+			identifier: parameter.notFound
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Parameter \#1 \$author_id of function get_author_posts_url expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Parameter \#1 \$slug of method Elementify\\Inc\\Breadcrumb_Trail\:\:get_post_types_by_slug\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Parameter \#2 \$protocols of function esc_url expects array\<string\>\|null, int\|string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Parameter \#2 \$user_id of function get_the_author_meta expects int\|false, ''''\|numeric\-string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Parameter \#3 \$format of function get_archives_link expects string, false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Result of method Elementify\\Inc\\Breadcrumb_Trail\:\:get_post_types_by_slug\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Variable \$matches in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.variable
+			count: 2
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Variable \$post might not be defined\.$#'
+			identifier: variable.undefined
+			count: 2
+			path: inc/classes/class-breadcrumb-trail.php
+
+		-
+			message: '#^Access to property \$selective_refresh on an unknown class Elementify\\Inc\\WP_Customize_Manager\.$#'
+			identifier: class.notFound
+			count: 3
+			path: inc/classes/class-customizer.php
+
+		-
+			message: '#^Call to method get_setting\(\) on an unknown class Elementify\\Inc\\WP_Customize_Manager\.$#'
+			identifier: class.notFound
+			count: 3
+			path: inc/classes/class-customizer.php
+
+		-
+			message: '#^Parameter \$wp_customize of method Elementify\\Inc\\Customizer\:\:customizer\(\) has invalid type Elementify\\Inc\\WP_Customize_Manager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: inc/classes/class-customizer.php
+
+		-
+			message: '#^Function is_product not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: inc/classes/class-utils.php
+
+		-
+			message: '#^Method Elementify\\Inc\\Utils\:\:schema_org_definitions\(\) should return string\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/classes/class-utils.php
+
+		-
+			message: '#^Parameter \#1 \$prefix of function uniqid expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: inc/classes/class-utils.php
+
+		-
+			message: '#^Access to an undefined property WP_Post\:\:\$classes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: inc/helpers/functions.php
+
+		-
+			message: '#^Access to an undefined property WP_Post\:\:\$url\.$#'
+			identifier: property.notFound
+			count: 1
+			path: inc/helpers/functions.php
+
+		-
+			message: '#^Function elementify_breadcrumb\(\) with return type void returns mixed but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: inc/helpers/functions.php
+
+		-
+			message: '#^Function elementify_site_description\(\) should return string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/helpers/functions.php
+
+		-
+			message: '#^Function elementify_site_logo\(\) should return string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/helpers/functions.php
+
+		-
+			message: '#^Function elementify_site_title\(\) should return string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: inc/helpers/functions.php
+
+		-
+			message: '#^Parameter \#1 \$args of function wp_list_pages expects array\{child_of\?\: int, authors\?\: string, date_format\?\: string, depth\?\: int, echo\?\: bool, exclude\?\: array\<int\>\|string, include\?\: array, link_after\?\: string, \.\.\.\}, array\{echo\: false, title_li\: false\} given\.$#'
+			identifier: argument.type
+			count: 2
+			path: inc/helpers/functions.php
+
+		-
+			message: '#^Variable \$classname might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: inc/helpers/functions.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' and ''cats'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: inc/helpers/template-functions.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' and ''div1'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: inc/helpers/template-functions.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' and ''tags'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: inc/helpers/template-functions.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: inc/helpers/template-functions.php
+
+		-
+			message: '#^Variable \$elements in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: inc/helpers/template-functions.php
+
+		-
+			message: '#^Parameter \#1 \$author_id of function get_author_posts_url expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: inc/helpers/template-tags.php
+
+		-
+			message: '#^Parameter \#1 \$author_id of function get_author_posts_url expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: template-parts/components/blog/entry-meta.php
+
+		-
+			message: '#^Variable \$metas in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: template-parts/components/blog/entry-meta.php
+
+		-
+			message: '#^Call to function array_key_exists\(\) with ''desktop'' and array\{desktop\: ''1''\} will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Call to function array_key_exists\(\) with ''desktop'' and array\{desktop\: mixed\} will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Left side of && is always false\.$#'
+			identifier: booleanAnd.leftAlwaysFalse
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Left side of && is always true\.$#'
+			identifier: booleanAnd.leftAlwaysTrue
+			count: 6
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Loose comparison using \!\= between ''F j, Y'' and '''' will always evaluate to true\.$#'
+			identifier: notEqual.alwaysTrue
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Loose comparison using \!\= between ''cats'' and '''' will always evaluate to true\.$#'
+			identifier: notEqual.alwaysTrue
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Loose comparison using \!\= between ''dash'' and '''' will always evaluate to true\.$#'
+			identifier: notEqual.alwaysTrue
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Loose comparison using \!\= between ''none'' and '''' will always evaluate to true\.$#'
+			identifier: notEqual.alwaysTrue
+			count: 2
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''breadcrumbs''\|''post\-meta''\|''thumbnail''\|''title'' and ''excerpt'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''breadcrumbs''\|''post\-meta''\|''thumbnail''\|''title'' and ''taxonomy'' will always evaluate to false\.$#'
+			identifier: equal.alwaysFalse
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Loose comparison using \=\= between ''cats'' and ''cats'' will always evaluate to true\.$#'
+			identifier: equal.alwaysTrue
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Variable \$elements in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 2
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Variable \$metas in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: template-parts/components/entry-meta.php

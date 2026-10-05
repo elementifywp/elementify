@@ -1,0 +1,30 @@
+# szepeviktor/phpstan-wordpress is loaded automatically by phpstan/extension-installer.
+includes:
+	- phpstan-baseline.neon
+
+parameters:
+	level: 5
+	phpVersion:
+		min: 70400
+		max: 80499
+	treatPhpDocTypesAsCertain: false
+	bootstrapFiles:
+		- tests/phpstan/bootstrap.php
+	paths:
+		- functions.php
+		- inc/
+		- template-parts/
+		- 404.php
+		- archive.php
+		- comments.php
+		- footer.php
+		- header.php
+		- index.php
+		- page.php
+		- search.php
+		- sidebar.php
+		- single.php
+	excludePaths:
+		analyseAndScan:
+			- vendor/
+			- node_modules/

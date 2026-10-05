@@ -1,0 +1,11 @@
+{
+	"extends": "@wordpress/stylelint-config",
+	"rules": {
+		"selector-class-pattern": [
+			"^[a-z0-9]+(?:(?:-|_|__|--)[a-z0-9]+)*$",
+			{
+				"message": "Use lowercase class names; hyphens, plus the `__` and `_` separators WordPress core classes use (wp-block-button__link, current_page_item)."
+			}
+		]
+	}
+}

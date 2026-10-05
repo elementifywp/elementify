@@ -1,0 +1,14 @@
+allowBuilds:
+  '@parcel/watcher': true
+  unrs-resolver: true
+  core-js: false
+  core-js-pure: false
+  fs-ext-extra-prebuilt: false
+
+# Patched versions of transitive dev-tool dependencies flagged by `pnpm audit`.
+# Remove an entry once the upstream package ships the fix itself.
+overrides:
+  serialize-javascript: ^7.0.5
+  qs: ^6.16.0
+  js-yaml@>=5.0.0 <=5.4.0: ^5.4.1
+  uuid@<11.1.1: ^11.1.1

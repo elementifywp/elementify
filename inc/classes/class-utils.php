@@ -9,6 +9,14 @@ namespace Elementify\Inc;
 
 use Elementify\Inc\Traits\Singleton;
 
+/**
+ * Static helpers shared across the theme.
+ *
+ * Covers class-name building, attribute string rendering, array manipulation,
+ * PHP 8 string function polyfills, Customizer deep links, and schema.org
+ * microdata attributes. All methods are static and safe to call without
+ * booting the singleton.
+ */
 class Utils {
 
 	use Singleton;
@@ -16,21 +24,23 @@ class Utils {
 	/**
 	 * A utility for constructing className strings conditionally.
 	 *
-	 * @param ...$args
+	 * Accepts strings, and arrays whose values are either class name strings or
+	 * booleans keyed by class name, where `true` means "include this class".
 	 *
-	 * @return string
+	 * @param mixed ...$args Class name strings, or arrays as described above.
+	 * @return string The collected class names joined by a single space.
 	 */
 	public static function clsx( ...$args ) {
-		$classNames = array();
+		$classNames = [];
 
 		foreach ( $args as $arg ) {
 			if ( is_string( $arg ) && $arg !== '' ) {
 				$classNames[] = $arg;
-			} else if ( is_array( $arg ) ) {
+			} elseif ( is_array( $arg ) ) {
 				foreach ( $arg as $k => $v ) {
 					if ( is_string( $v ) ) {
 						$classNames[] = $v;
-					} else if ( is_bool( $v ) && $v === true ) {
+					} elseif ( is_bool( $v ) && $v === true ) {
 						$classNames[] = $k;
 					}
 				}
@@ -43,7 +53,8 @@ class Utils {
 	/**
 	 * Echo version for clsx
 	 *
-	 * @param ...$args
+	 * @param mixed ...$args Class name strings, or arrays as described in clsx().
+	 * @return void
 	 */
 	public static function the_clsx( ...$args ) {
 		echo esc_attr( self::clsx( ...$args ) );
@@ -52,9 +63,8 @@ class Utils {
 	/**
 	 * Render attribute string
 	 *
-	 * @param $attributes
-	 *
-	 * @return string
+	 * @param array $attributes Attribute values keyed by attribute name.
+	 * @return string The attributes as a space-separated `name="value"` string.
 	 */
 	public static function render_attribute_string( $attributes ) {
 		$attrs = [];
@@ -69,7 +79,8 @@ class Utils {
 	/**
 	 * Print attribute string
 	 *
-	 * @param $attributes
+	 * @param array $attributes Attribute values keyed by attribute name.
+	 * @return void
 	 */
 	public static function print_attribute_string( $attributes ) {
 		echo self::render_attribute_string( $attributes );
@@ -78,9 +89,11 @@ class Utils {
 	/**
 	 * Encode uri component
 	 *
-	 * @param $str
+	 * rawurlencode() per RFC 3986, then restores the sub-delims that
+	 * JavaScript's encodeURIComponent() leaves unescaped.
 	 *
-	 * @return string
+	 * @param string $str The string to encode.
+	 * @return string The encoded string.
 	 */
 	public static function encode_uri_component( $str ) {
 		$revert = [
@@ -99,10 +112,10 @@ class Utils {
 	 *
 	 * @See: https://github.com/laravel/framework
 	 *
-	 * @param $array
-	 * @param $depth
-	 *
-	 * @return array
+	 * @param array    $array The array to flatten.
+	 * @param int|float $depth How many levels of nesting to descend. INF
+	 *                     flattens fully; the default is the float INF.
+	 * @return array The flattened values, re-indexed from zero.
 	 */
 	public static function array_flatten( $array, $depth = INF ) {
 		$result = [];
@@ -130,9 +143,8 @@ class Utils {
 	 *
 	 * @See: https://github.com/laravel/framework
 	 *
-	 * @param $array
-	 *
-	 * @return array
+	 * @param array $array An array whose values may themselves be arrays.
+	 * @return array All values merged into a single flat array.
 	 */
 	public static function array_collapse( $array ) {
 		$results = [];
@@ -151,25 +163,29 @@ class Utils {
 	/**
 	 * Just like array_pluck function in laravel
 	 *
-	 * @param $key
-	 * @param $arr
-	 *
-	 * @return array
+	 * @param string|int $key Key to read from each item in $arr.
+	 * @param array      $arr Items to pluck from.
+	 * @return array The plucked values, in the order of $arr.
 	 */
 	public static function array_pluck( $key, $arr ) {
-		return array_map( function ( $item ) use ( $key ) {
-			return $item[ $key ];
-		}, $arr );
+		return array_map(
+			function ( $item ) use ( $key ) {
+				return $item[ $key ];
+			},
+			$arr
+		);
 	}
 
 	/**
 	 * Find value in an array using a string path
 	 *
-	 * @param $arr
-	 * @param $path
-	 * @param null $default
+	 * Supports a `[]` segment to map the rest of the path over every value at
+	 * that level, e.g. 'items[].id'.
 	 *
-	 * @return mixed|null
+	 * @param array  $arr     The array to search.
+	 * @param string $path    Dot-delimited path to the value.
+	 * @param mixed  $default Value to return when the path cannot be resolved.
+	 * @return mixed The value at $path, or $default.
 	 */
 	public static function array_path( $arr, $path, $default = null ) {
 		$keys   = explode( '.', $path );
@@ -204,7 +220,7 @@ class Utils {
 	/**
 	 * Generate rand key
 	 *
-	 * @return string
+	 * @return string A 32-character hex string, seeded from time(), uniqid() and wp_rand().
 	 */
 	public static function rand_key() {
 		return md5( time() . '-' . uniqid( wp_rand(), true ) . '-' . wp_rand() );
@@ -213,10 +229,9 @@ class Utils {
 	/**
 	 * Polyfill for `str_contains()` function added in PHP 8.0.
 	 *
-	 * @param $haystack
-	 * @param $needle
-	 *
-	 * @return bool
+	 * @param string $haystack The string to search in.
+	 * @param string $needle   The substring to search for.
+	 * @return bool Whether $needle occurs in $haystack. An empty needle always matches.
 	 */
 	public static function str_contains( $haystack, $needle ) {
 		return ( '' === $needle || false !== strpos( $haystack, $needle ) );
@@ -225,10 +240,9 @@ class Utils {
 	/**
 	 * Polyfill for `str_starts_with()` function added in PHP 8.0.
 	 *
-	 * @param $haystack
-	 * @param $needle
-	 *
-	 * @return bool
+	 * @param string $haystack The string to search in.
+	 * @param string $needle   The prefix to look for.
+	 * @return bool Whether $haystack begins with $needle. An empty needle always matches.
 	 */
 	public static function str_starts_with( $haystack, $needle ) {
 		if ( function_exists( 'str_starts_with' ) ) {
@@ -245,10 +259,9 @@ class Utils {
 	/**
 	 * Polyfill for `str_ends_with()` function added in PHP 8.0.
 	 *
-	 * @param $haystack
-	 * @param $needle
-	 *
-	 * @return bool
+	 * @param string $haystack The string to search in.
+	 * @param string $needle   The suffix to look for.
+	 * @return bool Whether $haystack ends with $needle. An empty needle always matches.
 	 */
 	public static function str_ends_with( $haystack, $needle ) {
 		if ( function_exists( 'str_ends_with' ) ) {
@@ -266,12 +279,11 @@ class Utils {
 	/**
 	 * Get customizer_url
 	 *
-	 * @param $location
-	 *
-	 * @return string
+	 * @param string $location Control or section to focus in the Customizer.
+	 * @return string The Customizer admin URL with the focus query arg set.
 	 */
 	public static function customizer_url( $location ) {
-		$query                     = array();
+		$query                     = [];
 		$query['lotta_auto_focus'] = $location;
 
 		return add_query_arg( $query, admin_url( 'customize.php' ) );
@@ -291,8 +303,13 @@ class Utils {
 	/**
 	 * Get any necessary schema definition.
 	 *
+	 * Recognised contexts are html, header, navigation, logo, article,
+	 * post-author, comment-body, comment-author, sidebar, footer and video.
+	 * The html and article types are filterable.
+	 *
 	 * @param string $context The element to target.
-	 * @return string Our final attribute to add to the element.
+	 * @return string|null Our final attribute to add to the element, or null
+	 *                     when the context has no definition.
 	 */
 	public static function schema_org_definitions( $context ) {
 		$data = false;
@@ -369,21 +386,28 @@ class Utils {
 		}
 	}
 	/**
-	 * Print attribute string
+	 * Echo the schema.org microdata attributes for an element.
 	 *
-	 * @param $attributes
+	 * Despite the parameter name, the value is the element context passed
+	 * straight to schema_org_definitions().
+	 *
+	 * @param string $attributes The element context, e.g. 'header'.
+	 * @return void
 	 */
 	public static function the_microdata( $attributes ) {
 		echo self::schema_org_definitions( $attributes );
 	}
 
 	/**
-	 * Return attribute string
+	 * Return the schema.org microdata attributes for an element.
 	 *
-	 * @param $attributes
+	 * Despite the parameter name, the value is the element context passed
+	 * straight to schema_org_definitions().
+	 *
+	 * @param string $attributes The element context, e.g. 'header'.
+	 * @return string|false The attributes, or false when the context is unknown.
 	 */
 	public static function microdata( $attributes ) {
 		return self::schema_org_definitions( $attributes );
 	}
-
 }

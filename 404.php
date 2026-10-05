@@ -19,23 +19,21 @@ get_header();
 <?php
 /**
  * Functions hooked into elementify/before_content action
- *
  */
 do_action( 'elementify/before_content' );
 ?>
 
 <main id="main" class="site-main">
 
-    <section class="error-404 not-found">
-        <?php
+	<section class="error-404 not-found">
+		<?php
 		/**
 		 * Functions hooked into elementify_404_content_top action
-		 *
 		 */
 		do_action( 'elementify/404/entry_header' );
 		?>
 
-        <?php
+		<?php
 		/**
 		 * Functions hooked into elementify/404/entry_content action
 		 *
@@ -44,14 +42,13 @@ do_action( 'elementify/before_content' );
 		do_action( 'elementify/404/entry_content' );
 		?>
 
-        <?php
+		<?php
 		/**
 		 * Functions hooked into elementify_404_content_bottom action
-		 *
 		 */
 		do_action( 'elementify/404/entry_footer' );
 		?>
-    </section><!-- .error-404 -->
+	</section><!-- .error-404 -->
 
 </main><!-- #main -->
 

@@ -3,9 +3,9 @@
 Contributors: automattic
 Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
 
-Requires at least: 4.6
-Tested up to: 5.4
-Requires PHP: 5.6
+Requires at least: 6.4
+Tested up to: 7.1
+Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GNU General Public License v2 or later
 License URI: LICENSE

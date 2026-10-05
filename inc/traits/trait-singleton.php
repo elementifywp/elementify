@@ -27,6 +27,11 @@
 
 namespace Elementify\Inc\Traits;
 
+/**
+ * Gives a class a single shared instance per subclass, created on first use.
+ *
+ * Each service class uses this trait and is retrieved with ::get_instance().
+ */
 trait Singleton {
 
 	/**
@@ -35,12 +40,16 @@ trait Singleton {
 	 * This is meant to be overridden in the classes which implement
 	 * this trait. This is ideal for doing stuff that you only want to
 	 * do once, such as hooking into actions and filters, etc.
+	 *
+	 * @return void
 	 */
 	protected function __construct() {
 	}
 
 	/**
 	 * Prevent object cloning
+	 *
+	 * @return void
 	 */
 	final protected function __clone() {
 	}
@@ -83,7 +92,5 @@ trait Singleton {
 		}
 
 		return $instance[ $called_class ];
-
 	}
-
 } // End trait

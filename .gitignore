@@ -1,13 +1,44 @@
-# IDE or OS
-.idea/
-.DS_Store
+# Dependencies
+node_modules/
+vendor/
 
-# Log files
+# Environment
+.env
+.wp-env.override.json
+
+# Local overrides of the *.dist QA configs
+phpcs.xml
+phpstan.neon
+
+# Caches and logs
+.phpcs-cache.json
 *.log
 
-# Build artifact
-.grunt
+# Source maps from `pnpm start` (production builds don't emit them)
+/assets/build/**/*.map
 
-# local
-node_modules/
-vendor
+# Playwright output
+/artifacts/
+
+# Release archive (`pnpm run release`)
+/elementify.zip
+
+# Other package managers' lockfiles (pnpm is the source of truth)
+package-lock.json
+yarn.lock
+
+# OS files
+.DS_Store
+[Tt]humbs.db
+[Dd]esktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Theme ZIP packaging output (`pnpm run release`)
+/dist/

@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<ruleset
+	name="WPCS for Elementify"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/master/phpcs.xsd"
+>
+	<description>Sniffs for Elementify</description>
+
+	<!-- What to scan -->
+	<file>.</file>
+
+	<!-- Exclude paths -->
+	<exclude-pattern>**/build/**</exclude-pattern>
+	<exclude-pattern>**/artifacts/**</exclude-pattern>
+	<exclude-pattern>**/node_modules/**</exclude-pattern>
+	<exclude-pattern>**/vendor/**</exclude-pattern>
+	<exclude-pattern>**/vendor-prefixed/**</exclude-pattern>
+	<exclude-pattern>**/tests/**</exclude-pattern>
+
+	<!-- CLI args -->
+	<arg value="sp" />
+	<arg name="basepath" value="./" />
+	<arg name="colors" />
+	<arg name="extensions" value="php" />
+	<arg name="cache" value=".phpcs-cache.json" />
+	<arg name="parallel" value="20" />
+	<arg name="severity" value="1" />
+
+	<!-- PHP version compatibility: matches "Requires PHP" in style.css -->
+	<config name="testVersion" value="7.4-" />
+
+	<!-- WordPress version compatibility: matches "Requires at least" in style.css -->
+	<config name="minimum_supported_wp_version" value="6.4" />
+
+	<!--
+		PHPCompatibility + PHPCompatibilityWP
+		@see: https://github.com/PHPCompatibility/PHPCompatibilityWP
+	-->
+	<rule ref="PHPCompatibilityWP" />
+
+	<!--
+		Core WordPress Coding Standards
+		@see: https://github.com/WordPress/WordPress-Coding-Standards
+	-->
+	<rule ref="WordPress-Extra">
+		<exclude name="Generic.Commenting.DocComment.MissingShort" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax" />
+		<exclude name="Universal.Operators.DisallowShortTernary" />
+		<exclude name="WordPress.Files.FileName" />
+		<!-- Deprecated in PHPCS v4 -->
+		<exclude name="Generic.Functions.CallTimePassByReference" />
+	</rule>
+	<rule ref="WordPress-Docs">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+	</rule>
+
+	<!-- Enforce short array syntax [] over array() -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+
+	<!--
+		Test-specific exclusions
+	-->
+	<rule ref="Generic.Files.OneObjectStructurePerFile.MultipleFound">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+	</rule>
+	<rule ref="Generic.PHP.NoSilencedErrors">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.PHP.DiscouragedPHPFunctions">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.PHP.NoSilencedErrors">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.EnqueuedResources.NonEnqueuedScript">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+	</rule>
+
+	<!--
+		Theme-specific customizations
+	-->
+
+	<!-- Enforce theme prefix on all globals -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude-pattern>**/tests/**</exclude-pattern>
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="ELEMENTIFY" /><!-- Constants -->
+				<element value="Elementify" /><!-- Classes -->
+				<element value="elementify_" /><!-- Functions/variables -->
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Enforce text domain -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="elementify" />
+			</property>
+		</properties>
+	</rule>
+
+</ruleset>

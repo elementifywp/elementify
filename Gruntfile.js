@@ -1,180 +1,194 @@
-module.exports = function( grunt ) {
-	'use strict';
+/**
+ * Grunt tasks for packaging the Elementify theme.
+ *
+ * Usage:
+ *   pnpm run release        Build assets, check i18n/versions, create the ZIP.
+ *   pnpm exec grunt release Same, but skips the webpack build.
+ *
+ * Output: dist/elementify-<version>.zip containing a single `elementify/`
+ * folder, ready to upload via Appearance → Themes → Add New → Upload.
+ *
+ * @param {Object} grunt Grunt instance.
+ */
+module.exports = function ( grunt ) {
+	require( 'load-grunt-tasks' )( grunt );
+
+	const pkg = grunt.file.readJSON( 'package.json' );
+	const slug = pkg.name;
+
+	// Allowlist of files that ship with the theme. Anything not listed here
+	// (sources, tests, tooling configs, vendor/, node_modules/) stays out.
+	const themeFiles = [
+		'*.php',
+		'style.css',
+		'rtl.css',
+		'theme.json',
+		'screenshot.{png,jpg,jpeg,webp}',
+		'readme.txt',
+		'LICENSE*',
+		'wpml-config.xml',
+		'assets/build/**',
+		'inc/**',
+		'languages/**',
+		'template-parts/**',
+		// Block theme folders, picked up automatically if added later.
+		'patterns/**',
+		'parts/**',
+		'templates/**',
+		'styles/**',
+		// Never ship these, even inside allowed folders.
+		'!**/*.map',
+		'!**/.DS_Store',
+		'!**/*.tmp',
+	];
+
+	// Files WordPress requires (or the theme cannot run without).
+	const requiredFiles = [
+		'style.css',
+		'index.php',
+		'functions.php',
+		'screenshot.png',
+		'readme.txt',
+		'assets/build/css/main.css',
+		'assets/build/js/main.js',
+	];
 
 	grunt.initConfig( {
-		pkg: grunt.file.readJSON( 'package.json' ),
+		pkg,
+
+		clean: {
+			temp: {
+				src: [
+					'**/*.tmp',
+					'**/.afpDeleted*',
+					'**/.DS_Store',
+					'!node_modules/**',
+					'!vendor/**',
+				],
+				dot: true,
+				filter: 'isFile',
+			},
+			dist: [ 'dist/' ],
+		},
+
+		// Every translatable string must use the theme's text domain.
+		checktextdomain: {
+			options: {
+				text_domain: slug,
+				report_missing: true,
+				keywords: [
+					'__:1,2d',
+					'_e:1,2d',
+					'_x:1,2c,3d',
+					'esc_html__:1,2d',
+					'esc_html_e:1,2d',
+					'esc_html_x:1,2c,3d',
+					'esc_attr__:1,2d',
+					'esc_attr_e:1,2d',
+					'esc_attr_x:1,2c,3d',
+					'_ex:1,2c,3d',
+					'_n:1,2,4d',
+					'_nx:1,2,4c,5d',
+					'_n_noop:1,2,3d',
+					'_nx_noop:1,2,3c,4d',
+				],
+			},
+			files: {
+				src: [ '*.php', 'inc/**/*.php', 'template-parts/**/*.php' ],
+				expand: true,
+			},
+		},
 
 		copy: {
-			main: {
-				options: {
-					mode: true,
-				},
-				src: [
-					'**',
-					'!style - Copy.css',
-					'!resources/**',
-					'!node_modules/**',
-					'!css/sourcemap/**',
-					'!.git/**',
-					'!bin/**',
-					'!.gitlab-ci.yml',
-					'!tests/**',
-					'!phpunit.xml.dist',
-					'!*.sh',
-					'!*.map',
-					'!.gitignore',
-					'!phpunit.xml',
-					'!README.md',
-					'!codesniffer.ruleset.xml',
-					'!vendor/**',
-					'!phpcs.xml.dist',
-					'!phpcs.xml',
-					'!CONTRIBUTING.md',
-					'!phpcs.ruleset.xml',
-					/**
-					 * Are you developer? Then add below files.
-					 */
-					'!Gruntfile.js',
-					'!postcss.config.js',
-					'!webpack.config.js',
-					'!package.json',
-					'!package-lock.json',
-					'!composer.json',
-					'!composer.lock',
-					'!yarn.lock',
-					'!sass/**',
-					'!*.zip',
+			theme: {
+				files: [
+					{
+						expand: true,
+						src: themeFiles,
+						dest: `dist/${ slug }/`,
+					},
 				],
-				dest: 'elementify/',
 			},
 		},
 
 		compress: {
-			main: {
+			theme: {
 				options: {
-					archive: 'elementify.zip',
 					mode: 'zip',
+					archive: `dist/${ slug }-${ pkg.version }.zip`,
 				},
-				files: [
-					{
-						src: [ './elementify/**' ],
-					},
-				],
-			},
-		},
-
-		clean: {
-			main: [ 'elementify' ],
-			zip: [ 'elementify.zip' ],
-		},
-
-		makepot: {
-			target: {
-				options: {
-					domainPath: '/',
-					mainFile: 'elementify.php',
-					potFilename: 'languages/elementify.pot',
-					potHeaders: {
-						poedit: true,
-						'x-poedit-keywordslist': true,
-						'pot-creation-date': new Date().toISOString(), // Ensure this is correctly defined
-						'language-team': 'Your Team <team@example.com>', // Optional: Add language team
-						'report-msgid-bugs-to': 'https://example.com/support', // Optional: Add bug report URL
-					},
-					type: 'wp-theme',
-					updateTimestamp: true,
-				},
-			},
-		},
-
-		wp_readme_to_markdown: {
-			your_target: {
-				files: {
-					'README.md': 'readme.txt',
-				},
-			},
-		},
-
-		addtextdomain: {
-			options: {
-				textdomain: 'elementify',
-			},
-			target: {
-				files: {
-					src: [
-						'*.php',
-						'**/*.php',
-						'!node_modules/**',
-						'!php-tests/**',
-						'!bin/**',
-					],
-				},
-			},
-		},
-
-		/**
-		 * Check textdomain
-		 */
-		checktextdomain: {
-			standard: {
-				options: {
-					text_domain: 'elementify', //Specify allowed domain(s)
-					keywords: [
-						//List keyword specifications
-						'__:1,2d',
-						'_e:1,2d',
-						'_x:1,2c,3d',
-						'esc_html__:1,2d',
-						'esc_html_e:1,2d',
-						'esc_html_x:1,2c,3d',
-						'esc_attr__:1,2d',
-						'esc_attr_e:1,2d',
-						'esc_attr_x:1,2c,3d',
-						'_ex:1,2c,3d',
-						'_n:1,2,4d',
-						'_nx:1,2,4c,5d',
-						'_n_noop:1,2,3d',
-						'_nx_noop:1,2,3c,4d',
-					],
-				},
-				files: [
-					{
-						src: [
-							'**/*.php', //all php
-							'!node_modules/**',
-						],
-						expand: true,
-					},
-				],
+				expand: true,
+				cwd: `dist/${ slug }/`,
+				src: [ '**/*' ],
+				dest: `${ slug }/`,
 			},
 		},
 	} );
 
-	/**
-	 * Load Grunt Tasks
-	 */
-	grunt.loadNpmTasks( 'grunt-contrib-copy' );
-	grunt.loadNpmTasks( 'grunt-contrib-compress' );
-	grunt.loadNpmTasks( 'grunt-contrib-clean' );
-	grunt.loadNpmTasks( 'grunt-wp-i18n' );
-	grunt.loadNpmTasks( 'grunt-checktextdomain' );
+	// Version must match in package.json, style.css and readme.txt.
+	// (ELEMENTIFY_VERSION is read from style.css at runtime, so it follows.)
+	grunt.registerTask(
+		'version-check',
+		'Verify version strings are in sync.',
+		function () {
+			const sources = [
+				[ 'style.css', /^\s*Version:\s*(\S+)/m ],
+				[ 'readme.txt', /^\s*Stable tag:\s*(\S+)/m ],
+			];
 
-	/* Read File Generation task */
-	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
+			let ok = true;
+			sources.forEach( ( [ file, pattern ] ) => {
+				const match = grunt.file.read( file ).match( pattern );
+				const found = match ? match[ 1 ] : null;
+				if ( found === pkg.version ) {
+					grunt.log.ok( `${ file }: ${ found }` );
+				} else {
+					ok = false;
+					grunt.log.error(
+						`${ file }: found "${ found }", expected "${ pkg.version }" (package.json)`
+					);
+				}
+			} );
 
-	// Generate Read me file
-	grunt.registerTask( 'readme', [ 'wp_readme_to_markdown' ] );
+			if ( ! ok ) {
+				grunt.fail.warn( 'Version strings are out of sync.' );
+			}
+		}
+	);
 
-	// i18n
-	grunt.registerTask( 'i18n', [ 'checktextdomain', 'addtextdomain', 'makepot' ] );
+	// Fail early if a required theme file or the compiled assets are missing.
+	grunt.registerTask(
+		'theme-check',
+		'Verify required theme files exist.',
+		function () {
+			const missing = requiredFiles.filter(
+				( file ) => ! grunt.file.exists( file )
+			);
 
-	// Generate Release package
-	grunt.registerTask( 'release', [
-		'clean:zip',
-		'copy',
-		'compress',
-		'clean:main',
+			if ( missing.length ) {
+				missing.forEach( ( file ) =>
+					grunt.log.error( `Missing: ${ file }` )
+				);
+				grunt.fail.warn(
+					'Required files are missing. Run `pnpm run build` first?'
+				);
+			}
+
+			grunt.log.ok( 'All required theme files present.' );
+		}
+	);
+
+	grunt.registerTask( 'finish', function () {
+		grunt.log.writeln( '----------' );
+		grunt.log.ok( `ZIP created: dist/${ slug }-${ pkg.version }.zip` );
+	} );
+
+	grunt.registerTask( 'check', [
+		'version-check',
+		'theme-check',
+		'checktextdomain',
 	] );
-
-	grunt.util.linefeed = '\n';
+	grunt.registerTask( 'build', [ 'copy:theme', 'compress:theme', 'finish' ] );
+	grunt.registerTask( 'release', [ 'clean', 'check', 'build' ] );
+	grunt.registerTask( 'default', [ 'release' ] );
 };
