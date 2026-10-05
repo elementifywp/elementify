@@ -124,6 +124,17 @@
 			toggle.querySelector( '.screen-reader-text' ).textContent =
 				labels.expand.replace( '%s', toggle.dataset.title );
 
+			// Reuse the link's caret icon (e.g. the one picked in the
+			// customizer) so the button matches it; otherwise keep the CSS chevron.
+			const caret = link.querySelector( '.ele-submenu-icon svg' );
+
+			if ( caret ) {
+				const icon = toggle.querySelector( '.ele-submenu-toggle-icon' );
+
+				icon.classList.add( 'has-svg' );
+				icon.appendChild( caret.cloneNode( true ) );
+			}
+
 			toggle.addEventListener( 'click', () =>
 				setSubmenu( item, ! item.classList.contains( 'is-open' ) )
 			);

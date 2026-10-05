@@ -4205,6 +4205,27 @@ Footer: Site Logo & Description.
 	transform: translateY(2px) rotate(-135deg);
 }
 
+/* The toggle reuses the link's caret SVG: drop the border chevron and flip the icon when open. */
+:is(#ele-header-menu-1, .ele-primary-navigation) .ele-submenu-toggle-icon.has-svg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	height: auto;
+	border: 0;
+	transform: none;
+}
+
+:is(#ele-header-menu-1, .ele-primary-navigation) .ele-submenu-toggle-icon.has-svg svg {
+	display: block;
+	width: 15px;
+	height: 15px;
+}
+
+:is(#ele-header-menu-1, .ele-primary-navigation) .is-open > .ele-submenu-toggle .ele-submenu-toggle-icon.has-svg {
+	transform: rotate(180deg);
+}
+
 @media (max-width: 63.99em) {
 
 	/*
