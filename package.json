@@ -58,6 +58,7 @@
 		"build": "wp-scripts build --config ./webpack.config.js",
 		"start": "wp-scripts start --config ./webpack.config.js",
 		"clean": "rm -rf assets/build",
+		"clean:dist": "rm -rf dist",
 		"format": "wp-scripts format ./assets/src ./tests",
 		"lint": "pnpm run --parallel \"/^lint:(js|css|pkg|php)$/\"",
 		"lint:js": "wp-scripts lint-js ./assets/src ./tests *.config.js Gruntfile.js",
@@ -68,13 +69,12 @@
 		"lint:php": "composer run lint",
 		"lint:php:fix": "composer run format",
 		"analyze:php": "composer run phpstan",
-		"i18n:pot": "wp i18n make-pot . languages/elementify.pot --domain=elementify --exclude=assets/build,node_modules,vendor,tests",
+		"i18n:pot": "wp i18n make-pot . languages/elementify.pot --domain=elementify --exclude=assets/build,node_modules,vendor,tests,dist",
 		"env": "wp-env",
 		"env:start": "wp-env start",
 		"env:stop": "wp-env stop",
 		"test:e2e": "wp-scripts test-playwright",
 		"test:e2e:ui": "wp-scripts test-playwright --ui",
-		"release": "pnpm run clean && pnpm run build && pnpm run i18n:pot && wp-scripts plugin-zip",
-		"package": "pnpm run build && pnpm run i18n:pot && grunt release"
+		"release": "pnpm run clean && pnpm run clean:dist && pnpm run build && pnpm run i18n:pot && grunt release"
 	}
 }

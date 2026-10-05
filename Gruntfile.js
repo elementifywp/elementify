@@ -2,7 +2,7 @@
  * Grunt tasks for packaging the Elementify theme.
  *
  * Usage:
- *   pnpm run package        Build assets, check i18n/versions, create the ZIP.
+ *   pnpm run release        Build assets, check i18n/versions, create the ZIP.
  *   pnpm exec grunt release Same, but skips the webpack build.
  *
  * Output: dist/elementify-<version>.zip containing a single `elementify/`

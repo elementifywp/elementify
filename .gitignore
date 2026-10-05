@@ -40,5 +40,5 @@ yarn.lock
 *.sublime-workspace
 *.code-workspace
 
-# Theme ZIP packaging output (`pnpm run package`)
+# Theme ZIP packaging output (`pnpm run release`)
 /dist/
