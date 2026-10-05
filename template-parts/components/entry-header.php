@@ -81,7 +81,7 @@ if ( $page_title ) : ?>
 					if ( $value == 'title' ) {
 						$title_tags = [ 'desktop' => 'h2' ];
 						if ( is_home() && is_front_page() ) {
-							$title_text = [ 'desktop' => ( function_exists( 'is_shop' ) && is_shop() ) ? esc_html__( 'Products', 'elementify-framework' ) : esc_html__( 'Home', 'elementify-framework' ) ];
+							$title_text = [ 'desktop' => ( function_exists( 'is_shop' ) && is_shop() ) ? esc_html__( 'Products', 'elementify' ) : esc_html__( 'Home', 'elementify' ) ];
 							if ( $title_text && array_key_exists( 'desktop', $title_text ) ) {
 								printf(
 									'<%1$s class="page-title ele-w-100">%2$s</%1$s><!-- .page-title -->',

@@ -46,6 +46,12 @@
 		"@wordpress/stylelint-config": "^26.0.0",
 		"copy-webpack-plugin": "^13.0.1",
 		"cssnano": "^6.1.2",
+		"grunt": "^1.6.3",
+		"grunt-checktextdomain": "^1.0.1",
+		"grunt-contrib-clean": "^2.0.1",
+		"grunt-contrib-compress": "^2.0.0",
+		"grunt-contrib-copy": "^1.0.0",
+		"load-grunt-tasks": "^5.1.0",
 		"webpack-remove-empty-scripts": "^1.1.1"
 	},
 	"scripts": {
@@ -54,7 +60,7 @@
 		"clean": "rm -rf assets/build",
 		"format": "wp-scripts format ./assets/src ./tests",
 		"lint": "pnpm run --parallel \"/^lint:(js|css|pkg|php)$/\"",
-		"lint:js": "wp-scripts lint-js ./assets/src ./tests *.config.js",
+		"lint:js": "wp-scripts lint-js ./assets/src ./tests *.config.js Gruntfile.js",
 		"lint:js:fix": "pnpm run lint:js --fix",
 		"lint:css": "wp-scripts lint-style \"assets/src/**/*.css\"",
 		"lint:css:fix": "pnpm run lint:css --fix",
@@ -68,6 +74,7 @@
 		"env:stop": "wp-env stop",
 		"test:e2e": "wp-scripts test-playwright",
 		"test:e2e:ui": "wp-scripts test-playwright --ui",
-		"release": "pnpm run clean && pnpm run build && pnpm run i18n:pot && wp-scripts plugin-zip"
+		"release": "pnpm run clean && pnpm run build && pnpm run i18n:pot && wp-scripts plugin-zip",
+		"package": "pnpm run build && pnpm run i18n:pot && grunt release"
 	}
 }

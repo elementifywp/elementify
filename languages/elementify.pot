@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-01T07:54:46+00:00\n"
+"POT-Creation-Date: 2026-10-05T05:27:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: elementify\n"
@@ -32,88 +32,111 @@ msgstr ""
 
 #. Author of the theme
 #: style.css
+#: dist/elementify/template-parts/footer/copyright.php:17
 #: template-parts/footer/copyright.php:17
 msgid "Elementify Themes"
 msgstr ""
 
 #. translators: %s: Parent menu item title.
-#: inc/classes/class-assets.php:84
+#: dist/elementify/inc/classes/class-assets.php:100
+#: inc/classes/class-assets.php:100
 #, php-format
 msgid "Show submenu for %s"
 msgstr ""
 
 #. translators: %s: Parent menu item title.
-#: inc/classes/class-assets.php:86
+#: dist/elementify/inc/classes/class-assets.php:102
+#: inc/classes/class-assets.php:102
 #, php-format
 msgid "Hide submenu for %s"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:271
 #: inc/classes/class-breadcrumb-trail.php:271
 msgid "Browse:"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:272
 #: inc/classes/class-breadcrumb-trail.php:272
 msgctxt "breadcrumbs aria label"
 msgid "Breadcrumbs"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:273
+#: dist/elementify/template-parts/components/entry-header.php:84
 #: inc/classes/class-breadcrumb-trail.php:273
+#: template-parts/components/entry-header.php:84
 msgid "Home"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:274
 #: inc/classes/class-breadcrumb-trail.php:274
 msgid "404 Not Found"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:275
 #: inc/classes/class-breadcrumb-trail.php:275
 msgid "Archives"
 msgstr ""
 
 #. Translators: %s is the search query.
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:277
 #: inc/classes/class-breadcrumb-trail.php:277
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
 #. Translators: %s is the page number.
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:279
 #: inc/classes/class-breadcrumb-trail.php:279
 #, php-format
 msgid "Page %s"
 msgstr ""
 
 #. Translators: %s is the page number.
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:281
 #: inc/classes/class-breadcrumb-trail.php:281
 #, php-format
 msgid "Comment Page %s"
 msgstr ""
 
 #. Translators: Minute archive title. %s is the minute time format.
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:283
 #: inc/classes/class-breadcrumb-trail.php:283
 #, php-format
 msgid "Minute %s"
 msgstr ""
 
 #. Translators: Weekly archive title. %s is the week date format.
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:285
 #: inc/classes/class-breadcrumb-trail.php:285
 #, php-format
 msgid "Week %s"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:770
 #: inc/classes/class-breadcrumb-trail.php:770
 msgctxt "minute and hour archives time format"
 msgid "g:i a"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:788
 #: inc/classes/class-breadcrumb-trail.php:788
 msgctxt "minute archives time format"
 msgid "i"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:806
 #: inc/classes/class-breadcrumb-trail.php:806
 msgctxt "hour archives time format"
 msgid "g a"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:823
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:853
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:893
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:921
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:1275
 #: inc/classes/class-breadcrumb-trail.php:823
 #: inc/classes/class-breadcrumb-trail.php:853
 #: inc/classes/class-breadcrumb-trail.php:893
@@ -123,6 +146,9 @@ msgctxt "yearly archives date format"
 msgid "Y"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:824
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:894
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:1280
 #: inc/classes/class-breadcrumb-trail.php:824
 #: inc/classes/class-breadcrumb-trail.php:894
 #: inc/classes/class-breadcrumb-trail.php:1280
@@ -130,140 +156,214 @@ msgctxt "monthly archives date format"
 msgid "F"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:825
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:1285
 #: inc/classes/class-breadcrumb-trail.php:825
 #: inc/classes/class-breadcrumb-trail.php:1285
 msgctxt "daily archives date format"
 msgid "j"
 msgstr ""
 
+#: dist/elementify/inc/classes/class-breadcrumb-trail.php:854
 #: inc/classes/class-breadcrumb-trail.php:854
 msgctxt "weekly archives date format"
 msgid "W"
 msgstr ""
 
-#: inc/classes/class-menus.php:44
+#: dist/elementify/inc/classes/class-menus.php:54
+#: inc/classes/class-menus.php:54
 msgid "Primary Menu"
 msgstr ""
 
-#: inc/classes/class-menus.php:45
+#: dist/elementify/inc/classes/class-menus.php:55
+#: inc/classes/class-menus.php:55
 msgid "Secondary Menu"
 msgstr ""
 
-#: inc/classes/class-menus.php:46
+#: dist/elementify/inc/classes/class-menus.php:56
+#: inc/classes/class-menus.php:56
 msgid "Sidebar Menu"
 msgstr ""
 
-#: inc/classes/class-menus.php:47
+#: dist/elementify/inc/classes/class-menus.php:57
+#: inc/classes/class-menus.php:57
 msgid "Footer Menu"
 msgstr ""
 
-#: inc/classes/class-sidebars.php:47
+#: dist/elementify/inc/classes/class-sidebars.php:59
+#: inc/classes/class-sidebars.php:59
 msgid "Sidebar"
 msgstr ""
 
-#: inc/classes/class-sidebars.php:49
+#: dist/elementify/inc/classes/class-sidebars.php:61
+#: dist/elementify/inc/classes/class-sidebars.php:70
+#: dist/elementify/inc/classes/class-sidebars.php:84
+#: dist/elementify/inc/classes/class-sidebars.php:97
+#: inc/classes/class-sidebars.php:61
+#: inc/classes/class-sidebars.php:70
+#: inc/classes/class-sidebars.php:84
+#: inc/classes/class-sidebars.php:97
 msgid "Add widgets here."
 msgstr ""
 
-#: inc/helpers/functions.php:248
+#: dist/elementify/inc/classes/class-sidebars.php:68
+#: inc/classes/class-sidebars.php:68
+msgid "Popup Area"
+msgstr ""
+
+#. translators: 1: Widget number.
+#: dist/elementify/inc/classes/class-sidebars.php:82
+#: inc/classes/class-sidebars.php:82
+#, php-format
+msgid "Header Area #%d"
+msgstr ""
+
+#. translators: 1: Widget number.
+#: dist/elementify/inc/classes/class-sidebars.php:95
+#: inc/classes/class-sidebars.php:95
+#, php-format
+msgid "Footer Area #%d"
+msgstr ""
+
+#: dist/elementify/inc/helpers/functions.php:299
+#: inc/helpers/functions.php:299
 msgid "Primary menu"
 msgstr ""
 
-#: inc/helpers/functions.php:250
+#: dist/elementify/inc/helpers/functions.php:301
+#: inc/helpers/functions.php:301
 msgid "Menu"
 msgstr ""
 
-#: inc/helpers/functions.php:387
+#: dist/elementify/inc/helpers/functions.php:450
+#: inc/helpers/functions.php:450
+msgid "Previous"
+msgstr ""
+
+#: dist/elementify/inc/helpers/functions.php:451
+#: dist/elementify/inc/helpers/template-tags.php:271
+#: inc/helpers/functions.php:451
+#: inc/helpers/template-tags.php:271
+msgid "Next"
+msgstr ""
+
+#. translators: Hidden text before a page number in the posts pagination, e.g. "Page 2".
+#: dist/elementify/inc/helpers/functions.php:453
+#: inc/helpers/functions.php:453
+msgid "Page"
+msgstr ""
+
+#: dist/elementify/inc/helpers/functions.php:490
+#: inc/helpers/functions.php:490
 msgid "Posts"
 msgstr ""
 
-#: inc/helpers/functions.php:388
+#: dist/elementify/inc/helpers/functions.php:491
+#: inc/helpers/functions.php:491
 msgid "Posts navigation"
 msgstr ""
 
-#: inc/helpers/template-functions.php:132
+#: dist/elementify/inc/helpers/template-functions.php:156
+#: inc/helpers/template-functions.php:156
 msgid "Skip to content"
 msgstr ""
 
-#: inc/helpers/template-functions.php:518
+#: dist/elementify/inc/helpers/template-functions.php:664
+#: inc/helpers/template-functions.php:664
 msgid "One Comment"
 msgstr ""
 
 #. translators: %s: The count of comments
-#: inc/helpers/template-functions.php:521
+#: dist/elementify/inc/helpers/template-functions.php:667
+#: inc/helpers/template-functions.php:667
 #, php-format
 msgid "%s Comments"
 msgstr ""
 
-#: inc/helpers/template-functions.php:551
+#: dist/elementify/inc/helpers/template-functions.php:697
+#: inc/helpers/template-functions.php:697
 msgid "Comments are closed."
 msgstr ""
 
-#: inc/helpers/template-functions.php:585
+#: dist/elementify/inc/helpers/template-functions.php:736
+#: inc/helpers/template-functions.php:736
 msgid "This is not the page you are looking for"
 msgstr ""
 
-#: inc/helpers/template-tags.php:95
+#: dist/elementify/inc/helpers/template-tags.php:96
+#: inc/helpers/template-tags.php:96
 #, php-format
 msgctxt "post date"
 msgid "Posted on %s"
 msgstr ""
 
-#: inc/helpers/template-tags.php:112
+#: dist/elementify/inc/helpers/template-tags.php:113
+#: inc/helpers/template-tags.php:113
 #, php-format
 msgctxt "post author"
 msgid " by %s"
 msgstr ""
 
-#: inc/helpers/template-tags.php:204
+#: dist/elementify/inc/helpers/template-tags.php:205
+#: dist/elementify/template-parts/components/entry-read-more.php:9
+#: inc/helpers/template-tags.php:205
 #: template-parts/components/entry-read-more.php:9
 msgid "Read more"
 msgstr ""
 
-#: inc/helpers/template-tags.php:254
+#: dist/elementify/inc/helpers/template-tags.php:261
+#: inc/helpers/template-tags.php:261
 msgid "First"
 msgstr ""
 
-#: inc/helpers/template-tags.php:263
+#: dist/elementify/inc/helpers/template-tags.php:270
+#: inc/helpers/template-tags.php:270
 msgid "Prev"
 msgstr ""
 
-#: inc/helpers/template-tags.php:264
-msgid "Next"
-msgstr ""
-
-#: inc/helpers/template-tags.php:270
+#: dist/elementify/inc/helpers/template-tags.php:277
+#: inc/helpers/template-tags.php:277
 msgid "Last"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/helpers/template-tags.php:346
+#: dist/elementify/inc/helpers/template-tags.php:362
+#: dist/elementify/template-parts/components/blog/entry-meta.php:92
+#: dist/elementify/template-parts/components/entry-meta.php:92
+#: inc/helpers/template-tags.php:362
 #: template-parts/components/blog/entry-meta.php:92
 #: template-parts/components/entry-meta.php:92
 msgid ", "
 msgstr ""
 
 #. translators: 1: list of categories.
-#: inc/helpers/template-tags.php:349
+#: dist/elementify/inc/helpers/template-tags.php:365
+#: inc/helpers/template-tags.php:365
 #, php-format
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/helpers/template-tags.php:353
+#: dist/elementify/inc/helpers/template-tags.php:369
+#: dist/elementify/template-parts/components/entry-tags.php:23
+#: inc/helpers/template-tags.php:369
 #: template-parts/components/entry-tags.php:23
 msgctxt "list item separator"
 msgid ", "
 msgstr ""
 
 #. translators: 1: list of tags.
-#: inc/helpers/template-tags.php:356
+#: dist/elementify/inc/helpers/template-tags.php:372
+#: inc/helpers/template-tags.php:372
 #, php-format
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: Name of current post. Only visible to screen readers
-#: inc/helpers/template-tags.php:364
+#: dist/elementify/inc/helpers/template-tags.php:380
+#: dist/elementify/template-parts/components/entry-content.php:45
+#: dist/elementify/template-parts/components/entry-footer.php:14
+#: inc/helpers/template-tags.php:380
 #: template-parts/components/entry-content.php:45
 #: template-parts/components/entry-footer.php:14
 #, php-format
@@ -271,17 +371,23 @@ msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post. Only visible to screen readers
+#: dist/elementify/template-parts/components/blog/entry-content.php:22
+#: dist/elementify/template-parts/components/entry-content.php:23
 #: template-parts/components/blog/entry-content.php:22
 #: template-parts/components/entry-content.php:23
 #, php-format
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr ""
 
+#: dist/elementify/template-parts/components/blog/entry-content.php:35
+#: dist/elementify/template-parts/components/entry-content.php:36
 #: template-parts/components/blog/entry-content.php:35
 #: template-parts/components/entry-content.php:36
 msgid "Pages:"
 msgstr ""
 
+#: dist/elementify/template-parts/components/blog/entry-image.php:49
+#: dist/elementify/template-parts/components/entry-image.php:54
 #: template-parts/components/blog/entry-image.php:49
 #: template-parts/components/entry-image.php:54
 #, php-format
@@ -289,11 +395,15 @@ msgctxt "sticky post"
 msgid "%1$s "
 msgstr ""
 
+#: dist/elementify/template-parts/components/blog/entry-image.php:50
+#: dist/elementify/template-parts/components/entry-image.php:55
 #: template-parts/components/blog/entry-image.php:50
 #: template-parts/components/entry-image.php:55
 msgid "Featured Post"
 msgstr ""
 
+#: dist/elementify/template-parts/components/blog/entry-meta.php:41
+#: dist/elementify/template-parts/components/entry-meta.php:49
 #: template-parts/components/blog/entry-meta.php:41
 #: template-parts/components/entry-meta.php:49
 msgid "Post Author"
@@ -301,6 +411,8 @@ msgstr ""
 
 #. translators: %s: Author name.
 #. translators: %s: Author name link.
+#: dist/elementify/template-parts/components/blog/entry-meta.php:54
+#: dist/elementify/template-parts/components/entry-meta.php:54
 #: template-parts/components/blog/entry-meta.php:54
 #: template-parts/components/entry-meta.php:54
 #, php-format
@@ -308,12 +420,16 @@ msgctxt "Post Author"
 msgid "%s"
 msgstr ""
 
+#: dist/elementify/template-parts/components/blog/entry-meta.php:68
+#: dist/elementify/template-parts/components/entry-meta.php:69
 #: template-parts/components/blog/entry-meta.php:68
 #: template-parts/components/entry-meta.php:69
 msgid "Published Date"
 msgstr ""
 
 #. translators: %s: post date.
+#: dist/elementify/template-parts/components/blog/entry-meta.php:74
+#: dist/elementify/template-parts/components/entry-meta.php:75
 #: template-parts/components/blog/entry-meta.php:74
 #: template-parts/components/entry-meta.php:75
 #, php-format
@@ -321,124 +437,156 @@ msgctxt "Post Date"
 msgid "%s"
 msgstr ""
 
+#: dist/elementify/template-parts/components/blog/entry-meta.php:87
+#: dist/elementify/template-parts/components/entry-cats.php:19
+#: dist/elementify/template-parts/components/entry-meta.php:87
 #: template-parts/components/blog/entry-meta.php:87
 #: template-parts/components/entry-cats.php:19
 #: template-parts/components/entry-meta.php:87
 msgid "Categories"
 msgstr ""
 
+#: dist/elementify/template-parts/components/entry-header.php:84
+#: template-parts/components/entry-header.php:84
+msgid "Products"
+msgstr ""
+
+#: dist/elementify/template-parts/components/entry-meta.php:106
 #: template-parts/components/entry-meta.php:106
 msgid "Comments"
 msgstr ""
 
 #. translators: %s: post title
+#: dist/elementify/template-parts/components/entry-meta.php:114
 #: template-parts/components/entry-meta.php:114
 #, php-format
 msgid "No Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
+#: dist/elementify/template-parts/components/entry-tags.php:19
 #: template-parts/components/entry-tags.php:19
 msgid "Tags"
 msgstr ""
 
+#: dist/elementify/template-parts/content-none.php:14
 #: template-parts/content-none.php:14
 msgid "Nothing Found"
 msgstr ""
 
 #. translators: 1: link to WP admin new post page.
+#: dist/elementify/template-parts/content-none.php:24
 #: template-parts/content-none.php:24
 #, php-format
 msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
 msgstr ""
 
+#: dist/elementify/template-parts/content-none.php:37
 #: template-parts/content-none.php:37
 msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
 msgstr ""
 
+#: dist/elementify/template-parts/content-none.php:44
 #: template-parts/content-none.php:44
 msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
 msgstr ""
 
+#: dist/elementify/template-parts/footer/copyright.php:10
 #: template-parts/footer/copyright.php:10
 msgid "Copyright {copyright} {current_year} {site_title}"
 msgstr ""
 
+#: dist/elementify/template-parts/footer/copyright.php:12
 #: template-parts/footer/copyright.php:12
 msgctxt "copyright date format; check date() on php.net"
 msgid "Y"
 msgstr ""
 
 #. translators: 1: title.
+#: dist/elementify/template-parts/footer/copyright.php:16
 #: template-parts/footer/copyright.php:16
 #, php-format
 msgid " - WordPress Theme by %1$s"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Color name"
 msgid "Primary"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Color name"
 msgid "Secondary"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Color name"
 msgid "Heading"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Color name"
 msgid "Text"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Color name"
 msgid "Border"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Color name"
 msgid "Subtle background"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Color name"
 msgid "Background"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Shadow name"
 msgid "Soft"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Font family name"
 msgid "System sans-serif"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Font family name"
 msgid "Monospace"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Font size name"
 msgid "Small"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Font size name"
 msgid "Medium"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Font size name"
 msgid "Large"
 msgstr ""
 
+#: dist/elementify/theme.json
 #: theme.json
 msgctxt "Font size name"
 msgid "Extra large"

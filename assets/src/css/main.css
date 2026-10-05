@@ -3774,6 +3774,19 @@ Header: Logo
 	width: var(--ele-logo-max-width, 150px);
 }
 
+.ele-site-branding .custom-logo-link {
+	display: inline-flex;
+	line-height: 0;
+}
+
+.ele-site-branding .custom-logo {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: var(--ele-logo-max-height, 50px);
+	object-fit: contain;
+}
+
 .ele-header-logo-wrap .ele-site-branding[data-logo="right"],
 .ele-footer-logo-wrap .ele-site-branding[data-logo="right"] {
 	--ele-logo-position: row-reverse;
@@ -3813,7 +3826,18 @@ Header: Logo
 .ele-header-logo-wrap .ele-site-branding .ele-site-identity,
 .ele-footer-logo-wrap .ele-site-branding .ele-site-identity {
 	display: flex;
-	flex-direction: column;
+	flex-direction: var(--ele-logo-position, row);
+	gap: var(--ele-logo-gap, 10px);
+	align-items: center;
+}
+
+.ele-site-identity .site-title-container {
+	align-items: flex-start;
+}
+
+.ele-header-logo-wrap .ele-site-branding[data-logo="top"] .ele-site-identity,
+.ele-footer-logo-wrap .ele-site-branding[data-logo="top"] .ele-site-identity,
+.ele-site-branding[data-logo="top"] .ele-site-identity .site-title-container {
 	align-items: var(--ele-logo-align, center);
 }
 

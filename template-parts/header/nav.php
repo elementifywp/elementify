@@ -18,24 +18,28 @@
 							<div class="ele-site-identity">
 								<?php
 								the_custom_logo();
-								if ( is_front_page() && is_home() ) :
-									?>
-									<h1 class="ele-site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+								?>
+								<div class="site-title-container ele-d-flex ele-flex-column">
 									<?php
-								else :
-									?>
-									<p class="ele-site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-									<?php
-								endif;
-								$elementify_description = get_bloginfo( 'description', 'display' );
-								if ( $elementify_description || is_customize_preview() ) :
-									?>
-									<p class="ele-site-description">
-									<?php
-									echo $elementify_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-									?>
-									</p>
-								<?php endif; ?>
+									if ( is_front_page() && is_home() ) :
+										?>
+										<h1 class="ele-site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+										<?php
+									else :
+										?>
+										<p class="ele-site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+										<?php
+									endif;
+									$elementify_description = get_bloginfo( 'description', 'display' );
+									if ( $elementify_description || is_customize_preview() ) :
+										?>
+										<p class="ele-site-description">
+										<?php
+										echo $elementify_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										?>
+										</p>
+									<?php endif; ?>
+								</div>
 							</div>
 						</div>
 					</div>

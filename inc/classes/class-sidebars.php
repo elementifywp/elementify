@@ -65,9 +65,9 @@ class Sidebars {
 				'after_title'   => '</h3>',
 			],
 			'popup-1'   => [
-				'name'          => esc_html__( 'Popup Area', 'elementify-framework' ),
+				'name'          => esc_html__( 'Popup Area', 'elementify' ),
 				'id'            => 'popup-1',
-				'description'   => esc_html__( 'Add widgets here.', 'elementify-framework' ),
+				'description'   => esc_html__( 'Add widgets here.', 'elementify' ),
 				'before_widget' => '<div id="%1$s" class="widget %2$s">',
 				'after_widget'  => '</div>',
 				'before_title'  => '<h3 class="widget-title">',
@@ -79,9 +79,9 @@ class Sidebars {
 		for ( $i = 1; $i <= 2; $i++ ) {
 			$args[ 'header-' . $i ] = [
 				/* translators: 1: Widget number. */
-				'name'          => sprintf( esc_html__( 'Header Area #%d', 'elementify-framework' ), $i ),
+				'name'          => sprintf( esc_html__( 'Header Area #%d', 'elementify' ), $i ),
 				'id'            => 'header-' . $i,
-				'description'   => esc_html__( 'Add widgets here.', 'elementify-framework' ),
+				'description'   => esc_html__( 'Add widgets here.', 'elementify' ),
 				'before_widget' => '<div id="%1$s" class="widget %2$s">',
 				'after_widget'  => '</div>',
 				'before_title'  => '<h3 class="widget-title">',
@@ -92,9 +92,9 @@ class Sidebars {
 		for ( $i = 1; $i <= 6; $i++ ) {
 			$args[ 'footer-' . $i ] = [
 				/* translators: 1: Widget number. */
-				'name'          => sprintf( esc_html__( 'Footer Area #%d', 'elementify-framework' ), $i ),
+				'name'          => sprintf( esc_html__( 'Footer Area #%d', 'elementify' ), $i ),
 				'id'            => 'footer-' . $i,
-				'description'   => esc_html__( 'Add widgets here.', 'elementify-framework' ),
+				'description'   => esc_html__( 'Add widgets here.', 'elementify' ),
 				'before_widget' => '<div id="%1$s" class="widget %2$s">',
 				'after_widget'  => '</div>',
 				'before_title'  => '<h3 class="widget-title">',
