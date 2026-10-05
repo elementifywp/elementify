@@ -245,6 +245,9 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 	 *     @type string          $menu_class     Classes for the menu `ul`, replacing the theme's default set. Default ''.
 	 *     @type callable|string $fallback_cb    Callback used when no menu is assigned. Default 'elementify_menu_fallback'.
 	 *     @type array           $nav_attributes Extra attributes for the `nav` element, as name => value. Default [].
+	 *     @type \Walker|null    $walker         Menu walker. A \Walker_Page instance is only handed to the
+	 *                                           fallback (as `page_walker`); any other walker is passed to
+	 *                                           wp_nav_menu(). Default null.
 	 * }
 	 * @return void
 	 */
@@ -259,6 +262,7 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 				'menu_class'     => '',
 				'fallback_cb'    => 'elementify_menu_fallback',
 				'nav_attributes' => [],
+				'walker'         => null,
 			]
 		);
 
@@ -300,18 +304,23 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 				</span>
 			</button>
 			<?php
-			wp_nav_menu(
-				[
-					'theme_location' => 'menu-1',
-					'menu_id'        => $menu_id,
-					'menu_class'     => $menu_class . ' ele-dropdown-reveal-' . sanitize_html_class( $args['reveal'] ),
-					'container'      => false,
-					'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-					'link_after'     => $args['link_after'],
-					'depth'          => absint( $args['depth'] ),
-					'fallback_cb'    => $args['fallback_cb'],
-				]
-			);
+			$menu_args = [
+				'theme_location' => 'menu-1',
+				'menu_id'        => $menu_id,
+				'menu_class'     => $menu_class . ' ele-dropdown-reveal-' . sanitize_html_class( $args['reveal'] ),
+				'container'      => '',
+				'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+				'link_after'     => $args['link_after'],
+				'depth'          => absint( $args['depth'] ),
+				'fallback_cb'    => $args['fallback_cb'],
+			];
+			// A page walker only fits the page-list fallback; nav menus keep core's walker.
+			if ( $args['walker'] instanceof \Walker_Page ) {
+				$menu_args['page_walker'] = $args['walker'];
+			} elseif ( ! empty( $args['walker'] ) ) {
+				$menu_args['walker'] = $args['walker'];
+			}
+			wp_nav_menu( $menu_args );
 			?>
 		</nav>
 		<?php
@@ -324,32 +333,39 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 --------------------------------------------------------------*/
 if ( ! function_exists( 'elementify_menu_fallback' ) ) {
 	/**
-	 * Menu fallback for primary menu.
+	 * Output the page list shown when no menu is assigned to the primary location.
 	 *
-	 * Contains wp_list_pages to display pages created,
+	 * Called by wp_nav_menu() as its fallback_cb. Renders pages through
+	 * wp_page_menu() as a bare `ul` (no container) using $args['page_walker']
+	 * when it is a \Walker_Page, otherwise \Elementify\Inc\Walker_Page, which
+	 * puts the dropdown-menu-toggle caret inside each parent link (Astra's
+	 * pattern). The list keeps the id and classes wp_nav_menu() would have
+	 * used, so the navigation script and styles apply unchanged.
 	 *
-	 * @param array $args Optional. wp_nav_menu() arguments; `menu_id` sets the list id. Default [].
-	 * @return  void
-	 * @since   1.0.0
+	 * @since 1.0.0
+	 *
+	 * @param array $args Optional. wp_nav_menu() arguments; `menu_id`, `menu_class`, `depth`,
+	 *                    `link_before`, `link_after` and `page_walker` are used. Default [].
+	 * @return void
 	 */
 	function elementify_menu_fallback( $args = [] ) {
-		$menu_id = ! empty( $args['menu_id'] ) ? $args['menu_id'] : 'primary-menu';
+		$walker = ! empty( $args['page_walker'] ) && $args['page_walker'] instanceof \Walker_Page
+			? $args['page_walker']
+			: new \Elementify\Inc\Walker_Page();
 
-		$output  = '';
-		$output .= '<ul id="' . esc_attr( $menu_id ) . '" class="ele-main-menu ele-d-flex ele-flex-wrap ele-list-style-none">';
-
-		$output .= wp_list_pages(
+		wp_page_menu(
 			[
-				'echo'     => false,
-				'title_li' => false,
+				'menu_id'     => ! empty( $args['menu_id'] ) ? $args['menu_id'] : 'primary-menu',
+				'menu_class'  => ! empty( $args['menu_class'] ) ? $args['menu_class'] : 'ele-main-menu ele-d-flex ele-flex-wrap ele-list-style-none',
+				'container'   => 'ul',
+				'before'      => '',
+				'after'       => '',
+				'depth'       => ! empty( $args['depth'] ) ? (int) $args['depth'] : 0,
+				'link_before' => ! empty( $args['link_before'] ) ? $args['link_before'] : '',
+				'link_after'  => ! empty( $args['link_after'] ) ? $args['link_after'] : '',
+				'walker'      => $walker,
 			]
 		);
-
-		$output .= '</ul>';
-
-        // @codingStandardsIgnoreStart
-        echo $output;
-        // @codingStandardsIgnoreEnd
 	}
 }
 
@@ -514,9 +530,11 @@ if ( ! function_exists( 'elementify_breadcrumb' ) ) {
 --------------------------------------------------------------*/
 if ( ! function_exists( 'elementify_submenu_icon' ) ) {
 	/**
-	 * Filters a menu item's starting output.
+	 * Append the dropdown arrow inside the link of nav menu items with submenus.
 	 *
-	 * Append the dropdown arrow to links with submenus.
+	 * Hooked to `walker_nav_menu_start_el`. Inserts a `span.ele-submenu-icon`
+	 * holding the chevron-down icon before the closing `</a>` of items carrying
+	 * the menu-item-has-children class; other items are returned unchanged.
 	 *
 	 * @param string  $item_output The menu item's starting HTML output.
 	 * @param WP_Post $item        Menu item data object.
@@ -529,14 +547,14 @@ if ( ! function_exists( 'elementify_submenu_icon' ) ) {
 		if ( $has_children ) {
 			$item_output = str_replace(
 				'</a>',
-				'<span class="ele-submenu-icon">' . elementify_get_the_svg( 'ui', 'angle-down', 15 ) . '</span></a>',
+				'<span class="ele-submenu-icon">' . elementify_get_the_svg( 'ui', 'chevron-down', 15 ) . '</span></a>',
 				$item_output
 			);
 		}
 		return $item_output;
 	}
 }
-// add_filter( 'walker_nav_menu_start_el', 'elementify_submenu_icon', 10, 4 );
+add_filter( 'walker_nav_menu_start_el', 'elementify_submenu_icon', 10, 4 );
 
 /*
 --------------------------------------------------------------

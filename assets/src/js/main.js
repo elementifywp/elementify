@@ -7,6 +7,8 @@
  * - Escape closes the innermost open submenu, then the panel, returning focus
  *   to the control that opened it.
  * - Closes everything when focus or a click leaves the navigation.
+ * - Keeps large-screen dropdowns inside the viewport by flipping any that
+ *   would overflow it (hidden dropdowns still widen the page otherwise).
  *
  * Large screens keep the CSS :hover / :focus-within dropdowns, so the menu
  * still works for keyboard users if this script fails to load.
@@ -16,7 +18,7 @@
 		{ expand: 'Show submenu for %s', collapse: 'Hide submenu for %s' },
 		window.elementifyMenu || {}
 	);
-	const desktop = window.matchMedia( '(min-width: 48em)' );
+	const desktop = window.matchMedia( '(min-width: 64em)' );
 
 	/**
 	 * Wires up one primary navigation instance. A header builder can print
@@ -168,11 +170,55 @@
 			}
 		} );
 
+		/**
+		 * Flips large-screen dropdowns that would run past the viewport edge.
+		 * Hidden dropdowns keep their layout box, so they can be measured
+		 * before they open. Parents come first in document order, so each
+		 * nested list is measured after its parent has been placed.
+		 */
+		function fitSubmenus() {
+			const submenus = menu.querySelectorAll( 'ul' );
+
+			submenus.forEach( ( submenu ) =>
+				submenu.classList.remove(
+					'ele-submenu-align-right',
+					'ele-submenu-align-left'
+				)
+			);
+
+			if ( ! desktop.matches ) {
+				return;
+			}
+
+			const viewport = document.documentElement.clientWidth;
+
+			submenus.forEach( ( submenu ) => {
+				const rect = submenu.getBoundingClientRect();
+
+				if ( rect.right > viewport ) {
+					submenu.classList.add( 'ele-submenu-align-right' );
+				} else if ( rect.left < 0 ) {
+					submenu.classList.add( 'ele-submenu-align-left' );
+				}
+			} );
+		}
+
+		let fitFrame = 0;
+
+		window.addEventListener( 'resize', () => {
+			window.cancelAnimationFrame( fitFrame );
+			fitFrame = window.requestAnimationFrame( fitSubmenus );
+		} );
+
+		fitSubmenus();
+
 		// Reset small-screen state when the viewport grows to the desktop layout.
 		desktop.addEventListener( 'change', ( event ) => {
 			if ( event.matches ) {
 				setPanel( false );
 			}
+
+			fitSubmenus();
 		} );
 	}
 

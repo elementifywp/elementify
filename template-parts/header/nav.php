@@ -32,7 +32,7 @@
 									?>
 									<p class="ele-site-description">
 									<?php
-									echo $elementify_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
+									echo $elementify_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 									?>
 									</p>
 								<?php endif; ?>
@@ -42,7 +42,7 @@
 				</div>
 				<div class="ele-builder-column-items ele-d-flex ele-flex-wrap ele-builder-col-2">
 					<div class="ele-header-menu-1-wrap ele-d-flex">
-						<?php elementify_primary_navigation(); ?>
+						<?php elementify_primary_navigation( [ 'walker' => new \Elementify\Inc\Walker_Page() ] ); ?>
 					</div>
 				</div>
 			</div>

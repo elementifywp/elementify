@@ -157,12 +157,6 @@ parameters:
 			path: inc/helpers/functions.php
 
 		-
-			message: '#^Parameter \#1 \$args of function wp_nav_menu expects array\{menu\?\: int\|string\|WP_Term, menu_class\?\: string, menu_id\?\: string, container\?\: string, container_class\?\: string, container_id\?\: string, container_aria_label\?\: string, fallback_cb\?\: \(callable\(\)\: mixed\)\|false, \.\.\.\}, array\{theme_location\: ''menu\-1'', menu_id\: ''primary\-menu'', menu_class\: ''ele\-main\-menu ele…'', container\: false, items_wrap\: ''\<ul id\="primary…'', fallback_cb\: ''elementify_menu…''\} given\.$#'
-			identifier: argument.type
-			count: 1
-			path: inc/helpers/functions.php
-
-		-
 			message: '#^Variable \$classname might not be defined\.$#'
 			identifier: variable.undefined
 			count: 1

@@ -4121,7 +4121,7 @@ Footer: Site Logo & Description.
 
 /* Primary navigation (#ele-header-menu-1)
 ---------------------------------------------
- * Small screens (< 48em): toggle button opens a full-width panel below the
+ * Small screens (< 64em): toggle button opens a full-width panel below the
  * header; submenus expand inline via the toggle buttons main.js adds.
  * Large screens: horizontal menu with :hover / :focus-within dropdowns.
  * Scoped with :is(#ele-header-menu-1, .ele-primary-navigation): every
@@ -4181,9 +4181,26 @@ Footer: Site Logo & Description.
 	transform: translateY(2px) rotate(-135deg);
 }
 
-@media (max-width: 47.99em) {
+@media (max-width: 63.99em) {
+
+	/*
+	 * From 640px the nav gets `ele-position-sm-relative` and the legacy
+	 * `.main-navigation-sm { transform: translateX(0) }`, either of which
+	 * makes the nav the containing block of the absolutely positioned panel,
+	 * squeezing it to the toggle's 44px width. Cancel both so the panel
+	 * spans the header row at every small-screen width.
+	 */
+	:is(#ele-header-menu-1, .ele-primary-navigation).main-navigation {
+		position: static;
+		transform: none;
+	}
 
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu {
+		display: none;
+	}
+
+	/* The toggle button is the control here; hide the caret inside the link. */
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu .ele-submenu-icon {
 		display: none;
 	}
 
@@ -4203,9 +4220,15 @@ Footer: Site Logo & Description.
 		box-shadow: var(--ele-box-shadow);
 	}
 
+	/*
+	 * The panel is a height-capped, scrolling flex column, so items must not
+	 * shrink: once open submenus make it taller than the screen, shrinking
+	 * items would overlap each other instead of the panel scrolling.
+	 */
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li {
 		display: flex;
 		flex-wrap: wrap;
+		flex-shrink: 0;
 		align-items: center;
 		min-height: 0;
 		width: 100%;
@@ -4223,9 +4246,22 @@ Footer: Site Logo & Description.
 		color: var(--ele-heading-color);
 	}
 
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li > a:hover,
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li > a:focus-visible,
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li.current-menu-item > a,
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li.current_page_item > a {
 		color: var(--ele-primary-color);
+	}
+
+	/*
+	 * Cancel the desktop dropdown link styles (`.ele-main-menu li:hover ul li a`
+	 * and its `:hover`), which are not media-scoped: their per-link border
+	 * doubles the item divider and their dark hover fill hides the text.
+	 */
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a,
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a:hover {
+		background: none;
+		border-bottom: 0;
 	}
 
 	/*
@@ -4287,7 +4323,7 @@ Footer: Site Logo & Description.
 	}
 }
 
-@media (min-width: 48em) {
+@media (min-width: 64em) {
 
 	:is(#ele-header-menu-1, .ele-primary-navigation) .menu-toggle {
 		display: none;
@@ -4299,6 +4335,39 @@ Footer: Site Logo & Description.
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: flex-end;
+	}
+
+	/*
+	 * Cap the item height so a long menu that wraps onto a second line adds
+	 * a compact row instead of another full header-height (80px) row.
+	 */
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu > li {
+		min-height: min(var(--ele-header-row-min-height, 0px), 3.5rem);
+	}
+
+	/*
+	 * Every item is `position: relative; z-index: 1`, so later siblings (e.g.
+	 * a wrapped second row) would paint over an open dropdown. Lift the item
+	 * whose dropdown is showing.
+	 */
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li:hover,
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li:focus-within {
+		z-index: 2;
+	}
+
+	/*
+	 * Edge alignment set by main.js when a dropdown would run past the
+	 * viewport: a top-level submenu aligns to its item's right edge, a deeper
+	 * one opens to the right instead of the left.
+	 */
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu > li > ul.ele-submenu-align-right {
+		left: auto;
+		right: 0;
+	}
+
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul ul.ele-submenu-align-left {
+		left: 100%;
+		right: auto;
 	}
 
 	/*
