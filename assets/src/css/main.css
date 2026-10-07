@@ -8040,7 +8040,7 @@ Pagination
 
 [data-builder-element="contact"] ul.ele-contact-list li {
 	gap: 15px;
-	align-items: var(--ele-align-items, center);
+	align-items: var(--ele-contact-align-items, start);
 }
 
 [data-builder-element="contact"]
@@ -9010,6 +9010,9 @@ form textarea {
 	box-sizing: border-box;
 	overflow-x: hidden;
 	overflow-y: auto;
+}
+.ele-header-row-sidebar .ele-builder-col-element[data-builder-element="menu_2"] {
+	width: 100%;
 }
 
 .ele-modal-visible {
