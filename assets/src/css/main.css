@@ -4257,7 +4257,7 @@ Footer: Site Logo & Description.
 		top: 100%;
 		left: 0;
 		right: 0;
-		max-height: calc(100vh - var(--ele-header-row-min-height, 80px));
+		height: calc(100vh - var(--ele-header-row-min-height, 80px));
 		overflow-y: auto;
 		padding: 8px 15px 16px;
 		background-color: var(--ele-base-100);
@@ -4288,7 +4288,6 @@ Footer: Site Logo & Description.
 		flex: 1;
 		height: auto;
 		padding: 12px 0;
-		color: var(--ele-heading-color);
 	}
 
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li > a:hover,
@@ -4387,7 +4386,7 @@ Footer: Site Logo & Description.
 	 * a compact row instead of another full header-height (80px) row.
 	 */
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu > li {
-		min-height: min(var(--ele-header-row-min-height, 0px), 3.5rem);
+		height: min(var(--ele-header-row-min-height, 0px), 3.5rem);
 	}
 
 	/*
@@ -5289,7 +5288,7 @@ nav .ele-submenu-icon {
 }
 
 .ele-main-menu > li:not(.ele-main-menu > li .sub-menu) {
-	min-height: var(--ele-header-row-min-height, 0);
+	height: var(--ele-header-row-min-height, 0);
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
