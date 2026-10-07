@@ -4497,10 +4497,6 @@ nav .ele-submenu-icon {
 .ele-main-menu li {
 	position: relative;
 	z-index: 1;
-}
-
-.ele-main-menu li a,
-.ele-collapsible-menu li a {
 	--ele-font-weight: 500;
 	--ele-text-transform: uppercase;
 	--ele-font-size: 14px;
@@ -4513,6 +4509,10 @@ nav .ele-submenu-icon {
 	--ele-menu-hover-color: var(--ele-primary-color);
 	--ele-menu-active-color: var(--ele-primary-color);
 	--ele-menu-item-pseudo-color: var(--ele-primary-color);
+}
+
+.ele-main-menu li a,
+.ele-collapsible-menu li a {
 	padding: var(--ele-menu-item-padding, 0px);
 	transition: color 0.35s;
 	gap: 3px;
