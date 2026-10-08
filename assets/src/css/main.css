@@ -4215,6 +4215,7 @@ Footer: Site Logo & Description.
 		flex-wrap: wrap;
 		flex-shrink: 0;
 		align-items: center;
+		height: auto;
 		min-height: 0;
 		width: 100%;
 		border-bottom: var(--ele-border);
@@ -4240,12 +4241,17 @@ Footer: Site Logo & Description.
 	/*
 	 * Cancel the desktop dropdown link styles (`.ele-main-menu li:hover ul li a`
 	 * and its `:hover`), which are not media-scoped: their per-link border
-	 * doubles the item divider and their dark hover fill hides the text.
+	 * doubles the item divider, their dark hover fill hides the text, and
+	 * their `--ele-base-100` link colour is white-on-white in this panel.
 	 */
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a,
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a:hover {
 		background: none;
 		border-bottom: 0;
+	}
+
+	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a {
+		color: var(--ele-heading-color);
 	}
 
 	/*
@@ -4365,9 +4371,6 @@ Footer: Site Logo & Description.
 		left: 0;
 		right: auto;
 		min-width: 200px;
-		background-color: var(--ele-base-100);
-		border: var(--ele-border);
-		box-shadow: var(--ele-box-shadow);
 		transition:
 			opacity var(--ele-transition-normal) ease-in-out,
 			visibility 0s linear var(--ele-transition-normal);
@@ -4375,7 +4378,7 @@ Footer: Site Logo & Description.
 
 	/* Third level and deeper open to the left: the menu sits on the right of the header. */
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul ul {
-		top: -1px;
+		top: 0;
 		left: auto;
 		right: 100%;
 		margin-top: 0;
@@ -4384,23 +4387,6 @@ Footer: Site Logo & Description.
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li:hover > ul,
 	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu li:focus-within > ul {
 		transition-delay: 0s;
-	}
-
-	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a {
-		color: var(--ele-heading-color);
-		border-bottom: var(--ele-border);
-	}
-
-	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li:last-child > a {
-		border-bottom: 0;
-	}
-
-	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a:hover,
-	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li a:focus-visible,
-	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li.current-menu-item > a,
-	:is(#ele-header-menu-1, .ele-primary-navigation) .ele-main-menu ul li.current_page_item > a {
-		color: var(--ele-primary-color);
-		background-color: var(--ele-base-200);
 	}
 }
 
