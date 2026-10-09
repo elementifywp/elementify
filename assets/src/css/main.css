@@ -214,6 +214,9 @@ samp {
 	font-size: 1em;
 
 	/* 2 */
+	tab-size: 4;
+	border-radius: 2px;
+	background: var(--ele-base-200);
 }
 
 /**
@@ -754,9 +757,11 @@ acronym {
 	cursor: help;
 }
 
+/* A primary tint: --ele-base-200 is the page background, so it would not show. */
 mark,
 ins {
-	background: var(--ele-base-200);
+	color: inherit;
+	background: color-mix(in srgb, var(--ele-primary-color) 14%, transparent);
 	text-decoration: none;
 }
 
@@ -1797,50 +1802,84 @@ object {
 ## Galleries
 --------------------------------------------------------------*/
 .gallery {
-	margin-bottom: 1.5em;
+	--ele-gallery-columns: 3;
+	display: grid;
+	grid-template-columns: repeat(var(--ele-gallery-columns), minmax(0, 1fr));
+	gap: 24px 16px;
+	margin-top: 2em;
+	margin-bottom: 2em;
 }
 
-.gallery-item {
-	display: inline-block;
+.gallery-columns-1 {
+	--ele-gallery-columns: 1;
+}
+
+.gallery-columns-2 {
+	--ele-gallery-columns: 2;
+}
+
+.gallery-columns-3 {
+	--ele-gallery-columns: 3;
+}
+
+.gallery-columns-4 {
+	--ele-gallery-columns: 4;
+}
+
+.gallery-columns-5 {
+	--ele-gallery-columns: 5;
+}
+
+.gallery-columns-6 {
+	--ele-gallery-columns: 6;
+}
+
+.gallery-columns-7 {
+	--ele-gallery-columns: 7;
+}
+
+.gallery-columns-8 {
+	--ele-gallery-columns: 8;
+}
+
+.gallery-columns-9 {
+	--ele-gallery-columns: 9;
+}
+
+/* Phones: more than three columns would shrink thumbnails to slivers. */
+@media (max-width: 37.49em) {
+
+	.gallery:is(.gallery-columns-4, .gallery-columns-5, .gallery-columns-6, .gallery-columns-7, .gallery-columns-8, .gallery-columns-9) {
+		--ele-gallery-columns: 3;
+	}
+}
+
+/*
+ * Each item is a <figure>: cancel the content figure margins (2em each) that
+ * otherwise stack between rows. Thumbnails keep their size, or shrink to fit.
+ */
+.gallery .gallery-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 0;
+	margin: 0;
 	text-align: center;
-	vertical-align: top;
-	width: 100%;
 }
 
-.gallery-columns-2 .gallery-item {
-	max-width: 50%;
-}
-
-.gallery-columns-3 .gallery-item {
-	max-width: 33.33%;
-}
-
-.gallery-columns-4 .gallery-item {
-	max-width: 25%;
-}
-
-.gallery-columns-5 .gallery-item {
-	max-width: 20%;
-}
-
-.gallery-columns-6 .gallery-item {
-	max-width: 16.66%;
-}
-
-.gallery-columns-7 .gallery-item {
-	max-width: 14.28%;
-}
-
-.gallery-columns-8 .gallery-item {
-	max-width: 12.5%;
-}
-
-.gallery-columns-9 .gallery-item {
-	max-width: 11.11%;
-}
-
-.gallery-caption {
+.gallery .gallery-icon img {
 	display: block;
+	max-width: 100%;
+	height: auto;
+	border-radius: 4px;
+}
+
+.gallery .gallery-caption {
+	display: block;
+	margin-top: 8px;
+	color: var(--ele-text-color);
+	font-size: 0.8125rem;
+	line-height: 1.45;
 }
 
 /*--------------------------------------------------------------
@@ -5681,8 +5720,14 @@ nav .ele-submenu-icon {
   color: var(--ele-text-color);
 } */
 
+/*
+ * Headings keep --ele-heading-color, and covers own their text colour
+ * (core: white, or dark with `is-light`), so leave them out. The exclusion
+ * sits in :where() to keep this selector's specificity at (0,1,1), below
+ * content rules like `.entry-content blockquote`.
+ */
 .entry-excerpt > *:not(a),
-.entry-content > *:not(a) {
+.entry-content > *:not(a, :where(h1, h2, h3, h4, h5, h6, .wp-block-cover, .wp-block-cover-image)) {
 	color: var(--ele-text-color);
 }
 
@@ -6695,51 +6740,213 @@ Comments
 	gap: 8px;
 }
 
-.ele-comments-wrap .comment-body .reply {
-	position: absolute;
-	top: 55px;
-	right: 0;
+/*
+ * Each comment is an <article>, so the singular layout's
+ * `.site-main article > *:not(:last-child)` spacing (35px) would land
+ * between its header, content and reply. The card sets its own spacing.
+ */
+.ele-comments-wrap .comment-list article.comment-body > * {
+	margin-bottom: 0;
 }
 
-.ele-comments-wrap .comment-body:hover .reply a {
-	background: var(--ele-secondary-color);
-	color: var(--ele-base-100);
-	transition: all 0.3s ease 0s;
-	border-radius: 3px;
+/*
+ * Comment card (core markup: article.comment-body > footer.comment-meta
+ * [.comment-author (avatar, name, "says:"), .comment-metadata (date)],
+ * .comment-content, .reply). The avatar sits to the left of the name and
+ * date; the content lines up under the name; Reply sits top right.
+ */
+.ele-comments-wrap .comment-list article.comment-body {
+	--ele-comment-avatar-size: 40px;
+	--ele-comment-offset: calc(var(--ele-comment-avatar-size) + 16px);
+	position: relative;
+	padding-block: 32px;
+	border-top: var(--ele-border);
 }
 
-.ele-comments-wrap .comment-body .reply a {
-	font-size: 14px;
-	padding: 5px 10px;
-	transition: all 0.3s ease 0s;
+.ele-comments-wrap .comment-meta {
+	position: relative;
+	min-height: var(--ele-comment-avatar-size);
+	padding-inline-start: var(--ele-comment-offset);
+}
+
+/* Keep the name and date clear of the Reply button (absent past the max thread depth). */
+.ele-comments-wrap .comment-body:has(> .reply) .comment-meta {
+	padding-inline-end: 80px;
 }
 
 .ele-comments-wrap .comment-author > img.avatar {
 	position: absolute;
-	left: 0;
-	width: 30px;
-	border-radius: 3px;
+	top: 0;
+	inset-inline-start: 0;
+	width: var(--ele-comment-avatar-size);
+	height: var(--ele-comment-avatar-size);
+	border-radius: 50%;
 }
 
-.ele-comments-wrap .comment-list article.comment-body {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	border-top: var(--ele-border);
-	position: relative;
-	padding-left: 50px;
+.ele-comments-wrap .comment-author {
+	margin-bottom: 2px;
+	color: var(--ele-heading-color);
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.4;
 }
 
-.ele-comments-wrap .comment-author,
+.ele-comments-wrap .comment-author .fn {
+	font-weight: inherit;
+}
+
+.ele-comments-wrap .comment-author .fn a {
+	color: inherit;
+	font-weight: inherit;
+}
+
+/* "says:" reads naturally to screen readers but is noise on screen. */
+.ele-comments-wrap .comment-author .says {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
 .ele-comments-wrap .comment-metadata {
-	margin-bottom: 10px;
+	margin: 0;
+	font-size: 0.8125rem;
+	line-height: 1.4;
 }
 
+.ele-comments-wrap .comment-metadata a {
+	color: var(--ele-text-color);
+}
+
+.ele-comments-wrap .comment-metadata a:hover {
+	color: var(--ele-primary-color);
+}
+
+.ele-comments-wrap .comment-awaiting-moderation {
+	display: block;
+	margin-top: 8px;
+	padding-inline-start: var(--ele-comment-offset);
+	font-size: 0.8125rem;
+	font-style: italic;
+}
+
+.ele-comments-wrap .comment-body .reply {
+	position: absolute;
+	top: 32px;
+	inset-inline-end: 0;
+}
+
+.ele-comments-wrap .comment-body .reply a {
+	display: inline-flex;
+	align-items: center;
+	height: 28px;
+	padding: 0 12px;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	border: var(--ele-border);
+	border-radius: 3px;
+	transition: all var(--ele-transition-fast, 0.2s) ease;
+}
+
+.ele-comments-wrap .comment-body:hover .reply a,
+.ele-comments-wrap .comment-body .reply a:focus-visible {
+	color: var(--ele-base-100);
+	background: var(--ele-secondary-color);
+	border-color: var(--ele-secondary-color);
+}
+
+/*
+ Comment content
+----------------------------------------
+ * Comments are outside .entry-content, so give their HTML its own compact
+ * rhythm: flow spacing between children, and the same quote/list/table
+ * treatment as post content.
+ */
 .ele-comments-wrap .comment-content {
-	padding-top: 15px;
+	padding-top: 16px;
+	padding-inline-start: var(--ele-comment-offset);
+	overflow-wrap: break-word;
+}
+
+.ele-comments-wrap .comment-content > * {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.ele-comments-wrap .comment-content > * + * {
+	margin-top: 1em;
 }
 
 .ele-comments-wrap .comment-content p {
 	line-height: 1.6;
+}
+
+.ele-comments-wrap .comment-content :is(h1, h2, h3, h4, h5, h6) {
+	line-height: 1.3;
+}
+
+.ele-comments-wrap .comment-content > :is(h1, h2, h3, h4, h5, h6):not(:first-child) {
+	margin-top: 1.5em;
+}
+
+.ele-comments-wrap .comment-content :is(ul, ol) {
+	padding-inline-start: 1.5em;
+}
+
+.ele-comments-wrap .comment-content li + li,
+.ele-comments-wrap .comment-content li > :is(ul, ol) {
+	margin-top: 0.4em;
+}
+
+.ele-comments-wrap .comment-content blockquote {
+	margin-inline: 0;
+	padding-inline-start: 1.25em;
+	color: var(--ele-heading-color);
+	font-style: italic;
+	border-inline-start: 4px solid var(--ele-primary-color);
+}
+
+.ele-comments-wrap .comment-content blockquote > * + * {
+	margin-top: 0.75em;
+}
+
+.ele-comments-wrap .comment-content blockquote cite {
+	color: var(--ele-text-color);
+	font-size: 0.875rem;
+	font-style: normal;
+}
+
+.ele-comments-wrap .comment-content table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.ele-comments-wrap .comment-content :is(th, td) {
+	padding: 8px 12px;
+	text-align: start;
+	border: var(--ele-border);
+}
+
+.ele-comments-wrap .comment-content th {
+	color: var(--ele-heading-color);
+	background: var(--ele-base-100);
+}
+
+.ele-comments-wrap .comment-content dt {
+	color: var(--ele-heading-color);
+	font-weight: 600;
+}
+
+.ele-comments-wrap .comment-content dd {
+	margin: 0.25em 0 0.75em;
+	margin-inline-start: 1.5em;
+}
+
+.ele-comments-wrap .comment-content img {
+	max-width: 100%;
+	height: auto;
 }
 
 /* Text fields show focus through their border colour; other controls need an outline. */
@@ -6771,7 +6978,8 @@ Comments
 	top: 2px;
 }
 
-.comment-form p:not(.comment-form-cookies-consent) label {
+/* The offset, padding and fill only apply to the label that sits inside the field. */
+[data-form-label="inside"] .comment-form p:not(.comment-form-cookies-consent) label {
 	left: 12px;
 	background-color: var(
 		--ele-form-field-background-initial-color,
@@ -6818,10 +7026,32 @@ Comments
 	padding-bottom: 50px;
 }
 
-.comment-list li > ul,
-.comment-list li > ol {
-	margin-bottom: 0;
-	margin-left: 50px;
+/* Replies: no list numbers, one fixed indent per level (tighter on phones). */
+.comment-list .children {
+	margin: 0;
+	padding: 0;
+	padding-inline-start: 56px;
+	list-style: none;
+}
+
+@media (max-width: 47.99em) {
+
+	.comment-list .children {
+		padding-inline-start: 20px;
+	}
+
+	.ele-comments-wrap .comment-list article.comment-body {
+		--ele-comment-avatar-size: 36px;
+		padding-block: 24px;
+	}
+
+	.ele-comments-wrap .comment-body .reply {
+		top: 24px;
+	}
+
+	.ele-comments-wrap .comment-content {
+		padding-inline-start: 0;
+	}
 }
 
 .comments-area .comment-respond {
@@ -7687,14 +7917,47 @@ Layout 3
 	color: var(--ele-text-color);
 }
 
+/*
+ * Inline code and keyboard keys sit on a small bordered --ele-base-100
+ * chip (the page background is --ele-base-200). `clone` keeps the chip
+ * intact on each line when code wraps. Code blocks reset this below.
+ */
 .entry-content code {
-	color: var(--ele-secondary-color);
-	font-weight: 600;
+	padding: 0.15em 0.4em;
+	color: var(--ele-heading-color);
+	font-size: 0.875em;
+	overflow-wrap: break-word;
+	background: var(--ele-base-100);
+	border: var(--ele-border);
+	border-radius: 4px;
+	box-decoration-break: clone;
 }
 
-.entry-content code::after,
-.entry-content code::before {
-	content: "`";
+.entry-content kbd {
+	padding: 0.1em 0.45em;
+	color: var(--ele-heading-color);
+	font-size: 0.875em;
+	background: var(--ele-base-100);
+	border: var(--ele-border);
+	border-bottom-width: 2px;
+	border-radius: 4px;
+}
+
+/* Plain HTML tables (block tables carry classes and core styling). */
+.entry-content table:not([class]) {
+	border-collapse: collapse;
+}
+
+.entry-content table:not([class]) :is(th, td) {
+	padding: 8px 12px;
+	text-align: start;
+	vertical-align: top;
+	border: var(--ele-border);
+}
+
+.entry-content table:not([class]) th {
+	color: var(--ele-heading-color);
+	background: var(--ele-base-100);
 }
 
 /* .entry-content a:not(.wp-element-button,
@@ -7852,9 +8115,12 @@ Pagination
 	line-height: var(--ele-line-height);
 }
 
+/* Sized by their label, like the theme pagination's prev/next buttons. */
 .wp-block-query-pagination .wp-block-query-pagination-next,
 .wp-block-query-pagination .wp-block-query-pagination-previous {
-	width: 10em;
+	width: auto;
+	padding: 0 1.25em;
+	white-space: nowrap;
 }
 
 .ele-pagination-wrap .page-numbers.ele-button {
@@ -7971,6 +8237,165 @@ Pagination
 	background-position: 0% 100%;
 	background-repeat: no-repeat;
 	transition: all 0.3s ease 0s;
+}
+
+/*--------------------------------------------------------------
+# Theme blocks
+--------------------------------------------------------------*/
+
+/*
+ * Links that are UI rather than prose (site title, pagination, comment
+ * meta) opt out of the link-type underline above. Same specificity as the
+ * link-type rules, so this must stay after them.
+ */
+:is(
+		.wp-block-site-title,
+		.wp-block-query-pagination,
+		.page-links,
+		.wp-block-comment-author-name,
+		.wp-block-comment-date,
+		.wp-block-comment-reply-link,
+		.wp-block-comment-edit-link
+	)
+	a,
+:is(
+		.wp-block-site-title,
+		.wp-block-query-pagination,
+		.page-links,
+		.wp-block-comment-author-name,
+		.wp-block-comment-date,
+		.wp-block-comment-reply-link,
+		.wp-block-comment-edit-link
+	)
+	a:hover {
+	text-decoration: none;
+	background-image: none;
+}
+
+/*
+ * Site Title: a heading, not a link. `font-size: inherit` undoes the
+ * typography group's `--ele-font-size` compounding inside the heading.
+ */
+.wp-block-site-title a {
+	color: var(--ele-heading-color);
+	font-size: inherit;
+}
+
+.wp-block-site-title a:hover {
+	color: var(--ele-primary-color);
+}
+
+/*
+ * Query Pagination and the post's page links ("Pages: 1 2"): bordered
+ * number boxes, matching the theme's numbered pagination.
+ */
+.wp-block-query-pagination,
+.page-links {
+	--ele-pagination-border: 1px solid;
+	--ele-pagination-border-color: var(--ele-base-300);
+	align-items: center;
+	gap: 8px;
+}
+
+.page-links {
+	margin-top: 2em;
+}
+
+:is(.wp-block-query-pagination, .page-links) a {
+	background-color: var(--ele-base-100);
+}
+
+:is(.wp-block-query-pagination, .page-links) a:hover {
+	color: var(--ele-pagination-heading-color);
+	border-color: var(--ele-pagination-heading-color);
+}
+
+.wp-block-query-pagination .page-numbers.dots {
+	width: auto;
+	border-color: transparent;
+}
+
+/* Comments block: same card language as the classic comment list. */
+.wp-block-comments .wp-block-comment-template {
+	padding-inline-start: 0;
+	list-style: none;
+}
+
+.wp-block-comments .wp-block-comment-template ol {
+	padding-inline-start: 2rem;
+	list-style: none;
+}
+
+.wp-block-comments .wp-block-comment-template li {
+	margin: 0;
+	padding-top: 24px;
+	border-top: var(--ele-border);
+}
+
+/*
+ * The default comment template lays out avatar | text with a Columns
+ * block, which core stacks below 782px with `flex-basis: 100% !important`.
+ * Keep the avatar beside the text; matching core needs !important.
+ */
+@media (max-width: 781px) {
+
+	.wp-block-comment-template .wp-block-columns {
+		flex-wrap: nowrap !important;
+		gap: 16px;
+	}
+
+	.wp-block-comment-template .wp-block-columns > .wp-block-column:first-child:not(:only-child) {
+		flex: 0 0 auto !important;
+	}
+
+	.wp-block-comment-template .wp-block-columns > .wp-block-column:last-child:not(:only-child) {
+		flex: 1 1 0 !important;
+		min-width: 0;
+	}
+}
+
+.wp-block-comment-author-name {
+	color: var(--ele-heading-color);
+	font-weight: 600;
+}
+
+.wp-block-comment-author-name a {
+	color: inherit;
+	font-weight: inherit;
+}
+
+.wp-block-comment-date a {
+	color: var(--ele-text-color);
+}
+
+.wp-block-comment-author-name a:hover,
+.wp-block-comment-date a:hover {
+	color: var(--ele-primary-color);
+}
+
+.wp-block-comment-reply-link a {
+	display: inline-flex;
+	align-items: center;
+	height: 28px;
+	padding: 0 12px;
+	color: var(--ele-primary-color);
+	font-size: 0.8125rem;
+	font-weight: 500;
+	border: var(--ele-border);
+	border-radius: 3px;
+	transition: all var(--ele-transition-fast, 0.2s) ease;
+}
+
+.wp-block-comment-reply-link a:hover,
+.wp-block-comment-reply-link a:focus-visible {
+	color: var(--ele-base-100);
+	background-color: var(--ele-secondary-color);
+	border-color: var(--ele-secondary-color);
+}
+
+/* Comments Form block: same 40px fields as the theme comment form (textarea keeps its own height). */
+.wp-block-post-comments-form {
+	--ele-form-field-height: 40px;
 }
 
 /*--------------------------------------------------------------
@@ -8168,48 +8593,123 @@ Pagination
 	transition: all 0.3s ease 0s;
 }
 
-/* conent */
+/*
+ Separator
+----------------------------------------
+ * A 2px rule in a muted tint of the text colour (a colour picked in the
+ * editor wins). Default style is a short centred rule; Wide style and
+ * wide/full alignment span the content; Dots keeps core's "···".
+ */
 .entry-content hr {
-	border-color: var(--ele-base-300);
-	border-top-width: 1px;
-	margin-bottom: 3em;
-	margin-top: 3em;
+	margin-top: 2.5em;
+	margin-bottom: 2.5em;
+	border: 0;
+	border-top: 2px solid currentcolor;
 }
 
-[data-sidebar="left"]
-	.entry-content
-	.wp-block-separator:not(.is-style-wide):not(.is-style-dots),
-[data-sidebar="right"]
-	.entry-content
-	.wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
-	width: 100%;
+.entry-content hr:where(:not(.has-text-color, .has-background, .is-style-dots)) {
+	color: color-mix(in srgb, var(--ele-text-color) 22%, transparent);
 }
 
+.entry-content .wp-block-separator:not(.is-style-wide, .is-style-dots, .alignwide, .alignfull) {
+	width: 100px;
+	margin-inline: auto;
+}
+
+.entry-content .wp-block-separator.is-style-dots {
+	border: 0;
+}
+
+/*
+ Quote
+----------------------------------------
+ * Accent rule on the leading edge (both edges swap for right / centered
+ * text), padding instead of the browser's side margins. `is-style-plain`
+ * opts out of the rule.
+ */
 .entry-content blockquote {
-	border-left-color: var(--ele-base-300);
-	border-left-width: 0.25rem;
+	margin-top: 1.6em;
+	margin-bottom: 1.6em;
 	color: var(--ele-heading-color);
 	font-style: italic;
 	font-weight: 500;
-	margin-bottom: 1.6em;
-	margin-top: 1.6em;
 }
 
-.entry-content .wp-block-quote cite {
+.entry-content blockquote:where(:not(.is-style-plain, .has-text-align-center, .has-text-align-right)) {
+	padding-inline-start: 1.5em;
+	border-inline-start: 4px solid var(--ele-primary-color);
+}
+
+.entry-content blockquote.has-text-align-right:where(:not(.is-style-plain)) {
+	padding-inline-end: 1.5em;
+	border-inline-end: 4px solid var(--ele-primary-color);
+}
+
+.entry-content blockquote.has-text-align-center:where(:not(.is-style-plain)) {
+	padding-block: 1.5em;
+	border-block: 3px solid var(--ele-primary-color);
+}
+
+/* Matches the paragraph-rhythm rule's specificity so quotes set their own spacing. */
+.entry-content blockquote p:not(.elementor-widget *) {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+.entry-content blockquote p:not(.elementor-widget *):last-of-type {
+	margin-bottom: 0;
+}
+
+.entry-content blockquote cite {
 	display: block;
-	margin-top: 15px;
-	font-size: 14px;
+	margin-top: 0.75em;
+	color: var(--ele-text-color);
+	font-size: 0.875rem;
+	font-style: normal;
+	font-weight: 500;
+}
+
+/*
+ Code, Preformatted, Verse
+----------------------------------------
+ * The page background is --ele-base-200, so these sit on a bordered
+ * --ele-base-100 card to read as a box. The typography group above sets
+ * `font-family: var(--ele-font-family)` on pre/code, so switch the
+ * variable rather than the property; Verse is poetry and keeps the body
+ * font.
+ */
+:where(pre, code, kbd, samp) {
+	--ele-font-family: ui-monospace, sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 pre {
-	background: var(--ele-base-100);
-	font-family: "Courier 10 Pitch", Courier, monospace;
-	font-size: 15px;
-	line-height: 1.6;
-	margin-bottom: 1.6em;
 	max-width: 100%;
+	margin-top: 1.6em;
+	margin-bottom: 1.6em;
+	padding: 1em 1.25em;
 	overflow: auto;
-	padding: 15px 20px;
+	font-size: 0.875rem;
+	line-height: 1.7;
+	tab-size: 4;
+	background: var(--ele-base-100);
+	border: var(--ele-border);
+	border-radius: 4px;
+}
+
+.wp-block-verse {
+	--ele-font-family: inherit;
+	font-size: inherit;
+	white-space: pre-wrap;
+}
+
+/* The inline-code chip is for code in running text, not code blocks. */
+.entry-content pre code {
+	padding: 0;
+	color: inherit;
+	font-size: inherit;
+	background: none;
+	border: 0;
+	border-radius: 0;
 }
 
 .wp-block-code,
@@ -8218,50 +8718,70 @@ pre {
 	border-color: var(--ele-base-300);
 }
 
-code,
-kbd,
-samp,
-pre {
-	tab-size: 4;
-	border-radius: 2px;
-	background: var(--ele-base-200);
-}
-
+/*
+ Pullquote
+----------------------------------------
+ * A card with an accent top rule and a faint quote mark behind the text.
+ * A block background colour (`has-background`) replaces the card colour.
+ */
 figure.wp-block-pullquote {
 	position: relative;
-	padding: 70px;
+	padding: 3em 3.5em;
 	text-align: initial;
-	border-width: 10px;
-	border-style: solid;
-	border-color: var(--ele-base-300);
+	border: var(--ele-border);
+	border-top: 4px solid var(--ele-primary-color);
+	border-radius: 4px;
 }
 
-figure.wp-block-pullquote blockquote {
+figure.wp-block-pullquote:where(:not(.has-background)) {
+	background-color: var(--ele-base-100);
+}
+
+figure.wp-block-pullquote.has-text-align-center {
+	text-align: center;
+}
+
+figure.wp-block-pullquote.has-text-align-right {
+	text-align: right;
+}
+
+.entry-content figure.wp-block-pullquote blockquote {
 	position: relative;
 	isolation: isolate;
+	margin: 0;
+	padding: 0;
+	border: 0;
 }
 
-/* .wp-block-pullquote blockquote,
-.wp-block-pullquote cite,
-.wp-block-pullquote p {
-    color: inherit;
-} */
 figure.wp-block-pullquote blockquote::before {
 	position: absolute;
 	z-index: -1;
 	content: "";
-	width: var(--ele-quote-icon-size, 70px);
-	height: var(--ele-quote-icon-size, 70px);
-	top: calc(var(--ele-quote-icon-size, 70px) / -3);
-	inset-inline-start: calc(var(--ele-quote-icon-size, 70px) / -3);
-	opacity: 0.15;
-	background-color: currentcolor;
+	width: var(--ele-quote-icon-size, 60px);
+	height: var(--ele-quote-icon-size, 60px);
+	top: calc(var(--ele-quote-icon-size, 60px) / -2.5);
+	inset-inline-start: calc(var(--ele-quote-icon-size, 60px) / -2.5);
+	opacity: 0.12;
+	background-color: var(--ele-primary-color);
 	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M0,19.04v-8.62c-0.04-1.24,0.14-2.4,0.54-3.49S1.49,4.88,2.2,4.06C2.92,3.23,3.77,2.55,4.76,2C5.76,1.46,6.84,1.11,8,0.96 v3.72C6.58,5.17,5.6,5.89,5.07,6.85C4.55,7.8,4.29,8.98,4.29,10.37H8v8.67H0zM12,19.04v-8.62c-0.04-1.24,0.14-2.4,0.53-3.49 s0.95-2.05,1.66-2.87c0.71-0.83,1.57-1.51,2.56-2.06c0.99-0.54,2.08-0.89,3.24-1.04v3.72c-1.43,0.49-2.4,1.21-2.93,2.17c-0.53,0.96-0.79,2.13-0.79,3.52H20v8.67H12z'/%3E%3C/svg%3E");
 	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M0,19.04v-8.62c-0.04-1.24,0.14-2.4,0.54-3.49S1.49,4.88,2.2,4.06C2.92,3.23,3.77,2.55,4.76,2C5.76,1.46,6.84,1.11,8,0.96 v3.72C6.58,5.17,5.6,5.89,5.07,6.85C4.55,7.8,4.29,8.98,4.29,10.37H8v8.67H0zM12,19.04v-8.62c-0.04-1.24,0.14-2.4,0.53-3.49 s0.95-2.05,1.66-2.87c0.71-0.83,1.57-1.51,2.56-2.06c0.99-0.54,2.08-0.89,3.24-1.04v3.72c-1.43,0.49-2.4,1.21-2.93,2.17c-0.53,0.96-0.79,2.13-0.79,3.52H20v8.67H12z'/%3E%3C/svg%3E");
 }
 
-figure.wp-block-pullquote blockquote p {
-	margin-bottom: 1em;
+.entry-content figure.wp-block-pullquote p {
+	font-size: 1.375em;
+	line-height: 1.5;
+}
+
+@media (max-width: 47.99em) {
+
+	figure.wp-block-pullquote {
+		--ele-quote-icon-size: 40px;
+		padding: 2em 1.75em;
+	}
+
+	.entry-content figure.wp-block-pullquote p {
+		font-size: 1.2em;
+	}
 }
 
 .entry-content figure,
@@ -8369,6 +8889,35 @@ input,
 select,
 textarea {
 	margin: 0;
+}
+
+/*
+ * Password-protected post form. Core prints
+ * `<p><label>Password: <input></label> <input type="submit"></p>`
+ * (plus an empty `<p>`): lay the field and button out in one row, the
+ * label text above the field, and match the field to the button height.
+ */
+.post-password-form p:empty {
+	display: none;
+}
+
+.post-password-form p:has(> [type="submit"]) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 10px;
+}
+
+.post-password-form label {
+	display: flex;
+	flex: 1 1 220px;
+	flex-direction: column;
+	gap: 0.5em;
+	margin: 0;
+}
+
+.post-password-form input[type="password"] {
+	--ele-form-field-height: var(--ele-button-min-height, 40px);
 }
 
 form textarea {
@@ -8508,8 +9057,14 @@ form textarea {
 		animation-range: entry;
 	}
 
-	/* Related posts images render on the singular page too, but shouldn't scroll-reveal. */
-	.ele-related-posts-wrap article img {
+	/*
+	 * Related posts images render on the singular page too, and avatars
+	 * (classic comments are <article>s; the Avatar block sits in the post's):
+	 * none of them should scroll-reveal.
+	 */
+	.ele-related-posts-wrap article img,
+	.comment-list article img,
+	article .wp-block-avatar img {
 		scale: 1;
 		opacity: 1;
 		animation: none;
