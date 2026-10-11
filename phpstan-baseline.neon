@@ -7,26 +7,8 @@ parameters:
 			path: inc/classes/class-breadcrumb-trail.php
 
 		-
-			message: '#^Method Elementify\\Inc\\Breadcrumb_Trail\:\:get_post_types_by_slug\(\) with return type void returns list\<WP_Post_Type\> but should not return anything\.$#'
-			identifier: return.void
-			count: 1
-			path: inc/classes/class-breadcrumb-trail.php
-
-		-
-			message: '#^Method Elementify\\Inc\\Breadcrumb_Trail\:\:map_rewrite_tags\(\) should return array but return statement is missing\.$#'
-			identifier: return.missing
-			count: 2
-			path: inc/classes/class-breadcrumb-trail.php
-
-		-
 			message: '#^Method Elementify\\Inc\\Breadcrumb_Trail\:\:trail\(\) should return string but return statement is missing\.$#'
 			identifier: return.missing
-			count: 1
-			path: inc/classes/class-breadcrumb-trail.php
-
-		-
-			message: '#^PHPDoc tag @param references unknown parameter\: \$args$#'
-			identifier: parameter.notFound
 			count: 1
 			path: inc/classes/class-breadcrumb-trail.php
 
@@ -57,12 +39,6 @@ parameters:
 		-
 			message: '#^Parameter \#3 \$format of function get_archives_link expects string, false given\.$#'
 			identifier: argument.type
-			count: 1
-			path: inc/classes/class-breadcrumb-trail.php
-
-		-
-			message: '#^Result of method Elementify\\Inc\\Breadcrumb_Trail\:\:get_post_types_by_slug\(\) \(void\) is used\.$#'
-			identifier: method.void
 			count: 1
 			path: inc/classes/class-breadcrumb-trail.php
 
@@ -127,12 +103,6 @@ parameters:
 			path: inc/helpers/functions.php
 
 		-
-			message: '#^Function elementify_breadcrumb\(\) with return type void returns mixed but should not return anything\.$#'
-			identifier: return.void
-			count: 1
-			path: inc/helpers/functions.php
-
-		-
 			message: '#^Function elementify_site_description\(\) should return string but return statement is missing\.$#'
 			identifier: return.missing
 			count: 1
@@ -163,26 +133,26 @@ parameters:
 			path: inc/helpers/functions.php
 
 		-
-			message: '#^Loose comparison using \=\= between ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' and ''cats'' will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
-			count: 1
-			path: inc/helpers/template-functions.php
-
-		-
-			message: '#^Loose comparison using \=\= between ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' and ''div1'' will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
-			count: 1
-			path: inc/helpers/template-functions.php
-
-		-
-			message: '#^Loose comparison using \=\= between ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' and ''tags'' will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
-			count: 1
-			path: inc/helpers/template-functions.php
-
-		-
 			message: '#^Negated boolean expression is always false\.$#'
 			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: inc/helpers/template-functions.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between ''cats'' and ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: inc/helpers/template-functions.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between ''div1'' and ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: inc/helpers/template-functions.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between ''tags'' and ''excerpt''\|''ghost''\|''metas''\|''more''\|''thumbnail''\|''title'' will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
 			count: 1
 			path: inc/helpers/template-functions.php
 
@@ -223,6 +193,18 @@ parameters:
 			path: template-parts/components/entry-header.php
 
 		-
+			message: '#^Call to function in_array\(\) with arguments ''1'', array\{''2''\} and true will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 2
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Call to function in_array\(\) with arguments ''default'', array\{''narrow'', ''wide'', ''contain''\} and true will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
 			message: '#^If condition is always false\.$#'
 			identifier: if.alwaysFalse
 			count: 1
@@ -241,50 +223,50 @@ parameters:
 			path: template-parts/components/entry-header.php
 
 		-
-			message: '#^Loose comparison using \!\= between ''F j, Y'' and '''' will always evaluate to true\.$#'
-			identifier: notEqual.alwaysTrue
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
 			count: 1
 			path: template-parts/components/entry-header.php
 
 		-
-			message: '#^Loose comparison using \!\= between ''cats'' and '''' will always evaluate to true\.$#'
-			identifier: notEqual.alwaysTrue
+			message: '#^Strict comparison using \!\=\= between '''' and ''F j, Y'' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: template-parts/components/entry-header.php
 
 		-
-			message: '#^Loose comparison using \!\= between ''dash'' and '''' will always evaluate to true\.$#'
-			identifier: notEqual.alwaysTrue
+			message: '#^Strict comparison using \!\=\= between '''' and ''cats'' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
 			count: 1
 			path: template-parts/components/entry-header.php
 
 		-
-			message: '#^Loose comparison using \!\= between ''none'' and '''' will always evaluate to true\.$#'
-			identifier: notEqual.alwaysTrue
+			message: '#^Strict comparison using \!\=\= between '''' and ''dash'' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: template-parts/components/entry-header.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between '''' and ''none'' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
 			count: 2
 			path: template-parts/components/entry-header.php
 
 		-
-			message: '#^Loose comparison using \=\= between ''breadcrumbs''\|''post\-meta''\|''thumbnail''\|''title'' and ''excerpt'' will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
+			message: '#^Strict comparison using \=\=\= between ''cats'' and ''cats'' will always evaluate to true\.$#'
+			identifier: identical.alwaysTrue
 			count: 1
 			path: template-parts/components/entry-header.php
 
 		-
-			message: '#^Loose comparison using \=\= between ''breadcrumbs''\|''post\-meta''\|''thumbnail''\|''title'' and ''taxonomy'' will always evaluate to false\.$#'
-			identifier: equal.alwaysFalse
+			message: '#^Strict comparison using \=\=\= between ''excerpt'' and ''breadcrumbs''\|''post\-meta''\|''thumbnail''\|''title'' will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
 			count: 1
 			path: template-parts/components/entry-header.php
 
 		-
-			message: '#^Loose comparison using \=\= between ''cats'' and ''cats'' will always evaluate to true\.$#'
-			identifier: equal.alwaysTrue
-			count: 1
-			path: template-parts/components/entry-header.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
+			message: '#^Strict comparison using \=\=\= between ''taxonomy'' and ''breadcrumbs''\|''post\-meta''\|''thumbnail''\|''title'' will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
 			count: 1
 			path: template-parts/components/entry-header.php
 

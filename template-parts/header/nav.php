@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying a header navigation
  *
@@ -7,6 +6,7 @@
  *
  * @package Elementify
  */
+
 ?>
 <header id="masthead" class="site-header ele-position-relative ele-w-100 ele-site-header">
 	<div class="ele-header-row ele-position-absolute-before ele-header-row-main ele-d-flex ele-align-items-center ele-position-absolute-after" data-row="main">

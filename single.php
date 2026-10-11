@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The template for displaying all single posts
  *
@@ -16,8 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// echo Utils::has_container_gaps();
-
 get_header();
 
 /**
@@ -31,18 +28,18 @@ if ( ! \Elementify\Inc\Elementor::get_instance()->do_content_location( 'single' 
 
 	<?php
 	/**
-	 * Functions hooked into elementify/before_content action
+	 * Functions hooked into elementify_before_content action
 	 */
-	do_action( 'elementify/before_content' );
+	do_action( 'elementify_before_content' );
 	?>
 
 <main id="main" class="site-main ele-d-flex ele-flex-col ele-flex-column">
 
 	<?php
 	/**
-	 * Functions hooked into elementify/post/content/before_loop action
+	 * Functions hooked into elementify_post_content_before_loop action
 	 */
-	do_action( 'elementify/post/content/before_loop' );
+	do_action( 'elementify_post_content_before_loop' );
 
 	while ( have_posts() ) :
 		the_post();
@@ -50,7 +47,7 @@ if ( ! \Elementify\Inc\Elementor::get_instance()->do_content_location( 'single' 
 		/**
 		 * Functions hooked into elementify_post_content action
 		 */
-		do_action( 'elementify/post/before_content' );
+		do_action( 'elementify_post_before_content' );
 
 		get_template_part( 'template-parts/content', 'single' );
 
@@ -59,14 +56,14 @@ if ( ! \Elementify\Inc\Elementor::get_instance()->do_content_location( 'single' 
 		 *
 		 * @hooked elementify_post_after_content_elements  - 10
 		 */
-		do_action( 'elementify/post/after_content' );
+		do_action( 'elementify_post_after_content' );
 
 	endwhile; // End of the loop.
 
 	/**
-	 * Functions hooked into elementify/post/content/after_loop action
+	 * Functions hooked into elementify_post_content_after_loop action
 	 */
-	do_action( 'elementify/post/content/after_loop' );
+	do_action( 'elementify_post_content_after_loop' );
 
 	?>
 
@@ -74,11 +71,11 @@ if ( ! \Elementify\Inc\Elementor::get_instance()->do_content_location( 'single' 
 
 	<?php
 	/**
-	 * Functions hooked into elementify/after_content action
+	 * Functions hooked into elementify_after_content action
 	 *
 	 * @hooked elementify_sidebar    - 10
 	 */
-	do_action( 'elementify/after_content' );
+	do_action( 'elementify_after_content' );
 	?>
 
 	<?php

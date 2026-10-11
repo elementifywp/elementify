@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying post entry content
  *
@@ -7,6 +6,7 @@
  *
  * @package Elementify
  */
+
 $content_classes   = [ 'ele-post-content' ];
 $content_classes[] = ( is_singular() ) ? 'entry-content' : 'entry-excerpt';
 ?>

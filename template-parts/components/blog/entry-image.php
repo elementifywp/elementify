@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying post/page featured image.
  *
@@ -45,10 +44,7 @@ if ( post_password_required() || is_attachment() ) {
 
 		<?php
 		if ( is_sticky() ) {
-			printf(
-				esc_html_x( '%1$s ', 'sticky post', 'elementify' ),
-				'<label class="ele-sticky-label">' . esc_html__( 'Featured Post', 'elementify' ) . '</label>'
-			);
+			echo '<label class="ele-sticky-label">' . esc_html__( 'Featured Post', 'elementify' ) . '</label>';
 		}
 		?>
 

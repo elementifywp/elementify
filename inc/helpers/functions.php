@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Theme helper functions
  *
@@ -8,6 +7,7 @@
 
 use Elementify\Inc\Utils;
 use Elementify\Inc\Svg_Icons;
+
 /*
 |--------------------------------------------------------------------------
 | Menu Option
@@ -16,7 +16,7 @@ use Elementify\Inc\Svg_Icons;
 | Returns an array of navigation menus.
 */
 
-if ( ! function_exists( 'bizness_get_nav_menus' ) ) {
+if ( ! function_exists( 'elementify_get_nav_menus' ) ) {
 	/**
 	 * Returns an array of navigation menus.
 	 *
@@ -24,7 +24,7 @@ if ( ! function_exists( 'bizness_get_nav_menus' ) ) {
 	 * @param string $value_field The value to be stored in options. Accepted values: id|slug.
 	 * @return array
 	 */
-	function bizness_get_nav_menus( $value_field = 'id' ) {
+	function elementify_get_nav_menus( $value_field = 'id' ) {
 		$choices   = [];
 		$nav_menus = wp_get_nav_menus();
 
@@ -37,27 +37,26 @@ if ( ! function_exists( 'bizness_get_nav_menus' ) ) {
 }
 
 /*
---------------------------------------------------------------
-// Site Title
---------------------------------------------------------------*/
+ * Site title.
+ */
 if ( ! function_exists( 'elementify_site_title' ) ) {
 	/**
 	 * Displays the site title dynamically.
 	 *
-	 * @param array   $args  Arguments for displaying the site title.
-	 * @param boolean $echo  Echo or return the HTML.
+	 * @param array   $args   Arguments for displaying the site title.
+	 * @param boolean $output Echo or return the HTML.
 	 * @return string $html  Compiled HTML based on our arguments.
 	 * @since 1.0.0
 	 */
-	function elementify_site_title( $args = [], $echo = true ) {
-		// Allow dynamic text, otherwise fallback to bloginfo
+	function elementify_site_title( $args = [], $output = true ) {
+		// Allow dynamic text; otherwise, fall back to bloginfo.
 		$default_text = get_bloginfo( 'name' );
 
 		$defaults = [
 			'title'       => '<a href="%1$s">%2$s</a>',
 			'title_class' => 'ele-site-title',
 			'wrapper'     => '<div class="%1$s" itemprop="name">%2$s</div>',
-			'text'        => $default_text, // NEW: Allows overriding the text
+			'text'        => $default_text, // NEW: Allows overriding the text.
 			'condition'   => ( is_front_page() || is_home() ) && ! is_page(),
 		];
 
@@ -73,7 +72,7 @@ if ( ! function_exists( 'elementify_site_title' ) ) {
 
 		$contents  = sprintf( $args['title'], $home_url, $title_text );
 		$classname = esc_attr( $args['title_class'] );
-		$wrap      = $args['wrapper']; // Wrapper is usually safe from sprintf if controlled by dev
+		$wrap      = $args['wrapper']; // Wrapper is usually safe from sprintf if controlled by the dev.
 
 		$html = sprintf( $wrap, $classname, $contents );
 
@@ -82,7 +81,7 @@ if ( ! function_exists( 'elementify_site_title' ) ) {
 		 */
 		$html = apply_filters( 'elementify_site_title_html', $html, $args, $classname, $contents );
 
-		if ( ! $echo ) {
+		if ( ! $output ) {
 			return $html;
 		}
 
@@ -91,25 +90,24 @@ if ( ! function_exists( 'elementify_site_title' ) ) {
 }
 
 /*
---------------------------------------------------------------
-// Site Description
---------------------------------------------------------------*/
+ * Site description.
+ */
 if ( ! function_exists( 'elementify_site_description' ) ) {
 	/**
 	 * Displays the site description dynamically.
 	 *
-	 * @param array   $args  Arguments for displaying the site description.
-	 * @param boolean $echo  Echo or return the HTML.
+	 * @param array   $args   Arguments for displaying the site description.
+	 * @param boolean $output Echo or return the HTML.
 	 * @return string $html  The HTML to display.
 	 * @since 1.0.0
 	 */
-	function elementify_site_description( $args = [], $echo = true ) {
+	function elementify_site_description( $args = [], $output = true ) {
 		$default_text = get_bloginfo( 'description' );
 
 		$defaults = [
 			'class'   => 'ele-site-description',
 			'wrapper' => '<p class="%1$s" itemprop="description">%2$s</p>',
-			'text'    => $default_text, // NEW: Allows overriding the text
+			'text'    => $default_text, // NEW: Allows overriding the text.
 		];
 
 		$args = wp_parse_args( $args, $defaults );
@@ -130,7 +128,7 @@ if ( ! function_exists( 'elementify_site_description' ) ) {
 		 */
 		$html = apply_filters( 'elementify_site_description_html', $html, $args, $classname, $description_text );
 
-		if ( ! $echo ) {
+		if ( ! $output ) {
 			return $html;
 		}
 
@@ -139,25 +137,24 @@ if ( ! function_exists( 'elementify_site_description' ) ) {
 }
 
 /*
---------------------------------------------------------------
-// Site Logo
---------------------------------------------------------------*/
+ * Site logo.
+ */
 if ( ! function_exists( 'elementify_site_logo' ) ) {
 	/**
 	 * Displays the site logo dynamically.
 	 *
-	 * @param array   $args  Arguments for displaying the site logo.
-	 * @param boolean $echo  Echo or return the HTML.
+	 * @param array   $args   Arguments for displaying the site logo.
+	 * @param boolean $output Echo or return the HTML.
 	 * @return string $html  The HTML to display.
 	 * @since 1.0.0
 	 */
-	function elementify_site_logo( $args = [], $echo = true ) {
+	function elementify_site_logo( $args = [], $output = true ) {
 		$defaults = [
 			'class'     => 'ele-site-logo',
 			'wrapper'   => '<div class="%1$s">%2$s</div>',
-			'logo_id'   => get_theme_mod( 'custom_logo' ), // NEW: Allows passing a specific logo ID
-			'logo_size' => 'full', // NEW: Allows dynamic image sizes (e.g., 'thumbnail', 'medium')
-			'fallback'  => '', // NEW: HTML to show if no logo is set
+			'logo_id'   => get_theme_mod( 'custom_logo' ), // NEW: Allows passing a specific logo ID.
+			'logo_size' => 'full', // NEW: Allows dynamic image sizes (e.g., 'thumbnail', 'medium').
+			'fallback'  => '', // NEW: HTML to show if no logo is set.
 		];
 
 		$args = wp_parse_args( $args, $defaults );
@@ -167,11 +164,11 @@ if ( ! function_exists( 'elementify_site_logo' ) ) {
 		 */
 		$args = apply_filters( 'elementify_site_logo_args', $args, $defaults );
 
-		// If no logo ID is provided or set, return fallback or empty
+		// If no logo ID is provided or set, return the fallback or empty.
 		if ( empty( $args['logo_id'] ) ) {
 			$html = $args['fallback'];
 		} else {
-			// Get logo HTML, optionally with a specific size
+			// Get logo HTML, optionally with a specific size.
 			$logo_html = wp_get_attachment_image( $args['logo_id'], $args['logo_size'], false, [ 'class' => 'custom-logo' ] );
 			$logo_html = wp_kses_post( $logo_html );
 
@@ -186,17 +183,17 @@ if ( ! function_exists( 'elementify_site_logo' ) ) {
 		 */
 		$html = apply_filters( 'elementify_site_logo_html', $html, $args, $classname );
 
-		if ( ! $echo ) {
+		if ( ! $output ) {
 			return $html;
 		}
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
+
 /*
---------------------------------------------------------------
-// Site Identity
---------------------------------------------------------------*/
+ * Site identity.
+ */
 if ( ! function_exists( 'elementify_site_identify' ) ) {
 	/**
 	 * Displays the site  title and description.
@@ -217,9 +214,8 @@ if ( ! function_exists( 'elementify_site_identify' ) ) {
 }
 
 /*
---------------------------------------------------------------
-// Primary Navigation
---------------------------------------------------------------*/
+ * Primary navigation.
+ */
 if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 	/**
 	 * Displays the primary navigation: the small-screen toggle and the menu-1 location.
@@ -328,9 +324,8 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 }
 
 /*
---------------------------------------------------------------
-// Primary menu fallback
---------------------------------------------------------------*/
+ * Primary menu fallback.
+ */
 if ( ! function_exists( 'elementify_menu_fallback' ) ) {
 	/**
 	 * Output the page list shown when no menu is assigned to the primary location.
@@ -370,9 +365,8 @@ if ( ! function_exists( 'elementify_menu_fallback' ) ) {
 }
 
 /*
---------------------------------------------------------------
-// Collapsable menu fallback
---------------------------------------------------------------*/
+ * Collapsible menu fallback.
+ */
 if ( ! function_exists( 'elementify_collapsible_menu_fallback' ) ) {
 	/**
 	 * Menu fallback for primary menu.
@@ -404,9 +398,8 @@ if ( ! function_exists( 'elementify_collapsible_menu_fallback' ) ) {
 }
 
 /*
---------------------------------------------------------------
-// Get SVG Code
---------------------------------------------------------------*/
+ * Get SVG code.
+ */
 /**
  * Gets the SVG code for a given icon.
  *
@@ -432,17 +425,16 @@ function elementify_the_svg( $group, $icon, $size ) {
 }
 
 /*
---------------------------------------------------------------
-// Pagination
---------------------------------------------------------------*/
-if ( ! function_exists( 'elemetify_pagination' ) ) {
+ * Pagination.
+ */
+if ( ! function_exists( 'elementify_pagination' ) ) {
 
 	/**
 	 * Elemetify Pagination.
 	 *
 	 * @return void
 	 */
-	function elemetify_pagination() {
+	function elementify_pagination() {
 
 		$links = paginate_links(
 			[
@@ -502,18 +494,18 @@ if ( ! function_exists( 'elemetify_pagination' ) ) {
 */
 if ( ! function_exists( 'elementify_breadcrumb' ) ) {
 	/**
-	 * Display trail breadcrumb
+	 * Display trail breadcrumb.
 	 *
-	 * @return void
+	 * @return string|void The breadcrumb trail markup, or void when echoing.
 	 */
 	function elementify_breadcrumb() {
 		$defaults = [
 			'show_browse' => false,
 			'echo'        => true,
 		];
-		$args     = apply_filters( 'breadcrumb_trail_args', $defaults );
+		$args     = apply_filters( 'breadcrumb_trail_args', $defaults ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Library filter.
 
-		$breadcrumb = apply_filters( 'breadcrumb_trail_object', null, $args );
+		$breadcrumb = apply_filters( 'breadcrumb_trail_object', null, $args ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Library filter.
 
 		if ( ! is_object( $breadcrumb ) ) {
 
@@ -525,9 +517,8 @@ if ( ! function_exists( 'elementify_breadcrumb' ) ) {
 }
 
 /*
---------------------------------------------------------------
-// Add svg icon for the menu item if they have submenu items.
---------------------------------------------------------------*/
+ * Add an SVG icon for the menu item if it has submenu items.
+ */
 if ( ! function_exists( 'elementify_submenu_icon' ) ) {
 	/**
 	 * Append the dropdown arrow inside the link of nav menu items with submenus.
@@ -538,12 +529,10 @@ if ( ! function_exists( 'elementify_submenu_icon' ) ) {
 	 *
 	 * @param string  $item_output The menu item's starting HTML output.
 	 * @param WP_Post $item        Menu item data object.
-	 * @param int     $depth       Depth of the menu item, relative to its parent.
-	 * @param object  $args        Menu arguments, from wp_nav_menu().
 	 * @return string The item output, with the arrow appended when the item has children.
 	 */
-	function elementify_submenu_icon( $item_output, $item, $depth, $args ) {
-		$has_children = in_array( 'menu-item-has-children', $item->classes );
+	function elementify_submenu_icon( $item_output, $item ) {
+		$has_children = in_array( 'menu-item-has-children', $item->classes, true );
 		if ( $has_children ) {
 			$item_output = str_replace(
 				'</a>',
@@ -554,12 +543,11 @@ if ( ! function_exists( 'elementify_submenu_icon' ) ) {
 		return $item_output;
 	}
 }
-add_filter( 'walker_nav_menu_start_el', 'elementify_submenu_icon', 10, 4 );
+add_filter( 'walker_nav_menu_start_el', 'elementify_submenu_icon', 10, 2 );
 
 /*
---------------------------------------------------------------
-// Add classes in Sub Menu
---------------------------------------------------------------*/
+ * Add classes in submenu.
+ */
 if ( ! function_exists( 'elementify_submenu_classes' ) ) {
 	/**
 	 * Filters the CSS classes of a submenu's sub-menu element.
@@ -567,21 +555,18 @@ if ( ! function_exists( 'elementify_submenu_classes' ) ) {
 	 * Adds `ele-transition-normal` to any `sub-menu` class, enabling the
 	 * theme's submenu open/close transition.
 	 *
-	 * @param array  $classes The submenu's CSS classes.
-	 * @param object $args    Menu arguments, from wp_nav_menu().
-	 * @param int    $depth   Depth of the submenu, relative to its parent.
+	 * @param array $classes The submenu's CSS classes.
 	 * @return array The classes, with the transition class added.
 	 */
-	function elementify_submenu_classes( $classes, $args, $depth ) {
+	function elementify_submenu_classes( $classes ) {
 		foreach ( $classes as $key => $class ) {
-			if ( $class == 'sub-menu' ) {
+			if ( 'sub-menu' === $class ) {
 				$classes[ $key ] = 'sub-menu ele-transition-normal';
 			}
 		}
 		return $classes;
 	}
 }
-// add_filter( 'nav_menu_submenu_css_class', 'elementify_submenu_classes', 10, 3 );
 
 /**
  * Detects the social network from a URL and returns the SVG code for its icon.
@@ -592,7 +577,7 @@ if ( ! function_exists( 'elementify_submenu_classes' ) ) {
  * @param int    $size The icon size in pixels.
  * @return string
  */
-function twenty_twenty_one_get_social_link_svg( $uri, $size = 24 ) {
+function elementify_get_social_link_svg( $uri, $size = 24 ) {
 	return Elementify\Inc\Svg_Icons::get_social_link_svg( $uri, $size );
 }
 
@@ -607,10 +592,10 @@ function twenty_twenty_one_get_social_link_svg( $uri, $size = 24 ) {
  * @param stdClass $args        An object of wp_nav_menu() arguments.
  * @return string The menu item output with social icon.
  */
-function twenty_twenty_one_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
+function elementify_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
 	// Change SVG icon inside social links menu if there is supported URL.
 	if ( 'footer' === $args->theme_location ) {
-		$svg = twenty_twenty_one_get_social_link_svg( $item->url, 24 );
+		$svg = elementify_get_social_link_svg( $item->url, 24 );
 		if ( ! empty( $svg ) ) {
 			$item_output = str_replace( $args->link_before, $svg, $item_output );
 		}
@@ -619,11 +604,11 @@ function twenty_twenty_one_nav_menu_social_icons( $item_output, $item, $depth, $
 	return $item_output;
 }
 
-add_filter( 'walker_nav_menu_start_el', 'twenty_twenty_one_nav_menu_social_icons', 10, 4 );
+add_filter( 'walker_nav_menu_start_el', 'elementify_nav_menu_social_icons', 10, 4 );
 
 add_filter(
 	'nav_menu_link_attributes',
-	function ( $attr, $item, $args, $depth ) {
+	function ( $attr ) {
 
 		$class = 'ele-menu-link';
 
@@ -640,84 +625,16 @@ add_filter(
 		return $attr;
 	},
 	5,
-	4
+	1
 );
 
-// /**
-// * Filters the CSS class(es) applied to a menu list element.
-// *
-// * @param array $classes Array of the CSS classes that are applied to the menu `<ul>` element.
-// * @return array
-// */
-// add_filter( 'nav_menu_submenu_css_class', function( $classes ) {
-// return [ 'wp-block-navigation__container' ];
-// } );
-
-// /**
-// * Filters the CSS classes applied to a menu item's list item element.
-// *
-// * @param array $classes Array of the CSS classes that are applied to the menu item's `<li>` element.
-// * @return array
-// */
-// add_filter( 'nav_menu_css_class', function( $classes ) {
-// $item_classes = [ 'wp-block-navigation-link' ];
-// if ( in_array( 'current-menu-item', $classes ) ) {
-// $item_classes[] = 'current-menu-item';
-// }
-// if ( in_array( 'menu-item-has-children', $classes ) ) {
-// $item_classes[] = 'has-child';
-// }
-// return $item_classes;
-// } );
-
-// /**
-// * Filters the HTML attributes applied to a menu item's anchor element.
-// *
-// * @param array $atts The HTML attributes applied to the menu item's `<a>` element, empty strings are ignored.
-// * @return array
-// */
-// add_filter( 'nav_menu_link_attributes', function( $atts ) {
-// $atts['class'] = 'wp-block-navigation-link__content';
-// return $atts;
-// } );
-
-// /**
-// * Filters a menu item's title.
-// *
-// * @param string $title The menu item's title.
-// * @return string
-// */
-// add_filter( 'nav_menu_item_title', function( $title ) {
-// return '<span class="wp-block-navigation-link__label">' . $title . '</span>';
-// } );
-
-/**
- * Filters a menu item's starting output.
- *
- * Append the dropdown arrow to links with submenus.
- *
- * @param string   $item_output The menu item's starting HTML output.
- * @param WP_Post  $item        Menu item data object.
- * @return string
- */
-// add_filter( 'walker_nav_menu_start_el', function( $item_output, $item ) {
-// $has_children = in_array( 'menu-item-has-children', $item->classes );
-// if ( $has_children ) {
-// $item_output = str_replace(
-// '</a>',
-// '</a><span class="wp-block-navigation-link__submenu-icon"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" transform="rotate(90)"><path d="M8 5v14l11-7z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span>',
-// $item_output
-// );
-// }
-// return $item_output;
-// }, 10, 2 );
 
 
 if ( ! function_exists( 'elementify_blog_id' ) ) {
 	/**
-	 * Get blog id, support multisite
+	 * Get the blog ID; supports multisite.
 	 *
-	 * @param null $slug
+	 * @param null|string $slug Optional. Multisite slug suffix.
 	 *
 	 * @return string
 	 */
@@ -726,7 +643,7 @@ if ( ! function_exists( 'elementify_blog_id' ) ) {
 
 		$prefix = ( is_multisite() && $blog_id > 1 ) ? 'ele-blog-' . $blog_id : 'ele-blog';
 
-		return $slug === null ? $prefix : $prefix . '-' . $slug;
+		return null === $slug ? $prefix : $prefix . '-' . $slug;
 	}
 }
 
@@ -754,7 +671,7 @@ if ( ! function_exists( 'elementify_footer_widgets_show' ) ) {
 	 * Forces a Customizer section active when its id belongs to a footer
 	 * widgets area, so the builder never hides those panels.
 	 *
-	 * @param bool            $active  Whether the section is currently active.
+	 * @param bool                 $active  Whether the section is currently active.
 	 * @param WP_Customize_Section $section The section being tested.
 	 * @return bool Whether the section should be active.
 	 */
@@ -783,23 +700,24 @@ if ( ! function_exists( 'elementify_get_post_id' ) ) {
 	 * @return int The post ID. Returns 0 if not found.
 	 */
 	function elementify_get_post_id( $post_id_override = '' ) {
-		// Check for legacy function and use it if available
+		// Check for the legacy function and use it if available.
 		if ( function_exists( 'elementify_framework_get_post_id' ) ) {
 			return (int) elementify_framework_get_post_id( $post_id_override );
 		}
 
-		// Handle override early
+		// Handle the override early.
 		if ( ! empty( $post_id_override ) && is_numeric( $post_id_override ) ) {
 			return (int) apply_filters( 'elementify_get_post_id', (int) $post_id_override, $post_id_override );
 		}
 
-		// Use WordPress core function for singular posts
-		if ( is_singular() && ( $current_id = get_the_ID() ) !== false ) {
+		// Use the WordPress core function for singular posts.
+		$current_id = get_the_ID();
+		if ( is_singular() && false !== $current_id ) {
 			return (int) apply_filters( 'elementify_get_post_id', $current_id, $post_id_override );
 		}
 
-		// Handle specific page types
-		$post_id = 0; // Default value
+		// Handle specific page types.
+		$post_id = 0; // Default value.
 
 		if ( is_home() ) {
 			$post_id = (int) get_option( 'page_for_posts', 0 );
@@ -821,65 +739,3 @@ if ( ! function_exists( 'elementify_get_post_id' ) ) {
 }
 
 
-
-/**
- * Page menu walker that marks the current page and its ancestors.
- *
- * Wraps each page in an <li> whose classes come from the core `page_css_class`
- * filter, and gives the anchor an `ele-menu-link` class.
- */
-class Elementify_Walker_Page_Menu extends Walker_Page {
-
-	/**
-	 * Render the opening markup for a single page link.
-	 *
-	 * Appends an <li> carrying the core `current_page_item`,
-	 * `current_page_parent` and `current_page_ancestor` classes, followed by
-	 * an anchor with the `ele-menu-link` class. Appends the page date when
-	 * $args['show_date'] is set.
-	 *
-	 * @param string  $output       Walker output, passed by reference and appended to.
-	 * @param WP_Post $page         The page being rendered.
-	 * @param int     $depth        Depth of the page, relative to its parent.
-	 * @param array   $args         Menu arguments, including an optional 'show_date' key.
-	 * @param int     $current_page ID of the page currently being viewed, if any.
-	 * @return void
-	 */
-	function start_el( &$output, $page, $depth = 0, $args = [], $current_page = 0 ) {
-		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
-
-		$css_class = [ 'page_item', 'page-item-' . $page->ID ];
-		if ( ! empty( $current_page ) ) {
-			$_current_page = get_post( $current_page );
-			if ( in_array( $page->ID, $_current_page->ancestors ) ) {
-				$css_class[] = 'current_page_ancestor';
-			}
-			if ( $page->ID == $current_page ) {
-				$css_class[] = 'current_page_item';
-			} elseif ( $_current_page && $page->ID == $_current_page->post_parent ) {
-				$css_class[] = 'current_page_parent';
-			}
-		} elseif ( $page->ID == get_option( 'page_for_posts' ) ) {
-			$css_class[] = 'current_page_parent';
-		}
-
-		$css_class = implode( ' ', apply_filters( 'page_css_class', $css_class, $page, $depth, $args, $current_page ) );
-
-		// Here we add the custom class 'ele-menu-link' to the anchor tag
-		$output .= $indent . sprintf(
-			'<li class="%s"><a href="%s" class="ele-menu-link">%s</a>',
-			$css_class,
-			esc_url( get_permalink( $page->ID ) ),
-			apply_filters( 'the_title', $page->post_title, $page->ID )
-		);
-
-		if ( ! empty( $args['show_date'] ) ) {
-			if ( 'modified' == $args['show_date'] ) {
-				$time = $page->post_modified;
-			} else {
-				$time = $page->post_date;
-			}
-			$output .= ' ' . mysql2date( get_option( 'date_format' ), $time );
-		}
-	}
-}

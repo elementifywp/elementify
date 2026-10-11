@@ -6,6 +6,7 @@
  *
  * @package Elementify
  */
+
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> data-link-type="1">
@@ -14,9 +15,9 @@
 	/**
 	 * Hook for entry content.
 	 *
-	 * @hooked elementify/loop/post/entry_header - 10
-	 * @hooked elementify/loop/post/entry_content - 15
+	 * @hooked elementify_loop_post_entry_header - 10
+	 * @hooked elementify_loop_post_entry_content - 15
 	 */
-	do_action( 'elementify/loop/post/entry_content' );
+	do_action( 'elementify_loop_post_entry_content' );
 	?>
 </article><!-- #post-<?php the_ID(); ?> -->

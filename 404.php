@@ -18,9 +18,9 @@ get_header();
 
 <?php
 /**
- * Functions hooked into elementify/before_content action
+ * Functions hooked into elementify_before_content action
  */
-do_action( 'elementify/before_content' );
+do_action( 'elementify_before_content' );
 ?>
 
 <main id="main" class="site-main">
@@ -30,23 +30,23 @@ do_action( 'elementify/before_content' );
 		/**
 		 * Functions hooked into elementify_404_content_top action
 		 */
-		do_action( 'elementify/404/entry_header' );
+		do_action( 'elementify_404_entry_header' );
 		?>
 
 		<?php
 		/**
-		 * Functions hooked into elementify/404/entry_content action
+		 * Functions hooked into elementify_404_entry_content action
 		 *
 		 * @hooked elementify_404_conent - 10
 		 */
-		do_action( 'elementify/404/entry_content' );
+		do_action( 'elementify_404_entry_content' );
 		?>
 
 		<?php
 		/**
 		 * Functions hooked into elementify_404_content_bottom action
 		 */
-		do_action( 'elementify/404/entry_footer' );
+		do_action( 'elementify_404_entry_footer' );
 		?>
 	</section><!-- .error-404 -->
 
@@ -54,11 +54,11 @@ do_action( 'elementify/before_content' );
 
 <?php
 /**
- * Functions hooked into elementify/after_content action
+ * Functions hooked into elementify_after_content action
  *
  * @hooked elementify_sidebar    - 10
  */
-do_action( 'elementify/after_content' );
+do_action( 'elementify_after_content' );
 ?>
 
 <?php get_footer(); ?>

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying post entry meta
  *
@@ -23,7 +22,7 @@ if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $meta
 		<?php
 		foreach ( $metas as $key => $value ) {
 
-			if ( $value === 'author' ) {
+			if ( 'author' === $value ) {
 				$author_email = get_the_author_meta( 'user_email' );
 				$has_avatar   = elementify_has_gravatar( $author_email );
 				$avatar       = get_avatar(
@@ -50,9 +49,9 @@ if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $meta
 					<span class="ele-meta-text">
 						<?php
 						printf(
-							/* translators: %s: Author name. */
-							esc_html_x( '%s', 'Post Author', 'elementify' ),
-							'<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author_meta( 'display_name' ) ) . '</a>'
+							'<a href="%1$s">%2$s</a>',
+							esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+							esc_html( get_the_author_meta( 'display_name' ) )
 						);
 						?>
 					</span><!-- .ele-meta-text -->
@@ -60,19 +59,17 @@ if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $meta
 				<?php
 			}
 
-			if ( $value === 'date' ) {
-				$date_format    = get_option( 'date_format' );
-				$published_date = esc_html( get_the_date( $date_format ) );
+			if ( 'date' === $value ) {
+				$date_format = get_option( 'date_format' );
 				?>
 				<li class="ele-post-meta post-published-date ele-d-flex ele-flex-wrap ele-align-items-center">
 					<span class="screen-reader-text"><?php esc_html_e( 'Published Date', 'elementify' ); ?></span>
 					<span class="ele-meta-text">
 						<?php
-						$publish_date = '<a href="' . esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ) . '">' . esc_html( $published_date ) . '</a>';
 						printf(
-							/* translators: %s: post date. */
-							esc_html_x( '%s', 'Post Date', 'elementify' ),
-							$publish_date
+							'<a href="%1$s">%2$s</a>',
+							esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ),
+							esc_html( get_the_date( $date_format ) )
 						);
 						?>
 					</span><!-- .ele-meta-text -->
@@ -81,7 +78,7 @@ if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $meta
 
 			}
 
-			if ( $value === 'category' ) {
+			if ( 'category' === $value ) {
 				?>
 				<li class="ele-post-meta post-categories ele-d-flex ele-flex-wrap ele-align-items-center">
 					<span class="screen-reader-text"><?php esc_html_e( 'Categories', 'elementify' ); ?></span>

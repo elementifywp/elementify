@@ -13,6 +13,7 @@ use Elementify\Inc\Traits\Singleton;
  * Enqueues the theme's front-end and Customizer preview styles and scripts.
  *
  * Versions and script dependencies come from the `*.asset.php` manifests that
+ *
  * @wordpress/scripts writes next to each file in assets/build.
  */
 class Assets {
@@ -50,23 +51,22 @@ class Assets {
 	 * deferred main.js with the translated submenu toggle labels it reads from
 	 * `window.elementifyMenu`, and core's comment-reply script on singular
 	 * views with threaded comments open. Fires the
-	 * `elementify/frontend/before_register_scripts` and
-	 * `elementify/frontend/after_register_scripts` actions around it.
+	 * `elementify_frontend_before_register_scripts` and
+	 * `elementify_frontend_after_register_scripts` actions around it.
 	 *
 	 * @return void
 	 */
 	public function frontend_assets() {
 
 		/**
-		 * Functions hooked into elementify/frontend/before_register_scripts action
+		 * Functions hooked into elementify_frontend_before_register_scripts action
 		 *
 		 * Fires before Elementify frontend css & js are registered.
 		 */
-		do_action( 'elementify/frontend/before_register_scripts' );
+		do_action( 'elementify_frontend_before_register_scripts' );
 
 		// Enqueue Styles.
 		wp_enqueue_style( 'elementify-style', get_stylesheet_uri(), [], ELEMENTIFY_VERSION );
-		// wp_style_add_data( 'elementify-style', 'rtl', 'replace' );
 
 		$style_asset = $this->get_asset_meta( 'css/main' );
 		wp_enqueue_style(
@@ -110,11 +110,11 @@ class Assets {
 		}
 
 		/**
-		 * Functions hooked into elementify/frontend/before_register_scripts action
+		 * Functions hooked into elementify_frontend_before_register_scripts action
 		 *
 		 * Fires after Elementify frontend css & js are registered.
 		 */
-		do_action( 'elementify/frontend/after_register_scripts' );
+		do_action( 'elementify_frontend_after_register_scripts' );
 	}
 
 	/**
@@ -122,8 +122,8 @@ class Assets {
 	 *
 	 * The script binds handlers so title, tagline and header text colour
 	 * changes preview without a full reload. Fires the
-	 * `elementify/frontend/before_register_customize_preview_scripts` and
-	 * `elementify/frontend/after_register_customize_preview_scripts` actions
+	 * `elementify_frontend_before_register_customize_preview_scripts` and
+	 * `elementify_frontend_after_register_customize_preview_scripts` actions
 	 * around it.
 	 *
 	 * @return void
@@ -131,11 +131,11 @@ class Assets {
 	public function customize_preview_assets() {
 
 		/**
-		 * Functions hooked into elementify/frontend/before_register_customize_preview_scripts action
+		 * Functions hooked into elementify_frontend_before_register_customize_preview_scripts action
 		 *
 		 * Fires before Elementify frontend css & js are registered.
 		 */
-		do_action( 'elementify/frontend/before_register_customize_preview_scripts' );
+		do_action( 'elementify_frontend_before_register_customize_preview_scripts' );
 
 		// Enqueue scripts.
 		$customizer_asset = $this->get_asset_meta( 'js/customizer' );
@@ -148,11 +148,11 @@ class Assets {
 		);
 
 		/**
-		 * Functions hooked into elementify/frontend/after_register_customize_preview_scripts action
+		 * Functions hooked into elementify_frontend_after_register_customize_preview_scripts action
 		 *
 		 * Fires after Elementify frontend css & js are registered.
 		 */
-		do_action( 'elementify/frontend/after_register_customize_preview_scripts' );
+		do_action( 'elementify_frontend_after_register_customize_preview_scripts' );
 	}
 
 	/**

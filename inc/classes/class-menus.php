@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Register Menus
  *
@@ -68,7 +67,7 @@ class Menus {
 	 */
 	public function get_menu_id( $location ) {
 
-		// Get all locations
+		// Get all locations.
 		$locations = get_nav_menu_locations();
 
 		// Get object id by location.

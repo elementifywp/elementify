@@ -107,4 +107,21 @@
 		</properties>
 	</rule>
 
+	<!--
+		Template parts are loaded through get_template_part()/load_template(),
+		so their file-scope variables are function-local at runtime, not real
+		globals. Do not require the theme prefix on them.
+	-->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound">
+		<exclude-pattern>**/template-parts/**</exclude-pattern>
+	</rule>
+
+	<!--
+		Breadcrumb_Trail is a vendored third-party library. Its filter names are
+		part of that library's public API and must not be renamed.
+	-->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound">
+		<exclude-pattern>**/inc/classes/class-breadcrumb-trail.php</exclude-pattern>
+	</rule>
+
 </ruleset>

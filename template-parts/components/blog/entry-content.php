@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying post entry content
  *

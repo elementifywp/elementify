@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Functions which enhance the theme by hooking into WordPress
  *
@@ -64,11 +63,11 @@ if ( ! function_exists( 'elementify_body_classes' ) ) {
 |
 */
 
-add_action( 'elementify/head', 'elementify_head_meta', 10 );
-add_action( 'elementify/head_bottom', 'elementify_wp_head', 10 );
-add_action( 'elementify/body_attributes', 'elementify_body_attributes', 10 );
-add_action( 'elementify/body_top', 'elementify_wp_body_open', 10 );
-add_action( 'elementify/before_header', 'elementify_skip_link', 10 );
+add_action( 'elementify_head', 'elementify_head_meta', 10 );
+add_action( 'elementify_head_bottom', 'elementify_wp_head', 10 );
+add_action( 'elementify_body_attributes', 'elementify_body_attributes', 10 );
+add_action( 'elementify_body_top', 'elementify_wp_body_open', 10 );
+add_action( 'elementify_before_header', 'elementify_skip_link', 10 );
 
 if ( ! function_exists( 'elementify_head_meta' ) ) {
 
@@ -121,7 +120,7 @@ if ( ! function_exists( 'elementify_body_attributes' ) ) {
 		}
 
 		if ( ! $prefix ) {
-			return; // no value
+			return; // No value.
 		}
 		print ' data-prefix="' . esc_attr( $prefix ) . '" data-sidebar="right" data-form-label="default"';
 	}
@@ -164,9 +163,8 @@ if ( ! function_exists( 'elementify_skip_link' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-add_action( 'elementify/header', 'elementify_header', 10 );
-add_action( 'elementify/after_header', 'elementify_header_separator', 10 );
-// add_action( 'elementify/body_bottom', 'elementify_header_site_overlay',   10 );
+add_action( 'elementify_header', 'elementify_header', 10 );
+add_action( 'elementify_after_header', 'elementify_header_separator', 10 );
 
 if ( ! function_exists( 'elementify_header' ) ) {
 
@@ -210,11 +208,6 @@ if ( ! function_exists( 'elementify_header_site_overlay' ) ) {
 	 */
 	function elementify_header_site_overlay() {
 		$overlay_div = [ 'ele-site-overlay' ];
-		// Header Transition
-		// $settings   = elementify_customizer_controls_io();
-		// if ( !empty( $settings['header_transition'] ) ) {
-		// $overlay_div[] = esc_attr( $settings['header_transition'] );
-		// }
 
 		echo '<div class="' . esc_attr( implode( ' ', $overlay_div ) ) . '"></div>';
 	}
@@ -226,10 +219,9 @@ if ( ! function_exists( 'elementify_header_site_overlay' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-add_action( 'elementify/before_content', 'elementify_site_content_start', 10 );
-add_action( 'elementify/before_content', 'elementify_before_content_hero', 15 );
-add_action( 'elementify/after_content', 'elementify_site_content_end', 10 );
-// add_filter( 'post_class', 'elementify_set_post_class' );
+add_action( 'elementify_before_content', 'elementify_site_content_start', 10 );
+add_action( 'elementify_before_content', 'elementify_before_content_hero', 15 );
+add_action( 'elementify_after_content', 'elementify_site_content_end', 10 );
 
 if ( ! function_exists( 'elementify_site_content_start' ) ) {
 
@@ -251,7 +243,7 @@ if ( ! function_exists( 'elementify_site_content_start' ) ) {
 if ( ! function_exists( 'elementify_before_content_hero' ) ) {
 
 	/**
-	 * page header
+	 * Page header.
 	 *
 	 * Loads template-parts/components/entry-header.php above the content area.
 	 *
@@ -271,7 +263,7 @@ if ( ! function_exists( 'elementify_archive_title_remove_prefix' ) ) {
 	 * @return string The filtered archive title.
 	 */
 	function elementify_archive_title_remove_prefix( $title ) {
-		$prefixes = array(
+		$prefixes = [
 			'/^Category:\s*/i',
 			'/^Tag:\s*/i',
 			'/^Taxonomy:\s*/i',
@@ -280,8 +272,8 @@ if ( ! function_exists( 'elementify_archive_title_remove_prefix' ) ) {
 			'/^Month:\s*/i',
 			'/^Day:\s*/i',
 			'/^Archives:\s*/i',
-		);
-		$title = preg_replace( $prefixes, '', $title );
+		];
+		$title    = preg_replace( $prefixes, '', $title );
 		return trim( wp_strip_all_tags( $title ) );
 	}
 }
@@ -317,9 +309,9 @@ if ( ! function_exists( 'elementify_set_post_class' ) ) {
 	 * @return array The filtered post classes.
 	 */
 	function elementify_set_post_class( $classes ) {
-		$classes[] = 'ele-column'; // add a custom class to highlight this row in the table
+		$classes[] = 'ele-column'; // Add a custom class to highlight this row in the table.
 		$classes[] = 'ele-text-left';
-		// Return the array
+		// Return the array.
 		return apply_filters( 'elementify_set_post_class', $classes );
 	}
 }
@@ -330,15 +322,15 @@ if ( ! function_exists( 'elementify_set_post_class' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-add_action( 'elementify/sidebar', 'elementify_sidebar_area', 10 );
+add_action( 'elementify_sidebar', 'elementify_sidebar_area', 10 );
 
 if ( ! function_exists( 'elementify_sidebar_area' ) ) {
 
 	/**
 	 * Sidebar Area
 	 *
-	 * Opens the widget area, fires the elementify/sidebar_top and
-	 * elementify/sidebar_bottom actions around the sidebar-1 widget area, then
+	 * Opens the widget area, fires the elementify_sidebar_top and
+	 * elementify_sidebar_bottom actions around the sidebar-1 widget area, then
 	 * closes it.
 	 *
 	 * @return void
@@ -349,16 +341,16 @@ if ( ! function_exists( 'elementify_sidebar_area' ) ) {
 		echo '<div class="ele-sidebar ele-position-relative">';
 
 		/**
-		 * Functions hooked into elementify/sidebar_top action
+		 * Functions hooked into elementify_sidebar_top action
 		 */
-		do_action( 'elementify/sidebar_top' );
+		do_action( 'elementify_sidebar_top' );
 
 		dynamic_sidebar( 'sidebar-1' );
 
 		/**
-		 * Functions hooked into elementify/sidebar_bottom action
+		 * Functions hooked into elementify_sidebar_bottom action
 		 */
-		do_action( 'elementify/sidebar_bottom' );
+		do_action( 'elementify_sidebar_bottom' );
 
 		echo '</div><!-- .ele-sidebar -->';
 		echo '</aside><!-- .widget-area -->';
@@ -372,10 +364,10 @@ if ( ! function_exists( 'elementify_sidebar_area' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-add_action( 'elementify/content_top', 'elementify_posts_wrapper_start', 10 );
-add_action( 'elementify/content_bottom', 'elementify_posts_wrapper_end', 10 );
-add_action( 'elementify/content_bottom', 'elementify_posts_pagination', 15 );
-add_action( 'elementify/loop/entry_content', 'elementify_loop_entry_post_card', 20 );
+add_action( 'elementify_content_top', 'elementify_posts_wrapper_start', 10 );
+add_action( 'elementify_content_bottom', 'elementify_posts_wrapper_end', 10 );
+add_action( 'elementify_content_bottom', 'elementify_posts_pagination', 15 );
+add_action( 'elementify_loop_entry_content', 'elementify_loop_entry_post_card', 20 );
 
 if ( ! function_exists( 'elementify_posts_wrapper_start' ) ) {
 
@@ -410,12 +402,12 @@ if ( ! function_exists( 'elementify_posts_pagination' ) ) {
 	/**
 	 * Posts navigation
 	 *
-	 * Renders the archive pagination via elemetify_pagination().
+	 * Renders the archive pagination via elementify_pagination().
 	 *
 	 * @return void
 	 */
 	function elementify_posts_pagination() {
-		elemetify_pagination();
+		elementify_pagination();
 	}
 }
 
@@ -466,9 +458,9 @@ if ( ! function_exists( 'elementify_loop_entry_post_card' ) ) {
 
 			$last_component = count( $elements ) - 1;
 
-			$inserted = [ 'ghost' ]; // not necessarily an array, see manual quote
+			$inserted = [ 'ghost' ]; // Not necessarily an array; see manual quote.
 
-			array_splice( $elements, $last_component, 0, $inserted ); // splice in at position n
+			array_splice( $elements, $last_component, 0, $inserted ); // Splice in at position n.
 
 			echo '<div class="ele-d-flex ele-flex-column ele-column-content ele-position-relative ele-h-100 ele-w-100">';
 
@@ -476,8 +468,8 @@ if ( ! function_exists( 'elementify_loop_entry_post_card' ) ) {
 
 			foreach ( $elements as $key => $value ) {
 
-				// Thubmail
-				if ( $value == 'thumbnail' ) {
+				// Thumbnail.
+				if ( 'thumbnail' === $value ) {
 					if ( $content_open ) {
 						$content_open = false;
 						echo '</div>';
@@ -487,36 +479,36 @@ if ( ! function_exists( 'elementify_loop_entry_post_card' ) ) {
 						$content_open = true;
 						echo '<div class="ele-card-content ele-d-flex ele-flex-column ele-justify-content-inherit">';
 				}
-				// Categories
-				if ( $value == 'cats' ) {
+				// Categories.
+				if ( 'cats' === $value ) {
 					get_template_part( 'template-parts/components/entry-cats' );
 				}
-				// Title
-				if ( $value == 'title' ) {
+				// Title.
+				if ( 'title' === $value ) {
 					get_template_part( 'template-parts/components/entry-title' );
 				}
-				// Metas
-				if ( $value == 'metas' ) {
+				// Metas.
+				if ( 'metas' === $value ) {
 					get_template_part( 'template-parts/components/entry-meta' );
 				}
-				// Excerpt
-				if ( $value == 'excerpt' ) {
+				// Excerpt.
+				if ( 'excerpt' === $value ) {
 					get_template_part( 'template-parts/components/entry-content' );
 				}
-				// Read More
-				if ( $value == 'more' ) {
+				// Read More.
+				if ( 'more' === $value ) {
 					get_template_part( 'template-parts/components/entry-read-more' );
 				}
-				// Tags
-				if ( $value == 'tags' ) {
+				// Tags.
+				if ( 'tags' === $value ) {
 					get_template_part( 'template-parts/components/entry-tags' );
 				}
-				// Divider
-				if ( $value == 'div1' ) {
+				// Divider.
+				if ( 'div1' === $value ) {
 					echo '<div class="ele-entry-divider ele-boundless"></div><!-- .ele-entry-divider -->';
 				}
-				// Ghost
-				if ( $value == 'ghost' ) {
+				// Ghost.
+				if ( 'ghost' === $value ) {
 					echo '<div class="ele-ghost"></div><!-- .ele-ghost -->';
 				}
 			}
@@ -532,9 +524,8 @@ if ( ! function_exists( 'elementify_loop_entry_post_card' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-// add_action('elementify/loop/post/entry_content', 'elementify_single_post_title_elements', 10);
-add_action( 'elementify/loop/post/entry_content', 'elementify_single_post_content', 15 );
-add_action( 'elementify/post/after_content', 'elementify_post_after_content_elements', 10 );
+add_action( 'elementify_loop_post_entry_content', 'elementify_single_post_content', 15 );
+add_action( 'elementify_post_after_content', 'elementify_post_after_content_elements', 10 );
 if ( ! function_exists( 'elementify_single_post_title_elements' ) ) {
 
 	/**
@@ -600,7 +591,7 @@ if ( ! function_exists( 'elementify_post_after_content_elements' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-add_action( 'elementify/page/after_content', 'elementify_page_after_content_elements', 10 );
+add_action( 'elementify_page_after_content', 'elementify_page_after_content_elements', 10 );
 
 if ( ! function_exists( 'elementify_page_after_content_elements' ) ) {
 
@@ -635,7 +626,7 @@ if ( ! function_exists( 'elementify_page_after_content_elements' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-add_action( 'elementify/comments', 'elementify_comments_element', 10 );
+add_action( 'elementify_comments', 'elementify_comments_element', 10 );
 if ( ! function_exists( 'elementify_comments_element' ) ) {
 
 	/**
@@ -659,18 +650,18 @@ if ( ! function_exists( 'elementify_comments_element' ) ) {
 			?>
 			<h2 class="comments-title">
 				<?php
-				$elementify_comment_count = get_comments_number();
-				if ( 1 == $elementify_comment_count ) {
+				$elementify_comment_count = (int) get_comments_number();
+				if ( 1 === $elementify_comment_count ) {
 					echo esc_html__( 'One Comment', 'elementify' );
 				} else {
-					/* translators: %s: The count of comments */
-					printf( esc_html__( '%s Comments', 'elementify' ), $elementify_comment_count );
+					/* translators: %s: The count of comments. */
+					printf( esc_html__( '%s Comments', 'elementify' ), absint( $elementify_comment_count ) );
 				}
 				?>
 			</h2><!-- .comments-title -->
 
 			<?php
-			if ( $position['desktop'] === 'above' ) {
+			if ( 'above' === $position['desktop'] ) {
 				comment_form();
 			}
 			?>
@@ -698,11 +689,10 @@ if ( ! function_exists( 'elementify_comments_element' ) ) {
 				<?php
 			endif;
 
-			if ( $position['desktop'] === 'default' ) {
+			if ( 'default' === $position['desktop'] ) {
 				comment_form();
 			}
-		} // Check for have_comments().
-		else {
+		} else {
 			comment_form();
 		}
 	}
@@ -714,7 +704,7 @@ if ( ! function_exists( 'elementify_comments_element' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-add_action( 'elementify/404/entry_content', 'elementify_404_conent', 10 );
+add_action( 'elementify_404_entry_content', 'elementify_404_conent', 10 );
 if ( ! function_exists( 'elementify_404_conent' ) ) {
 
 	/**
@@ -756,7 +746,7 @@ if ( ! function_exists( 'elementify_404_conent' ) ) {
 |--------------------------------------------------------------------------
 |
 */
-add_action( 'elementify/footer', 'elementify_footer', 10 );
+add_action( 'elementify_footer', 'elementify_footer', 10 );
 if ( ! function_exists( 'elementify_footer' ) ) {
 
 	/**

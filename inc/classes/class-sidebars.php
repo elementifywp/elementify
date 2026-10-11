@@ -75,7 +75,7 @@ class Sidebars {
 			],
 		];
 
-		// Header Widgets Area
+		// Header Widgets Area.
 		for ( $i = 1; $i <= 2; $i++ ) {
 			$args[ 'header-' . $i ] = [
 				/* translators: 1: Widget number. */
@@ -88,7 +88,7 @@ class Sidebars {
 				'after_title'   => '</h3>',
 			];
 		}
-		// Footer Widgets Area
+		// Footer Widgets Area.
 		for ( $i = 1; $i <= 6; $i++ ) {
 			$args[ 'footer-' . $i ] = [
 				/* translators: 1: Widget number. */

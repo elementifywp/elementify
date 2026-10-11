@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying post entry meta
  *
@@ -50,9 +49,9 @@ if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $meta
 						<span class="ele-meta-text">
 							<?php
 							printf(
-								/* translators: %s: Author name link. */
-								esc_html_x( '%s', 'Post Author', 'elementify' ),
-								'<a href="' . esc_url( $author_url ) . '">' . esc_html( $author_name ) . '</a>'
+								'<a href="%1$s">%2$s</a>',
+								esc_url( $author_url ),
+								esc_html( $author_name )
 							);
 							?>
 						</span><!-- .ele-meta-text -->
@@ -62,18 +61,16 @@ if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $meta
 			}
 
 			if ( 'date' === $value ) {
-				$date_format    = get_option( 'date_format' );
-				$published_date = esc_html( get_the_date( $date_format, $the_post_id ) );
+				$date_format = get_option( 'date_format' );
 				?>
 				<li class="ele-post-meta post-published-date ele-d-flex ele-flex-wrap ele-align-items-center">
 					<span class="screen-reader-text"><?php esc_html_e( 'Published Date', 'elementify' ); ?></span>
 					<span class="ele-meta-text">
 						<?php
-						$publish_date = '<a href="' . esc_url( get_month_link( get_the_time( 'Y', $the_post_id ), get_the_time( 'm', $the_post_id ) ) ) . '">' . esc_html( $published_date ) . '</a>';
 						printf(
-							/* translators: %s: post date. */
-							esc_html_x( '%s', 'Post Date', 'elementify' ),
-							$publish_date
+							'<a href="%1$s">%2$s</a>',
+							esc_url( get_month_link( get_the_time( 'Y', $the_post_id ), get_the_time( 'm', $the_post_id ) ) ),
+							esc_html( get_the_date( $date_format, $the_post_id ) )
 						);
 						?>
 					</span><!-- .ele-meta-text -->

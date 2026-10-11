@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Custom template tags for the theme.
  *
@@ -79,7 +78,7 @@ if ( ! function_exists( 'elementify_posted_on' ) ) {
 
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 
-		// Post is modified ( when post published time is not equal to post modified time )
+		// Post is modified (when the published time differs from the modified time).
 		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 		}
@@ -93,6 +92,7 @@ if ( ! function_exists( 'elementify_posted_on' ) ) {
 		);
 
 		$posted_on = sprintf(
+			/* translators: %s: Post date. */
 			esc_html_x( 'Posted on %s', 'post date', 'elementify' ),
 			'<a href="' . esc_url( $post_date_archive_permalink ) . '" rel="bookmark">' . $time_string . '</a>'
 		);
@@ -110,6 +110,7 @@ if ( ! function_exists( 'elementify_posted_by' ) ) {
 	 */
 	function elementify_posted_by() {
 		$byline = sprintf(
+			/* translators: %s: Post author. */
 			esc_html_x( ' by %s', 'post author', 'elementify' ),
 			'<span class="author vcard"><a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 		);
@@ -154,7 +155,7 @@ if ( ! function_exists( 'elementify_the_excerpt' ) ) {
 
 		// Render blocks/shortcodes, then reduce to normalized plain text.
 		$text = strip_shortcodes( $post->post_content );
-		$text = apply_filters( 'the_content', $text );
+		$text = apply_filters( 'the_content', $text ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter.
 		$text = str_replace( ']]>', ']]&gt;', $text );
 		$text = wp_strip_all_tags( $text, true ); // Strips tags + <script>/<style>, breaks to spaces.
 		$text = trim( preg_replace( '/\s+/', ' ', $text ) );
@@ -205,7 +206,7 @@ if ( ! function_exists( 'elementify_excerpt_more' ) ) {
 			__( 'Read more', 'elementify' )
 		);
 
-		return apply_filters( 'elementify/excerpt_more', $more );
+		return apply_filters( 'elementify_excerpt_more', $more );
 	}
 }
 
@@ -250,18 +251,18 @@ if ( ! function_exists( 'elementify_the_post_pagination' ) ) {
 			if ( 1 < $total_pages && ! empty( $first_page_url ) ) {
 				printf(
 					'<span class="mr-2">Showing %1$s - %2$s Of %3$s</span>',
-					$from,
-					$to,
-					$of
+					absint( $from ),
+					absint( $to ),
+					absint( $of )
 				);
 			}
 
-			// First Page
+			// First page.
 			if ( 1 !== $current_page_no && ! empty( $first_page_url ) ) {
-				printf( '<a class="first-pagination-link btn border border-secondary mr-2" href="%1$s" title="first-pagination-link">%2$s</a>', esc_url( $first_page_url ), __( 'First', 'elementify' ) );
+				printf( '<a class="first-pagination-link btn border border-secondary mr-2" href="%1$s" title="first-pagination-link">%2$s</a>', esc_url( $first_page_url ), esc_html__( 'First', 'elementify' ) );
 			}
 
-			echo paginate_links(
+			echo paginate_links( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- paginate_links() returns safe HTML.
 				[
 					'base'      => $base,
 					'format'    => $format,
@@ -272,9 +273,9 @@ if ( ! function_exists( 'elementify_the_post_pagination' ) ) {
 				]
 			);
 
-			// Last Page
+			// Last page.
 			if ( $current_page_no < $total_pages && ! empty( $last_page_url ) ) {
-				printf( '<a class="last-pagination-link btn border border-secondary ml-2" href="%1$s" title="last-pagination-link">%2$s</a>', esc_url( $last_page_url ), __( 'Last', 'elementify' ) );
+				printf( '<a class="last-pagination-link btn border border-secondary ml-2" href="%1$s" title="last-pagination-link">%2$s</a>', esc_url( $last_page_url ), esc_html__( 'Last', 'elementify' ) );
 			}
 			?>
 		</div>
@@ -318,11 +319,11 @@ if ( ! function_exists( 'elementify_has_gravatar' ) ) {
 	 * When constructing the URL, use the parameter d=404.
 	 * This will cause Gravatar to return a 404 error rather than an image if the user hasn't set a picture.
 	 *
-	 * Note: the second path makes a remote request via get_headers(), so this
+	 * Note: the second path makes a remote request via wp_remote_head(), so this
 	 * function is not safe to call on every comment without caching.
 	 *
 	 * @param string $user_email User email.
-	 * @return bool|int 1 when the avatar exists, 0 when it does not.
+	 * @return bool Whether the avatar exists.
 	 */
 	function elementify_has_gravatar( $user_email ) {
 		$gravatar_url = get_avatar_url( $user_email );
@@ -333,11 +334,15 @@ if ( ! function_exists( 'elementify_has_gravatar' ) ) {
 
 		$gravatar_url = sprintf( '%s&d=404', $gravatar_url );
 
-		// Make a request to $gravatar_url and get the header
-		$headers = @get_headers( $gravatar_url );
+		// Make a request to the Gravatar URL and inspect the response status.
+		$response = wp_remote_head( $gravatar_url );
 
-		// If request status is 200, which means user has uploaded the avatar on gravatar site
-		return preg_match( '|200|', $headers[0] );
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		// A 200 status means the user has uploaded the avatar on the Gravatar site.
+		return 200 === wp_remote_retrieve_response_code( $response );
 	}
 }
 
@@ -433,20 +438,5 @@ if ( ! function_exists( 'elementify_post_thumbnail' ) ) :
 
 			<?php
 		endif; // End is_singular().
-	}
-endif;
-
-if ( ! function_exists( 'wp_body_open' ) ) :
-	/**
-	 * Shim for sites older than 5.2.
-	 *
-	 * Guards against redeclaring the core function, which WordPress added in
-	 * 5.2. Core only fires the wp_body_open action; the theme never binds to it.
-	 *
-	 * @link https://core.trac.wordpress.org/ticket/12563
-	 * @return void
-	 */
-	function wp_body_open() {
-		do_action( 'wp_body_open' );
 	}
 endif;

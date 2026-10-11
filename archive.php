@@ -26,31 +26,31 @@ if ( ! \Elementify\Inc\Elementor::get_instance()->do_content_location( 'archive'
 
 	<?php
 	/**
-	 * Functions hooked into elementify/before_content action
+	 * Functions hooked into elementify_before_content action
 	 *
 	 * @hooked elementify_site_content_start    - 10
 	 */
-	do_action( 'elementify/before_content' );
+	do_action( 'elementify_before_content' );
 	?>
 
 	<?php
 	/**
-	 * Functions hooked into elementify/before_content action
+	 * Functions hooked into elementify_before_content action
 	 *
 	 * @hooked elementify_posts_wrapper_start - 10
 	 */
-	do_action( 'elementify/content_top' );
+	do_action( 'elementify_content_top' );
 	?>
 
 	<?php if ( have_posts() ) : ?>
 
 		<?php
 		/**
-		 * Functions hooked into elementify/content/before_loop action
+		 * Functions hooked into elementify_content_before_loop action
 		 *
 		 * @hooked elementify_posts_page_header - 10
 		 */
-		do_action( 'elementify/content/before_loop' );
+		do_action( 'elementify_content_before_loop' );
 
 		/* Start the Loop */
 		while ( have_posts() ) :
@@ -66,12 +66,12 @@ if ( ! \Elementify\Inc\Elementor::get_instance()->do_content_location( 'archive'
 		endwhile;
 
 		/**
-		 * Functions hooked into elementify/content/after_loop action
+		 * Functions hooked into elementify_content_after_loop action
 		 *
 		 * @hooked elementify_posts_wrapper_end - 10
 		 * @hooked elementify_posts_pagination  - 15
 		 */
-		do_action( 'elementify/content/after_loop' );
+		do_action( 'elementify_content_after_loop' );
 
 else :
 
@@ -82,20 +82,20 @@ endif;
 
 	<?php
 	/**
-	 * Functions hooked into elementify/content_bottom action
+	 * Functions hooked into elementify_content_bottom action
 	 *
 	 * @hooked elementify_posts_wrapper_end - 10
 	 */
-	do_action( 'elementify/content_bottom' );
+	do_action( 'elementify_content_bottom' );
 	?>
 
 	<?php
 	/**
-	 * Functions hooked into elementify/after_content action
+	 * Functions hooked into elementify_after_content action
 	 *
 	 * @hooked elementify_site_content_end  - 10
 	 */
-	do_action( 'elementify/after_content' );
+	do_action( 'elementify_after_content' );
 	?>
 
 	<?php

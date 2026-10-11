@@ -18,25 +18,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php
 	/**
-	 * Functions hooked into elementify/before_footer action
+	 * Functions hooked into elementify_before_footer action
 	 */
-	do_action( 'elementify/before_footer' );
+	do_action( 'elementify_before_footer' );
 ?>
 
 <?php
 	/**
-	 * Functions hooked into elementify/footer action
+	 * Functions hooked into elementify_footer action
 	 *
 	 * @hooked elementify_footer - 10
 	 */
-	do_action( 'elementify/footer' );
+	do_action( 'elementify_footer' );
 ?>
 
 <?php
 	/**
-	 * Functions hooked into elementify/after_footer action
+	 * Functions hooked into elementify_after_footer action
 	 */
-	do_action( 'elementify/after_footer' );
+	do_action( 'elementify_after_footer' );
 ?>
 
 </div><!-- #page -->
@@ -44,11 +44,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php
 /**
- * Functions hooked into elementify/body_bottom action
+ * Functions hooked into elementify_body_bottom action
  *
  * @hooked elementify_framework_go_top_button - 10
  */
-do_action( 'elementify/body_bottom' );
+do_action( 'elementify_body_bottom' );
 ?>
 
 <?php wp_footer(); ?>

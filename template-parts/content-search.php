@@ -15,8 +15,8 @@
 	/**
 	 * Hook for entry content.
 	 *
-	 * @hooked elementify/loop/entry_post_card - 20
+	 * @hooked elementify_loop_entry_post_card - 20
 	 */
-	do_action( 'elementify/loop/entry_content' );
+	do_action( 'elementify_loop_entry_content' );
 	?>
 </article><!-- #post-<?php the_ID(); ?> -->

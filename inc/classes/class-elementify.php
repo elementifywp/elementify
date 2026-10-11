@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Bootstraps the Theme.
  *
@@ -118,11 +117,6 @@ class Elementify {
 
 		add_post_type_support( 'page', 'excerpt' ); // change page with your post type slug.
 
-		/**
-		 * Register image sizes.
-		 */
-		// add_image_size( 'featured-thumbnail', 350, 233, true );
-
 		// Add theme support for selective refresh for widgets.
 		/**
 		 * WordPress 4.5 includes a new Customizer framework called selective refresh
@@ -203,7 +197,7 @@ class Elementify {
 		 */
 		add_editor_style( [ 'assets/build/css/main.css', 'assets/build/css/editor.css' ] );
 
-		// Remove the core block patterns
+		// Remove the core block patterns.
 		remove_theme_support( 'core-block-patterns' );
 
 		/**

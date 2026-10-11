@@ -18,21 +18,21 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 }
 
 /**
- * Functions hooked into elementify/before_sidebar action
+ * Functions hooked into elementify_before_sidebar action
  */
-do_action( 'elementify/before_sidebar' );
+do_action( 'elementify_before_sidebar' );
 ?>
 
 <?php
 /**
- * Functions hooked into elementify/sidebar action
+ * Functions hooked into elementify_sidebar action
  */
-do_action( 'elementify/sidebar' );
+do_action( 'elementify_sidebar' );
 ?>
 
 <?php
 /**
- * Functions hooked into elementify/after_sidebar action
+ * Functions hooked into elementify_after_sidebar action
  */
-do_action( 'elementify/after_sidebar' );
+do_action( 'elementify_after_sidebar' );
 

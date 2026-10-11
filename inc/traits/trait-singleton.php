@@ -87,7 +87,7 @@ trait Singleton {
 			/**
 			 * Dependent items can use the `elementify_singleton_init_{$called_class}` hook to execute code
 			 */
-			do_action( sprintf( 'elementify_singleton_init_%s', $called_class ) ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+			do_action( sprintf( 'elementify_singleton_init_%s', $called_class ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Hook name is prefixed.
 
 		}
 

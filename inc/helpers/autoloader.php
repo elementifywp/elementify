@@ -10,26 +10,26 @@ namespace Elementify\Inc\Helpers;
 /**
  * Auto loader function.
  *
- * @param string $resource Source namespace.
+ * @param string $resource_name Source namespace.
  *
  * @return void
  */
-function autoloader( $resource = '' ) {
+function autoloader( $resource_name = '' ) {
 	$resource_path  = false;
 	$namespace_root = 'Elementify\\';
-	$resource       = trim( $resource, '\\' );
+	$resource_name  = trim( $resource_name, '\\' );
 
-	if ( empty( $resource ) || strpos( $resource, '\\' ) === false || strpos( $resource, $namespace_root ) !== 0 ) {
+	if ( empty( $resource_name ) || strpos( $resource_name, '\\' ) === false || strpos( $resource_name, $namespace_root ) !== 0 ) {
 		// Not our namespace, bail out.
 		return;
 	}
 
 	// Remove our root namespace.
-	$resource = str_replace( $namespace_root, '', $resource );
+	$resource_name = str_replace( $namespace_root, '', $resource_name );
 
 	$path = explode(
 		'\\',
-		str_replace( '_', '-', strtolower( $resource ) )
+		str_replace( '_', '-', strtolower( $resource_name ) )
 	);
 
 	/**

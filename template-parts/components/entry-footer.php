@@ -4,6 +4,7 @@
  *
  * @package Elementify
  */
+
 ?>
 <footer class="entry-footer">
 	<?php

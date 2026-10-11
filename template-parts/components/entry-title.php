@@ -5,7 +5,7 @@
  * @package Elementify
  */
 
-// Title
+// Title.
 if ( is_singular() ) {
 	printf(
 		'<h1 class="entry-title ele-post-title">%1$s</h1><!-- .entry-title -->',

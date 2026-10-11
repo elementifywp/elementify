@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying post/page featured image.
  *
@@ -11,7 +10,7 @@ $the_post_id = get_the_ID();
 if ( post_password_required() || is_attachment() ) {
 	return;
 }
-// add class for now featured images
+// Add a class for now featured images.
 $wrapper_classes = [ 'ele-featured-image-wrap ele-overflow-hidden' ];
 if ( ! has_post_thumbnail() ) {
 	$wrapper_classes[] = 'ele-unavailable-image';
@@ -50,10 +49,7 @@ if ( ! has_post_thumbnail() ) {
 
 		<?php
 		if ( is_sticky() ) {
-			printf(
-				esc_html_x( '%1$s ', 'sticky post', 'elementify' ),
-				'<label class="ele-sticky-label">' . esc_html__( 'Featured Post', 'elementify' ) . '</label>'
-			);
+			echo '<label class="ele-sticky-label">' . esc_html__( 'Featured Post', 'elementify' ) . '</label>';
 		}
 		?>
 

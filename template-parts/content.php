@@ -6,6 +6,7 @@
  *
  * @package Elementify
  */
+
 use Elementify\Inc\Utils;
 
 $the_post_id = get_the_ID();
@@ -16,9 +17,9 @@ $the_post_id = get_the_ID();
 	/**
 	 * Hook for entry content.
 	 *
-	 * @hooked elementify/loop/entry_post_card - 20
+	 * @hooked elementify_loop_entry_post_card - 20
 	 */
-	do_action( 'elementify/loop/entry_content' );
+	do_action( 'elementify_loop_entry_content' );
 	?>
 
 </article><!-- #post-<?php the_ID(); ?> -->

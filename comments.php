@@ -28,41 +28,41 @@ if ( post_password_required() ) {
 
 <?php
 /**
- * Functions hooked into elementify/before_comments action
+ * Functions hooked into elementify_before_comments action
  */
-do_action( 'elementify/before_comments' );
+do_action( 'elementify_before_comments' );
 ?>
 
 <div id="comments" class="comments-area">
 
 	<?php
 	/**
-	 * Functions hooked into elementify/comments_top action
+	 * Functions hooked into elementify_comments_top action
 	 */
-	do_action( 'elementify/comments_top' );
+	do_action( 'elementify_comments_top' );
 	?>
 
 	<?php
 	/**
-	 * Functions hooked into elementify/comments action
+	 * Functions hooked into elementify_comments action
 	 *
 	 * @hooked elementify_comments_element - 10
 	 */
-	do_action( 'elementify/comments' );
+	do_action( 'elementify_comments' );
 	?>
 
 	<?php
 	/**
-	 * Functions hooked into elementify/comments_bottom action
+	 * Functions hooked into elementify_comments_bottom action
 	 */
-	do_action( 'elementify/comments_bottom' );
+	do_action( 'elementify_comments_bottom' );
 	?>
 
 </div><!-- #comments -->
 
 <?php
 /**
- * Functions hooked into elementify/after_comments action
+ * Functions hooked into elementify_after_comments action
  */
-do_action( 'elementify/after_comments' );
+do_action( 'elementify_after_comments' );
 ?>

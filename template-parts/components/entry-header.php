@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying page title
  *
@@ -44,20 +43,21 @@ if ( $page_title ) : ?>
 		<?php
 		if ( ! empty( $elements ) ) {
 
-			// Remove thumbnail if conditions are met
-			if ( ( $key = array_search( 'thumbnail', $elements ) ) !== false ) {
+			// Remove the thumbnail if the conditions are met.
+			$key = array_search( 'thumbnail', $elements, true );
+			if ( false !== $key ) {
 				if ( is_singular() && ! has_post_thumbnail() ) {
 					unset( $elements[ $key ] );
 				}
 			}
 
-			if ( $header_preset && array_key_exists( 'desktop', $header_preset ) && in_array( $header_preset['desktop'], [ '2' ] ) ) {
-				$container_width  = [ 'desktop' => 'default' ];
-				$containerClasses = [ 'ele-container ele-mx-auto' ];
-				if ( in_array( $container_width['desktop'], [ 'narrow', 'wide', 'contain' ] ) ) {
-					$containerClasses[] = 'ele-container-' . sanitize_text_field( $container_width['desktop'] );
+			if ( $header_preset && array_key_exists( 'desktop', $header_preset ) && in_array( $header_preset['desktop'], [ '2' ], true ) ) {
+				$container_width   = [ 'desktop' => 'default' ];
+				$container_classes = [ 'ele-container ele-mx-auto' ];
+				if ( in_array( $container_width['desktop'], [ 'narrow', 'wide', 'contain' ], true ) ) {
+					$container_classes[] = 'ele-container-' . sanitize_text_field( $container_width['desktop'] );
 				}
-				echo '<div class="' . esc_attr( implode( ' ', $containerClasses ) ) . '">';
+				echo '<div class="' . esc_attr( implode( ' ', $container_classes ) ) . '">';
 			}
 			?>
 
@@ -65,8 +65,8 @@ if ( $page_title ) : ?>
 				<?php
 				$content_open = false;
 				foreach ( $elements as $key => $value ) {
-					// thumbnail
-					if ( $value == 'thumbnail' ) {
+					// Thumbnail.
+					if ( 'thumbnail' === $value ) {
 						if ( $content_open ) {
 							$content_open = false;
 							echo '</div>';
@@ -77,8 +77,8 @@ if ( $page_title ) : ?>
 							echo '<div class="ele-card-content ele-d-flex ele-flex-column ele-flex-grow">';
 					}
 
-					// title
-					if ( $value == 'title' ) {
+					// Title.
+					if ( 'title' === $value ) {
 						$title_tags = [ 'desktop' => 'h2' ];
 						if ( is_home() && is_front_page() ) {
 							$title_text = [ 'desktop' => ( function_exists( 'is_shop' ) && is_shop() ) ? esc_html__( 'Products', 'elementify' ) : esc_html__( 'Home', 'elementify' ) ];
@@ -110,49 +110,49 @@ if ( $page_title ) : ?>
 						}
 					}
 
-					// description
-					if ( $value == 'excerpt' ) {
+					// Description.
+					if ( 'excerpt' === $value ) {
 						the_archive_description( '<div class="archive-description">', '</div>' );
 					}
 
-					// breadcrumb
-					if ( $value == 'breadcrumbs' ) {
+					// Breadcrumb.
+					if ( 'breadcrumbs' === $value ) {
 						elementify_breadcrumb();
 					}
-					// Post Meta
-					if ( $value == 'post-meta' ) {
-						$args     = [];
-						$elements = [ 'author', 'date', 'comment' ];
-						$avatar   = false;
-						$date     = [ 'desktop' => 'F j, Y' ];
-						$taxonomy = [ 'desktop' => 'cats' ];
-						$prefix   = [ 'desktop' => 'none' ];
-						$sept     = [ 'desktop' => 'dash' ];
-						// Items
+					// Post meta.
+					if ( 'post-meta' === $value ) {
+						$args       = [];
+						$elements   = [ 'author', 'date', 'comment' ];
+						$avatar     = false;
+						$date       = [ 'desktop' => 'F j, Y' ];
+						$taxonomies = [ 'desktop' => 'cats' ];
+						$prefix     = [ 'desktop' => 'none' ];
+						$sept       = [ 'desktop' => 'dash' ];
+						// Items.
 						$args['items'] = ! empty( $elements ) ? map_deep( wp_unslash( $elements ), 'sanitize_text_field' ) : [];
-						// Enable Avatar
+						// Enable avatar.
 						if ( $avatar ) {
 							$args['avatar-enable'] = true;
 						}
-						// date formate
-						$args['date-format'] = $date['desktop'] != '' ? esc_html( $date['desktop'] ) : 'F j, Y';
-						// Taxonomy Type
-						$args['taxonomy-type'] = $taxonomy['desktop'] != '' ? esc_html( $taxonomy['desktop'] ) : 'cats';
-						// Item Prefix
-						$args['items-prefix'] = $prefix['desktop'] != '' ? esc_html( $prefix['desktop'] ) : 'none';
-						// Item Prefix
-						$args['items-sept'] = $sept['desktop'] != '' ? esc_html( $sept['desktop'] ) : 'dash';
+						// Date format.
+						$args['date-format'] = '' !== $date['desktop'] ? esc_html( $date['desktop'] ) : 'F j, Y';
+						// Taxonomy type.
+						$args['taxonomy-type'] = '' !== $taxonomies['desktop'] ? esc_html( $taxonomies['desktop'] ) : 'cats';
+						// Item prefix.
+						$args['items-prefix'] = '' !== $prefix['desktop'] ? esc_html( $prefix['desktop'] ) : 'none';
+						// Item separator.
+						$args['items-sept'] = '' !== $sept['desktop'] ? esc_html( $sept['desktop'] ) : 'dash';
 
 						get_template_part( 'template-parts/components/entry-meta', null, $args );
 					}
 
-					// Taxomony
-					if ( $value == 'taxonomy' ) {
+					// Taxonomy.
+					if ( 'taxonomy' === $value ) {
 						$args                 = [];
-						$taxonomy             = [ 'desktop' => 'cats' ];
+						$taxonomies           = [ 'desktop' => 'cats' ];
 						$prefix               = [ 'desktop' => 'none' ];
-						$args['items-prefix'] = $prefix['desktop'] != '' ? esc_html( $prefix['desktop'] ) : 'none';
-						if ( $taxonomy['desktop'] == 'cats' ) {
+						$args['items-prefix'] = '' !== $prefix['desktop'] ? esc_html( $prefix['desktop'] ) : 'none';
+						if ( 'cats' === $taxonomies['desktop'] ) {
 							get_template_part( 'template-parts/components/entry-cats', null, $args );
 						} else {
 							get_template_part( 'template-parts/components/entry-tags', null, $args );
@@ -163,7 +163,7 @@ if ( $page_title ) : ?>
 			</header><!-- .entry-header -->
 
 			<?php
-			if ( $header_preset && array_key_exists( 'desktop', $header_preset ) && in_array( $header_preset['desktop'], [ '2' ] ) ) {
+			if ( $header_preset && array_key_exists( 'desktop', $header_preset ) && in_array( $header_preset['desktop'], [ '2' ], true ) ) {
 				echo '</div><!-- .ele-container --->';
 			}
 		}

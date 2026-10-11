@@ -120,7 +120,7 @@ if ( ! class_exists( 'Elementify\Inc\Walker_Page' ) ) {
 				$css_class[] = 'current-menu-parent';
 			}
 
-			$css_classes = implode( ' ', apply_filters( 'page_css_class', $css_class, $page, $depth, $args, $current_page ) );
+			$css_classes = implode( ' ', apply_filters( 'page_css_class', $css_class, $page, $depth, $args, $current_page ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter.
 
 			$args['link_before'] = empty( $args['link_before'] ) ? '' : $args['link_before'];
 			$args['link_after']  = empty( $args['link_after'] ) ? '' : $args['link_after'];
@@ -131,23 +131,10 @@ if ( ! class_exists( 'Elementify\Inc\Walker_Page' ) ) {
 				esc_url( get_permalink( $page->ID ) ),
 				$aria_current,
 				$args['link_before'],
-				apply_filters( 'the_title', $page->post_title, $page->ID ),
+				apply_filters( 'the_title', $page->post_title, $page->ID ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter.
 				$args['link_after'],
 				$icon
 			);
 		}
-	}
-}
-
-if ( ! class_exists( 'Elementify_Walker_Page' ) ) {
-	/**
-	 * Global-namespace alias of \Elementify\Inc\Walker_Page.
-	 *
-	 * Lets code outside the theme namespace reference the walker by its
-	 * prefixed class name; it adds no behaviour of its own.
-	 *
-	 * @since 1.0.0
-	 */
-	class Elementify_Walker_Page extends \Elementify\Inc\Walker_Page {
 	}
 }

@@ -54,7 +54,7 @@ class Elementor {
 	/**
 	 * Hook Elementor support and the render-time overrides.
 	 *
-	 * The three elementify/* callbacks run at priority 5, ahead of the theme's
+	 * The four elementify_* callbacks run at priority 5, ahead of the theme's
 	 * own callbacks, which template-functions.php registers at priority 10 and 15.
 	 *
 	 * @return void
@@ -66,10 +66,10 @@ class Elementor {
 		 */
 		add_action( 'after_setup_theme', [ $this, 'theme_support' ] );
 		add_action( 'elementor/theme/register_locations', [ $this, 'register_locations' ] );
-		add_action( 'elementify/before_content', [ $this, 'maybe_suppress_content_wrapper' ], 5 );
-		add_action( 'elementify/after_content', [ $this, 'maybe_suppress_content_wrapper' ], 5 );
-		add_action( 'elementify/header', [ $this, 'maybe_render_header_location' ], 5 );
-		add_action( 'elementify/footer', [ $this, 'maybe_render_footer_location' ], 5 );
+		add_action( 'elementify_before_content', [ $this, 'maybe_suppress_content_wrapper' ], 5 );
+		add_action( 'elementify_after_content', [ $this, 'maybe_suppress_content_wrapper' ], 5 );
+		add_action( 'elementify_header', [ $this, 'maybe_render_header_location' ], 5 );
+		add_action( 'elementify_footer', [ $this, 'maybe_render_footer_location' ], 5 );
 	}
 
 	/**
@@ -224,9 +224,9 @@ class Elementor {
 			return;
 		}
 
-		remove_action( 'elementify/before_content', 'elementify_site_content_start', 10 );
-		remove_action( 'elementify/before_content', 'elementify_before_content_hero', 15 );
-		remove_action( 'elementify/after_content', 'elementify_site_content_end', 10 );
+		remove_action( 'elementify_before_content', 'elementify_site_content_start', 10 );
+		remove_action( 'elementify_before_content', 'elementify_before_content_hero', 15 );
+		remove_action( 'elementify_after_content', 'elementify_site_content_end', 10 );
 	}
 
 	/**
@@ -243,8 +243,8 @@ class Elementor {
 			return;
 		}
 
-		remove_action( 'elementify/header', 'elementify_header', 10 );
-		remove_action( 'elementify/after_header', 'elementify_header_separator', 10 );
+		remove_action( 'elementify_header', 'elementify_header', 10 );
+		remove_action( 'elementify_after_header', 'elementify_header_separator', 10 );
 	}
 
 	/**
@@ -258,6 +258,6 @@ class Elementor {
 			return;
 		}
 
-		remove_action( 'elementify/footer', 'elementify_footer', 10 );
+		remove_action( 'elementify_footer', 'elementify_footer', 10 );
 	}
 }

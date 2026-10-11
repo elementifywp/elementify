@@ -31,23 +31,23 @@ class Utils {
 	 * @return string The collected class names joined by a single space.
 	 */
 	public static function clsx( ...$args ) {
-		$classNames = [];
+		$class_names = [];
 
 		foreach ( $args as $arg ) {
-			if ( is_string( $arg ) && $arg !== '' ) {
-				$classNames[] = $arg;
+			if ( is_string( $arg ) && '' !== $arg ) {
+				$class_names[] = $arg;
 			} elseif ( is_array( $arg ) ) {
 				foreach ( $arg as $k => $v ) {
 					if ( is_string( $v ) ) {
-						$classNames[] = $v;
-					} elseif ( is_bool( $v ) && $v === true ) {
-						$classNames[] = $k;
+						$class_names[] = $v;
+					} elseif ( is_bool( $v ) && true === $v ) {
+						$class_names[] = $k;
 					}
 				}
 			}
 		}
 
-		return implode( ' ', $classNames );
+		return implode( ' ', $class_names );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Utils {
 		$attrs = [];
 
 		foreach ( $attributes as $attr => $value ) {
-			$attrs[] = $attr . '=' . '"' . esc_attr( $value ) . '"';
+			$attrs[] = $attr . '="' . esc_attr( $value ) . '"';
 		}
 
 		return implode( ' ', $attrs );
@@ -83,14 +83,14 @@ class Utils {
 	 * @return void
 	 */
 	public static function print_attribute_string( $attributes ) {
-		echo self::render_attribute_string( $attributes );
+		echo self::render_attribute_string( $attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in render_attribute_string().
 	}
 
 	/**
 	 * Encode uri component
 	 *
-	 * rawurlencode() per RFC 3986, then restores the sub-delims that
-	 * JavaScript's encodeURIComponent() leaves unescaped.
+	 * Encodes with rawurlencode() per RFC 3986, then restores the sub-delims
+	 * that JavaScript's encodeURIComponent() leaves unescaped.
 	 *
 	 * @param string $str The string to encode.
 	 * @return string The encoded string.
@@ -112,20 +112,20 @@ class Utils {
 	 *
 	 * @See: https://github.com/laravel/framework
 	 *
-	 * @param array    $array The array to flatten.
+	 * @param array     $input The array to flatten.
 	 * @param int|float $depth How many levels of nesting to descend. INF
 	 *                     flattens fully; the default is the float INF.
 	 * @return array The flattened values, re-indexed from zero.
 	 */
-	public static function array_flatten( $array, $depth = INF ) {
+	public static function array_flatten( $input, $depth = INF ) {
 		$result = [];
 
-		foreach ( $array as $item ) {
+		foreach ( $input as $item ) {
 
 			if ( ! is_array( $item ) ) {
 				$result[] = $item;
 			} else {
-				$values = $depth === 1
+				$values = 1 === $depth
 					? array_values( $item )
 					: self::array_flatten( $item, $depth - 1 );
 
@@ -143,13 +143,13 @@ class Utils {
 	 *
 	 * @See: https://github.com/laravel/framework
 	 *
-	 * @param array $array An array whose values may themselves be arrays.
+	 * @param array $input An array whose values may themselves be arrays.
 	 * @return array All values merged into a single flat array.
 	 */
-	public static function array_collapse( $array ) {
+	public static function array_collapse( $input ) {
 		$results = [];
 
-		foreach ( $array as $values ) {
+		foreach ( $input as $values ) {
 			if ( ! is_array( $values ) ) {
 				continue;
 			}
@@ -182,24 +182,24 @@ class Utils {
 	 * Supports a `[]` segment to map the rest of the path over every value at
 	 * that level, e.g. 'items[].id'.
 	 *
-	 * @param array  $arr     The array to search.
-	 * @param string $path    Dot-delimited path to the value.
-	 * @param mixed  $default Value to return when the path cannot be resolved.
-	 * @return mixed The value at $path, or $default.
+	 * @param array  $arr      The array to search.
+	 * @param string $path     Dot-delimited path to the value.
+	 * @param mixed  $fallback Value to return when the path cannot be resolved.
+	 * @return mixed The value at $path, or $fallback.
 	 */
-	public static function array_path( $arr, $path, $default = null ) {
+	public static function array_path( $arr, $path, $fallback = null ) {
 		$keys   = explode( '.', $path );
 		$source = $arr;
 
-		while ( count( $keys ) > 0 ) {
+		while ( ! empty( $keys ) ) {
 			$key = array_shift( $keys );
 
-			// collect value
-			if ( $key === '[]' ) {
+			// Collect value.
+			if ( '[]' === $key ) {
 				$result = [];
 
 				foreach ( $source as $item ) {
-					$result[] = self::array_path( $item, implode( '.', $keys ), $default );
+					$result[] = self::array_path( $item, implode( '.', $keys ), $fallback );
 				}
 
 				return $result;
@@ -208,12 +208,12 @@ class Utils {
 			if ( is_array( $source ) && isset( $source[ $key ] ) ) {
 				$source = $source[ $key ];
 			} else {
-				// current key doesn't exist, stop loop and return default value
-				return $default;
+				// Current key doesn't exist; stop the loop and return the fallback value.
+				return $fallback;
 			}
 		}
 
-		// we have reached the end of the path
+		// We have reached the end of the path.
 		return $source;
 	}
 
@@ -292,7 +292,7 @@ class Utils {
 	/**
 	 * Echo version for customizer_url
 	 *
-	 * @param $location
+	 * @param string $location Control or section to focus in the Customizer.
 	 *
 	 * @return void
 	 */
@@ -395,7 +395,7 @@ class Utils {
 	 * @return void
 	 */
 	public static function the_microdata( $attributes ) {
-		echo self::schema_org_definitions( $attributes );
+		echo self::schema_org_definitions( $attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in schema_org_definitions().
 	}
 
 	/**
