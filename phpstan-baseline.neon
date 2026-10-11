@@ -153,7 +153,7 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$args of function wp_list_pages expects array\{child_of\?\: int, authors\?\: string, date_format\?\: string, depth\?\: int, echo\?\: bool, exclude\?\: array\<int\>\|string, include\?\: array, link_after\?\: string, \.\.\.\}, array\{echo\: false, title_li\: false\} given\.$#'
 			identifier: argument.type
-			count: 2
+			count: 1
 			path: inc/helpers/functions.php
 
 		-
