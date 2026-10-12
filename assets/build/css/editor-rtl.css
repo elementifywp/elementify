@@ -1,1 +1,43 @@
-.is-root-container>*{margin-bottom:var(--ele-content-spacing);margin-top:0}.is-root-container p{margin-bottom:1.25em;margin-top:1.25em}.wp-block-button:not(.is-style-outline)>.wp-block-button__link{--ele-button-border:0px;background:var(--ele-button-box-initial-background);color:var(--ele-button-box-initial-color)}.wp-block-button:not(.is-style-outline)>.wp-block-button__link:hover{background:var(--ele-button-box-hover-background);color:var(--ele-button-box-hover-color)}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100%}
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@6.11.0_webpack@5.111.1/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/.pnpm/postcss-loader@6.2.1_postcss@8.5.28_webpack@5.111.1/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./assets/src/css/editor.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * Block editor canvas styles.
+ *
+ * main.css is also loaded in the editor (see add_editor_style() in
+ * class-elementify.php), but a few of its rules are scoped to front-end
+ * wrappers the editor canvas does not have: the `.ele-button-fill` body class
+ * and `.entry-content`. These rules mirror them on the editor's root
+ * container so blocks look the same in the editor as on the site.
+ *
+ * WordPress prefixes every selector here with `.editor-styles-wrapper`.
+ */
+
+/* Mirrors `.entry-content > *` and `.entry-content p`. */
+.is-root-container > * {
+	margin-top: 0;
+	margin-bottom: var(--ele-content-spacing);
+}
+
+.is-root-container p {
+	margin-top: 1.25em;
+	margin-bottom: 1.25em;
+}
+
+/* Mirrors `.ele-button-fill .wp-block-button__link`. */
+.wp-block-button:not(.is-style-outline) > .wp-block-button__link {
+	--ele-button-border: 0px;
+	background: var(--ele-button-box-initial-background);
+	color: var(--ele-button-box-initial-color);
+}
+
+.wp-block-button:not(.is-style-outline) > .wp-block-button__link:hover {
+	background: var(--ele-button-box-hover-background);
+	color: var(--ele-button-box-hover-color);
+}
+
+/* Mirrors `[data-sidebar] .entry-content .wp-block-separator`. */
+.wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
+	width: 100%;
+}
+
