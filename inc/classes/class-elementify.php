@@ -113,7 +113,7 @@ class Elementify {
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		add_theme_support( 'post-formats', [ 'aside', 'gallery' ] );
+		//add_theme_support( 'post-formats', [ 'aside', 'gallery' ] );
 
 		add_post_type_support( 'page', 'excerpt' ); // change page with your post type slug.
 
@@ -198,7 +198,7 @@ class Elementify {
 		add_editor_style( [ 'assets/build/css/main.css', 'assets/build/css/editor.css' ] );
 
 		// Remove the core block patterns.
-		remove_theme_support( 'core-block-patterns' );
+		//remove_theme_support( 'core-block-patterns' );
 
 		/**
 		 * Set the maximum allowed width for any content in the theme,
