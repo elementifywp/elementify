@@ -35,7 +35,7 @@ if ( ! function_exists( 'elementify_body_classes' ) ) {
 		}
 
 		// Adds a class of no-sidebar when there is no sidebar present.
-		if ( ! is_active_sidebar( 'sidebar-1' ) || is_404() ) {
+		if ( ! is_active_sidebar( elementify_get_sidebar_id() ) || is_404() ) {
 			$classes[] = 'no-sidebar';
 		}
 
@@ -345,7 +345,7 @@ if ( ! function_exists( 'elementify_sidebar_area' ) ) {
 		 */
 		do_action( 'elementify_sidebar_top' );
 
-		dynamic_sidebar( 'sidebar-1' );
+		dynamic_sidebar( elementify_get_sidebar_id() );
 
 		/**
 		 * Functions hooked into elementify_sidebar_bottom action

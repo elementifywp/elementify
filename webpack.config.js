@@ -32,6 +32,7 @@ module.exports = {
 		'js/customizer': path.join( SRC_DIR, 'js/customizer.js' ),
 		'css/main': path.join( SRC_DIR, 'css/main.css' ),
 		'css/editor': path.join( SRC_DIR, 'css/editor.css' ),
+		'css/woocommerce': path.join( SRC_DIR, 'css/woocommerce.css' ),
 	},
 	output: {
 		...defaultConfig.output,

@@ -31,6 +31,11 @@ class Elementify {
 		Sidebars::get_instance();
 		Elementor::get_instance();
 
+		// WooCommerce support only when the plugin is active.
+		if ( class_exists( 'WooCommerce' ) ) {
+			WooCommerce::get_instance();
+		}
+
 		$this->setup_hooks();
 	}
 

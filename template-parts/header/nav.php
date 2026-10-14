@@ -48,6 +48,11 @@
 					<div class="ele-header-menu-1-wrap ele-d-flex">
 						<?php elementify_primary_navigation( [ 'walker' => new \Elementify\Inc\Walker_Page() ] ); ?>
 					</div>
+					<?php if ( class_exists( 'WooCommerce' ) ) : ?>
+						<div class="ele-header-cart-wrap ele-d-flex">
+							<?php \Elementify\Inc\WooCommerce::get_instance()->header_cart(); ?>
+						</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>

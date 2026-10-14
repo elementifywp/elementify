@@ -432,12 +432,25 @@ if ( ! function_exists( 'elementify_pagination' ) ) {
 	/**
 	 * Elemetify Pagination.
 	 *
+	 * Prints numbered pagination for the main query. Callers paginating a
+	 * different loop (e.g. WooCommerce product loops) pass `total`, `current`,
+	 * `base` and `format`, which are handed to paginate_links().
+	 *
+	 * @param array $args {
+	 *     Optional. paginate_links() arguments, plus the keys below.
+	 *
+	 *     @type string $aria_label         Accessible name of the nav landmark.
+	 *     @type string $screen_reader_text Hidden heading inside the nav.
+	 * }
 	 * @return void
 	 */
-	function elementify_pagination() {
+	function elementify_pagination( $args = [] ) {
 
-		$links = paginate_links(
+		$args = wp_parse_args(
+			$args,
 			[
+				'aria_label'         => __( 'Posts', 'elementify' ),
+				'screen_reader_text' => __( 'Posts navigation', 'elementify' ),
 				'mid_size'           => 1,
 				'prev_text'          => elementify_get_the_svg( 'ui', 'chevron-left', 16 ) . '<span class="ele-pagination-label">' . esc_html__( 'Previous', 'elementify' ) . '</span>',
 				'next_text'          => '<span class="ele-pagination-label">' . esc_html__( 'Next', 'elementify' ) . '</span>' . elementify_get_the_svg( 'ui', 'chevron-right', 16 ),
@@ -445,6 +458,15 @@ if ( ! function_exists( 'elementify_pagination' ) ) {
 				'before_page_number' => '<span class="screen-reader-text">' . esc_html__( 'Page', 'elementify' ) . ' </span>',
 			]
 		);
+
+		$aria_label         = $args['aria_label'];
+		$screen_reader_text = $args['screen_reader_text'];
+		unset( $args['aria_label'], $args['screen_reader_text'] );
+
+		// Always return a string so the result can be passed through wp_kses().
+		$args['type'] = 'plain';
+
+		$links = paginate_links( $args );
 
 		// paginate_links() returns null when there is only one page.
 		if ( ! empty( $links ) ) {
@@ -479,8 +501,8 @@ if ( ! function_exists( 'elementify_pagination' ) ) {
 
 			printf(
 				'<div class="ele-pagination-wrap"><nav class="navigation pagination" aria-label="%1$s"><h2 class="screen-reader-text">%2$s</h2><div class="nav-links ele-d-flex ele-flex-wrap ele-align-items-center ele-w-100 ele-justify-content-center ele-justify-content-md-center ele-justify-content-lg-center" data-pagination-type="numbered" data-divider="none">%3$s</div></nav></div>',
-				esc_attr__( 'Posts', 'elementify' ),
-				esc_html__( 'Posts navigation', 'elementify' ),
+				esc_attr( $aria_label ),
+				esc_html( $screen_reader_text ),
 				wp_kses( $links, $allowed_tags )
 			);
 		}
@@ -513,6 +535,53 @@ if ( ! function_exists( 'elementify_breadcrumb' ) ) {
 		}
 
 		return $breadcrumb->trail();
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Sidebar selection
+|--------------------------------------------------------------------------
+*/
+
+if ( ! function_exists( 'elementify_is_woocommerce_sidebar_context' ) ) {
+	/**
+	 * Whether the current request is a WooCommerce screen that can show the
+	 * dedicated shop sidebar.
+	 *
+	 * @return bool
+	 */
+	function elementify_is_woocommerce_sidebar_context() {
+		if ( ! function_exists( 'is_woocommerce' ) ) {
+			return false;
+		}
+
+		return (
+			is_woocommerce()
+			|| ( function_exists( 'is_cart' ) && is_cart() )
+			|| ( function_exists( 'is_checkout' ) && is_checkout() )
+			|| ( function_exists( 'is_account_page' ) && is_account_page() )
+		);
+	}
+}
+
+if ( ! function_exists( 'elementify_get_sidebar_id' ) ) {
+	/**
+	 * Resolve the widget area the theme should render for the current view.
+	 *
+	 * Returns the dedicated WooCommerce sidebar on shop and store screens when
+	 * it holds widgets, and the theme's main sidebar everywhere else.
+	 *
+	 * @return string The sidebar id.
+	 */
+	function elementify_get_sidebar_id() {
+		$sidebar_id = 'sidebar-1';
+
+		if ( elementify_is_woocommerce_sidebar_context() && is_active_sidebar( 'sidebar-woocommerce' ) ) {
+			$sidebar_id = 'sidebar-woocommerce';
+		}
+
+		return apply_filters( 'elementify_get_sidebar_id', $sidebar_id );
 	}
 }
 

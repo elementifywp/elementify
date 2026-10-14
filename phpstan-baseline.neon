@@ -73,12 +73,6 @@ parameters:
 			path: inc/classes/class-customizer.php
 
 		-
-			message: '#^Function is_product not found\.$#'
-			identifier: function.notFound
-			count: 1
-			path: inc/classes/class-utils.php
-
-		-
 			message: '#^Method Elementify\\Inc\\Utils\:\:schema_org_definitions\(\) should return string\|null but return statement is missing\.$#'
 			identifier: return.missing
 			count: 1

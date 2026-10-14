@@ -10,6 +10,8 @@ parameters:
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
 		- tests/phpstan/bootstrap.php
+	scanFiles:
+		- vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
 	paths:
 		- functions.php
 		- inc/
