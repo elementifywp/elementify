@@ -569,15 +569,16 @@ if ( ! function_exists( 'elementify_get_sidebar_id' ) ) {
 	/**
 	 * Resolve the widget area the theme should render for the current view.
 	 *
-	 * Returns the dedicated WooCommerce sidebar on shop and store screens when
-	 * it holds widgets, and the theme's main sidebar everywhere else.
+	 * Returns the dedicated WooCommerce sidebar on shop and store screens, and
+	 * the theme's main sidebar everywhere else. Store screens never fall back
+	 * to the blog sidebar: with no WooCommerce widgets they render full width.
 	 *
 	 * @return string The sidebar id.
 	 */
 	function elementify_get_sidebar_id() {
 		$sidebar_id = 'sidebar-1';
 
-		if ( elementify_is_woocommerce_sidebar_context() && is_active_sidebar( 'sidebar-woocommerce' ) ) {
+		if ( elementify_is_woocommerce_sidebar_context() ) {
 			$sidebar_id = 'sidebar-woocommerce';
 		}
 

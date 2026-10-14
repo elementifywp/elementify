@@ -52,6 +52,7 @@ class WooCommerce {
 		 * Filters.
 		 */
 		add_filter( 'body_class', [ $this, 'body_class' ] );
+		add_filter( 'elementify_get_sidebar_id', [ $this, 'single_product_sidebar' ] );
 		add_filter( 'woocommerce_output_related_products_args', [ $this, 'related_products_args' ] );
 		add_filter( 'woocommerce_add_to_cart_fragments', [ $this, 'cart_link_fragment' ] );
 
@@ -132,6 +133,10 @@ class WooCommerce {
 		// Wrap the sale badge and thumbnail so the card image can be cropped and zoomed.
 		add_action( 'woocommerce_before_shop_loop_item_title', [ $this, 'product_media_start' ], 9 );
 		add_action( 'woocommerce_before_shop_loop_item_title', [ $this, 'product_media_end' ], 11 );
+
+		// Wrap the gallery and summary so the summary only sticks within that row.
+		add_action( 'woocommerce_before_single_product_summary', [ $this, 'product_hero_start' ], 5 );
+		add_action( 'woocommerce_after_single_product_summary', [ $this, 'product_hero_end' ], 5 );
 
 		// A single product carries its own title, so drop the theme hero there.
 		add_action( 'elementify_before_content', [ $this, 'single_product_suppress_hero' ], 5 );
@@ -256,6 +261,29 @@ class WooCommerce {
 	}
 
 	/**
+	 * Open the gallery + summary row of a single product.
+	 *
+	 * Runs before the sale badge (10) and gallery (20); closed after the
+	 * summary, before the tabs (10), upsells (15) and related products (20).
+	 *
+	 * @return void
+	 */
+	public function product_hero_start() {
+
+		echo '<div class="ele-product-hero">';
+	}
+
+	/**
+	 * Close the row opened by product_hero_start().
+	 *
+	 * @return void
+	 */
+	public function product_hero_end() {
+
+		echo '</div><!-- .ele-product-hero -->';
+	}
+
+	/**
 	 * Drop the theme's page-title band on single product pages.
 	 *
 	 * WooCommerce renders the product title, rating, excerpt and gallery in
@@ -285,6 +313,25 @@ class WooCommerce {
 		echo '<div class="ele-woocommerce-breadcrumb">';
 		elementify_breadcrumb();
 		echo '</div><!-- .ele-woocommerce-breadcrumb -->';
+	}
+
+	/**
+	 * Render single product pages full width, without a sidebar.
+	 *
+	 * The gallery and summary need the full content width. An id with no
+	 * registered widget area makes is_active_sidebar() false, so sidebar.php
+	 * prints nothing and the body gets `no-sidebar` / data-sidebar="none".
+	 *
+	 * @param string $sidebar_id The sidebar id for the current view.
+	 * @return string The filtered sidebar id.
+	 */
+	public function single_product_sidebar( $sidebar_id ) {
+
+		if ( is_product() ) {
+			return '';
+		}
+
+		return $sidebar_id;
 	}
 
 	/**
@@ -354,6 +401,15 @@ class WooCommerce {
 			'all'
 		);
 		wp_style_add_data( 'elementify-woocommerce', 'rtl', 'replace' );
+
+		$font_path   = WC()->plugin_url() . '/assets/fonts/';
+		$inline_font = sprintf(
+			'@font-face{font-family:"star";src:url("%1$s") format("woff"),url("%2$s") format("truetype");font-weight:normal;font-style:normal;font-display:swap;}',
+			esc_url_raw( $font_path . 'star.woff' ),
+			esc_url_raw( $font_path . 'star.ttf' )
+		);
+
+		wp_add_inline_style( 'elementify-woocommerce', $inline_font );
 	}
 
 	/**
@@ -389,7 +445,10 @@ class WooCommerce {
 	}
 
 	/**
-	 * Print a link to the cart with its subtotal and item count.
+	 * Print the header cart link: a bag icon with an item-count badge.
+	 *
+	 * The subtotal and item count are also spelled out for screen readers,
+	 * since the badge alone is just a number.
 	 *
 	 * @return void
 	 */
@@ -408,8 +467,12 @@ class WooCommerce {
 		);
 		?>
 		<a class="cart-contents" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'elementify' ); ?>">
-			<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span>
-			<span class="count"><?php echo esc_html( $item_count_text ); ?></span>
+			<?php elementify_the_svg( 'ui', 'shopping-bag', 22 ); ?>
+			<span class="count" aria-hidden="true"><?php echo esc_html( number_format_i18n( $count ) ); ?></span>
+			<span class="screen-reader-text">
+				<?php echo esc_html( $item_count_text ); ?>,
+				<span class="amount"><?php echo wp_kses_data( WC()->cart->get_cart_subtotal() ); ?></span>
+			</span>
 		</a>
 		<?php
 	}
@@ -417,9 +480,7 @@ class WooCommerce {
 	/**
 	 * Print the header cart: the cart link plus the mini-cart widget.
 	 *
-	 * Not hooked anywhere yet. Call it from a header template with
-	 * `\Elementify\Inc\WooCommerce::get_instance()->header_cart();`, guarded
-	 * by `class_exists( 'WooCommerce' )`.
+	 * Called from template-parts/header/nav.php when WooCommerce is active.
 	 *
 	 * @return void
 	 */

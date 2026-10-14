@@ -107,7 +107,8 @@ if ( ! function_exists( 'elementify_body_attributes' ) ) {
 	 *
 	 * Prints the data attributes main.css keys the content layout off: a
 	 * context prefix ('single-post', 'single-page' or 'blog'), the sidebar
-	 * position, and the default form label.
+	 * position ('right', or 'none' when the view's widget area is empty), and
+	 * the default form label.
 	 *
 	 * @return void
 	 */
@@ -122,7 +123,9 @@ if ( ! function_exists( 'elementify_body_attributes' ) ) {
 		if ( ! $prefix ) {
 			return; // No value.
 		}
-		print ' data-prefix="' . esc_attr( $prefix ) . '" data-sidebar="right" data-form-label="default"';
+		$sidebar = is_active_sidebar( elementify_get_sidebar_id() ) && ! is_404() ? 'right' : 'none';
+
+		print ' data-prefix="' . esc_attr( $prefix ) . '" data-sidebar="' . esc_attr( $sidebar ) . '" data-form-label="default"';
 	}
 }
 
