@@ -36,7 +36,7 @@
 		"template-parts"
 	],
 	"devDependencies": {
-		"@playwright/test": "^1.63.0",
+		"@playwright/test": "^1.64.0",
 		"@wordpress/babel-preset-default": "^8.56.0",
 		"@wordpress/browserslist-config": "^6.37.0",
 		"@wordpress/e2e-test-utils-playwright": "^2.1.0",
@@ -45,8 +45,8 @@
 		"@wordpress/postcss-plugins-preset": "^5.56.0",
 		"@wordpress/scripts": "^36.0.0",
 		"@wordpress/stylelint-config": "^26.0.0",
-		"copy-webpack-plugin": "^13.0.1",
-		"cssnano": "^6.1.2",
+		"copy-webpack-plugin": "^14.0.0",
+		"cssnano": "^9.7.0",
 		"grunt": "^1.6.3",
 		"grunt-checktextdomain": "^1.0.1",
 		"grunt-contrib-clean": "^2.0.1",
