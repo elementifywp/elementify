@@ -10,6 +10,16 @@
  * WordPress prefixes every selector here with `.editor-styles-wrapper`.
  */
 
+/*
+ * Keep the editor canvas white like the default editor. theme.json sets the
+ * site's page background (base-200) for the front end, and WordPress would
+ * otherwise paint it behind the content being edited too. `body` becomes
+ * `.editor-styles-wrapper`, which outranks the global styles' `body` rule.
+ */
+body {
+	background-color: var(--wp--preset--color--base-100, #fff);
+}
+
 /* Mirrors `.entry-content > *` and `.entry-content p`. */
 .is-root-container > * {
 	margin-top: 0;
