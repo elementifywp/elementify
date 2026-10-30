@@ -75,7 +75,7 @@ table.shop_table_responsive tr td.download-actions .button {
  * Shop tokens
  */
 .woocommerce-active {
-	--ele-shop-gap: clamp(16px, 2.5vw, 28px);
+	--ele-shop-gap: clamp(16px, 2.5vw, 24px);
 	--ele-shop-radius: 8px;
 	--ele-shop-sale-color: #e2401c;
 	--ele-shop-success-color: #0f834d;
@@ -98,7 +98,7 @@ table.shop_table_responsive tr td.download-actions .button {
 
 .ele-shop-toolbar .woocommerce-result-count {
 	margin: 0;
-	font-size: 0.875rem;
+	font-size: var(--ele-font-size,0.875rem);
 	color: var(--ele-text-color);
 }
 
@@ -108,7 +108,7 @@ table.shop_table_responsive tr td.download-actions .button {
 
 .ele-shop-toolbar .woocommerce-ordering select {
 	min-width: 220px;
-	font-size: 0.875rem;
+	font-size: var(--ele-font-size,0.875rem);
 }
 
 .woocommerce-products-header .term-description,
@@ -168,7 +168,7 @@ ul.products li.product {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	text-align: left;
+	/* text-align: left; */
 }
 
 ul.products li.product .woocommerce-loop-product__link,
@@ -236,10 +236,10 @@ ul.products li.product .star-rating {
 	font-size: 0.8125rem;
 }
 
-ul.products li.product .price {
+/* ul.products li.product .price {
 	display: block;
 	font-size: 0.9375rem;
-}
+} */
 
 ul.products li.product .button {
 	display: inline-flex;
@@ -284,13 +284,12 @@ ul.products li.product .button.loading {
 	text-decoration: line-through;
 	font-weight: 400;
 	color: var(--ele-text-color);
-	opacity: 0.6;
 }
 
 .price ins {
 	background: none;
 	text-decoration: none;
-	color: var(--ele-shop-sale-color);
+	/* color: var(--ele-shop-sale-color); */
 }
 
 /**
