@@ -312,9 +312,10 @@ ul.products li.product .button.loading {
 	margin: 0;
 }
 
-/* Theme pagination below product loops. */
+/* Theme pagination below product loops. The framework's Product Archives >
+   Pagination > Spacing setting writes --ele-pagination-spacing. */
 .woocommerce-active .ele-pagination-wrap .nav-links[data-divider="none"] {
-	margin-top: calc(var(--ele-shop-gap) * 1.5);
+	margin-top: var(--ele-pagination-spacing, calc(var(--ele-shop-gap) * 1.5));
 }
 
 /**
