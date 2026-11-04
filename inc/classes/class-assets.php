@@ -42,6 +42,43 @@ class Assets {
 		 */
 		add_action( 'wp_enqueue_scripts', [ $this, 'frontend_assets' ] );
 		add_action( 'customize_preview_init', [ $this, 'customize_preview_assets' ] );
+
+		/**
+		 * Filters.
+		 */
+		add_filter( 'wp_preload_resources', [ $this, 'preload_fonts' ] );
+	}
+
+	/**
+	 * Preload the bundled Inter font (latin, upright) so body text does not
+	 * flash in the fallback font. The @font-face rules themselves come from
+	 * theme.json, which WordPress prints in wp_head.
+	 *
+	 * Only the latin upright file is preloaded: it covers nearly every page,
+	 * while italic and latin-ext load on demand through their unicode-range.
+	 *
+	 * @param array $resources Resources to preload, each an array of link attributes.
+	 * @return array
+	 */
+	public function preload_fonts( $resources ) {
+		/**
+		 * Filters whether the theme preloads its bundled font. Turn it off
+		 * when a Customizer or plugin setting replaces the body font.
+		 *
+		 * @param bool $preload Whether to preload Inter. Default true.
+		 */
+		if ( ! apply_filters( 'elementify_preload_fonts', true ) ) {
+			return $resources;
+		}
+
+		$resources[] = [
+			'href'        => ELEMENTIFY_DIR_URI . '/assets/build/fonts/inter/inter-latin-wght-normal.woff2',
+			'as'          => 'font',
+			'type'        => 'font/woff2',
+			'crossorigin' => 'anonymous',
+		];
+
+		return $resources;
 	}
 
 	/**

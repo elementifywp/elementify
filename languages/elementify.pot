@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-15T08:48:33+00:00\n"
+"POT-Creation-Date: 2026-11-04T05:17:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: elementify\n"
@@ -22,7 +22,7 @@ msgstr ""
 #. Theme URI of the theme
 #. Author URI of the theme
 #: style.css
-msgid "http://elementifythemes.com/"
+msgid "https://elementifythemes.com/"
 msgstr ""
 
 #. Description of the theme
@@ -48,98 +48,110 @@ msgstr ""
 msgid "Hide submenu for %s"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:273
+#: inc/classes/class-breadcrumb-trail.php:319
 msgid "Browse:"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:274
+#: inc/classes/class-breadcrumb-trail.php:320
 msgctxt "breadcrumbs aria label"
 msgid "Breadcrumbs"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:275
-#: template-parts/components/entry-header.php:84
+#: inc/classes/class-breadcrumb-trail.php:321
+#: template-parts/components/entry-header.php:87
 msgid "Home"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:276
+#: inc/classes/class-breadcrumb-trail.php:322
 msgid "404 Not Found"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:277
+#: inc/classes/class-breadcrumb-trail.php:323
 msgid "Archives"
 msgstr ""
 
 #. Translators: %s is the search query.
-#: inc/classes/class-breadcrumb-trail.php:279
+#: inc/classes/class-breadcrumb-trail.php:325
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
 #. Translators: %s is the page number.
-#: inc/classes/class-breadcrumb-trail.php:281
+#: inc/classes/class-breadcrumb-trail.php:327
 #, php-format
 msgid "Page %s"
 msgstr ""
 
 #. Translators: %s is the page number.
-#: inc/classes/class-breadcrumb-trail.php:283
+#: inc/classes/class-breadcrumb-trail.php:329
 #, php-format
 msgid "Comment Page %s"
 msgstr ""
 
 #. Translators: Minute archive title. %s is the minute time format.
-#: inc/classes/class-breadcrumb-trail.php:285
+#: inc/classes/class-breadcrumb-trail.php:331
 #, php-format
 msgid "Minute %s"
 msgstr ""
 
 #. Translators: Weekly archive title. %s is the week date format.
-#: inc/classes/class-breadcrumb-trail.php:287
+#: inc/classes/class-breadcrumb-trail.php:333
 #, php-format
 msgid "Week %s"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:744
+#: inc/classes/class-breadcrumb-trail.php:790
 msgctxt "minute and hour archives time format"
 msgid "g:i a"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:762
+#: inc/classes/class-breadcrumb-trail.php:808
 msgctxt "minute archives time format"
 msgid "i"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:780
+#: inc/classes/class-breadcrumb-trail.php:826
 msgctxt "hour archives time format"
 msgid "g a"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:797
-#: inc/classes/class-breadcrumb-trail.php:827
-#: inc/classes/class-breadcrumb-trail.php:867
-#: inc/classes/class-breadcrumb-trail.php:895
-#: inc/classes/class-breadcrumb-trail.php:1245
+#: inc/classes/class-breadcrumb-trail.php:843
+#: inc/classes/class-breadcrumb-trail.php:873
+#: inc/classes/class-breadcrumb-trail.php:913
+#: inc/classes/class-breadcrumb-trail.php:941
+#: inc/classes/class-breadcrumb-trail.php:1291
 msgctxt "yearly archives date format"
 msgid "Y"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:798
-#: inc/classes/class-breadcrumb-trail.php:868
-#: inc/classes/class-breadcrumb-trail.php:1247
+#: inc/classes/class-breadcrumb-trail.php:844
+#: inc/classes/class-breadcrumb-trail.php:914
+#: inc/classes/class-breadcrumb-trail.php:1293
 msgctxt "monthly archives date format"
 msgid "F"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:799
-#: inc/classes/class-breadcrumb-trail.php:1249
+#: inc/classes/class-breadcrumb-trail.php:845
+#: inc/classes/class-breadcrumb-trail.php:1295
 msgctxt "daily archives date format"
 msgid "j"
 msgstr ""
 
-#: inc/classes/class-breadcrumb-trail.php:828
+#: inc/classes/class-breadcrumb-trail.php:874
 msgctxt "weekly archives date format"
 msgid "W"
+msgstr ""
+
+#: inc/classes/class-customizer.php:61
+msgid "Schema Markup"
+msgstr ""
+
+#: inc/classes/class-customizer.php:62
+msgid "Describe the site to search engines with schema.org microdata: the header, navigation, sidebar and footer, each post's headline, image, author and dates, comments and breadcrumbs. Turn this off if an SEO plugin already prints a complete schema graph."
+msgstr ""
+
+#: inc/classes/class-customizer.php:82
+msgid "Enable schema.org markup"
 msgstr ""
 
 #: inc/classes/class-menus.php:53
@@ -186,7 +198,7 @@ msgid "Footer Area #%d"
 msgstr ""
 
 #: inc/classes/class-woocommerce.php:194
-#: template-parts/components/entry-header.php:84
+#: template-parts/components/entry-header.php:87
 msgid "Products"
 msgstr ""
 
@@ -235,7 +247,7 @@ msgid "Previous"
 msgstr ""
 
 #: inc/helpers/functions.php:456
-#: inc/helpers/template-tags.php:272
+#: inc/helpers/template-tags.php:293
 msgid "Next"
 msgstr ""
 
@@ -248,21 +260,29 @@ msgstr ""
 msgid "Skip to content"
 msgstr ""
 
-#: inc/helpers/template-functions.php:658
+#: inc/helpers/template-functions.php:674
 msgid "One Comment"
 msgstr ""
 
 #. translators: %s: The count of comments.
-#: inc/helpers/template-functions.php:661
+#: inc/helpers/template-functions.php:677
 #, php-format
 msgid "%s Comments"
 msgstr ""
 
-#: inc/helpers/template-functions.php:691
+#: inc/helpers/template-functions.php:708
 msgid "Comments are closed."
 msgstr ""
 
-#: inc/helpers/template-functions.php:729
+#: inc/helpers/template-functions.php:744
+msgid "Error code: 404"
+msgstr ""
+
+#: inc/helpers/template-functions.php:745
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#: inc/helpers/template-functions.php:746
 msgid "This is not the page you are looking for"
 msgstr ""
 
@@ -280,96 +300,89 @@ msgctxt "post author"
 msgid " by %s"
 msgstr ""
 
-#: inc/helpers/template-tags.php:206
+#: inc/helpers/template-tags.php:227
 #: template-parts/components/entry-read-more.php:10
 msgid "Read more"
 msgstr ""
 
-#: inc/helpers/template-tags.php:262
+#: inc/helpers/template-tags.php:283
 msgid "First"
 msgstr ""
 
-#: inc/helpers/template-tags.php:271
+#: inc/helpers/template-tags.php:292
 msgid "Prev"
 msgstr ""
 
-#: inc/helpers/template-tags.php:278
+#: inc/helpers/template-tags.php:299
 msgid "Last"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/helpers/template-tags.php:367
-#: template-parts/components/blog/entry-meta.php:89
-#: template-parts/components/entry-meta.php:89
+#: inc/helpers/template-tags.php:388
+#: template-parts/components/entry-meta.php:107
 msgid ", "
 msgstr ""
 
 #. translators: 1: list of categories.
-#: inc/helpers/template-tags.php:370
+#: inc/helpers/template-tags.php:391
 #, php-format
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/helpers/template-tags.php:374
+#: inc/helpers/template-tags.php:395
 #: template-parts/components/entry-tags.php:23
 msgctxt "list item separator"
 msgid ", "
 msgstr ""
 
 #. translators: 1: list of tags.
-#: inc/helpers/template-tags.php:377
+#: inc/helpers/template-tags.php:398
 #, php-format
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: Name of current post. Only visible to screen readers
-#: inc/helpers/template-tags.php:385
+#: inc/helpers/template-tags.php:406
 #: template-parts/components/entry-content.php:45
 #: template-parts/components/entry-footer.php:15
 #, php-format
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr ""
 
+#: template-parts/components/entry-cats.php:19
+#: template-parts/components/entry-meta.php:102
+msgid "Categories"
+msgstr ""
+
 #. translators: %s: Name of current post. Only visible to screen readers
-#: template-parts/components/blog/entry-content.php:21
 #: template-parts/components/entry-content.php:23
 #, php-format
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr ""
 
-#: template-parts/components/blog/entry-content.php:34
 #: template-parts/components/entry-content.php:36
 msgid "Pages:"
 msgstr ""
 
-#: template-parts/components/blog/entry-image.php:47
-#: template-parts/components/entry-image.php:52
+#: template-parts/components/entry-image.php:58
 msgid "Featured Post"
 msgstr ""
 
-#: template-parts/components/blog/entry-meta.php:40
 #: template-parts/components/entry-meta.php:48
 msgid "Post Author"
 msgstr ""
 
-#: template-parts/components/blog/entry-meta.php:66
-#: template-parts/components/entry-meta.php:67
+#: template-parts/components/entry-meta.php:74
 msgid "Published Date"
 msgstr ""
 
-#: template-parts/components/blog/entry-meta.php:84
-#: template-parts/components/entry-cats.php:19
-#: template-parts/components/entry-meta.php:84
-msgid "Categories"
-msgstr ""
-
-#: template-parts/components/entry-meta.php:103
+#: template-parts/components/entry-meta.php:121
 msgid "Comments"
 msgstr ""
 
 #. translators: %s: post title
-#: template-parts/components/entry-meta.php:111
+#: template-parts/components/entry-meta.php:129
 #, php-format
 msgid "No Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""

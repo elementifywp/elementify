@@ -8,10 +8,13 @@ License: GNU General Public License v2 or later
 /* --------------------------------------------------------------
 # Variables
 -------------------------------------------------------------- */
+
+/* The default --ele-font-family leads with Inter, which is bundled in
+   assets/src/fonts and registered (with its @font-face rules) in theme.json. */
 :root {
-	--ele-font-family: -apple-system, blinkmacsystemfont, "Segoe UI", roboto,
-		helvetica, arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-		"Segoe UI Symbol";
+	--ele-font-family: inter, -apple-system, blinkmacsystemfont, "Segoe UI",
+		roboto, helvetica, arial, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol";
 	--ele-font-weight: 400;
 	--ele-font-size: 16px;
 	--ele-text-transform: none;

@@ -24,6 +24,7 @@ const BUILD_DIR = path.resolve( __dirname, 'assets/build' );
  * - assets/src/css/*.css -> assets/build/css/*.css (+ *-rtl.css); editor.css is
  *   loaded only in the block editor
  * - assets/src/images/   -> assets/build/images/
+ * - assets/src/fonts/    -> assets/build/fonts/ (referenced from theme.json)
  */
 module.exports = {
 	...defaultConfig,
@@ -50,6 +51,11 @@ module.exports = {
 				{
 					from: path.join( SRC_DIR, 'images' ),
 					to: path.join( BUILD_DIR, 'images' ),
+					noErrorOnMissing: true,
+				},
+				{
+					from: path.join( SRC_DIR, 'fonts' ),
+					to: path.join( BUILD_DIR, 'fonts' ),
 					noErrorOnMissing: true,
 				},
 			],

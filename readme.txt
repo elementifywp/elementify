@@ -66,6 +66,10 @@ Breadcrumb Trail, (C) 2008-2017 Justin Tadlock
 License: GNU GPL, version 2 or later
 Source: https://themehybrid.com/plugins/breadcrumb-trail
 
+Inter typeface, (C) 2016 The Inter Project Authors
+License: SIL Open Font License, version 1.1 (assets/build/fonts/inter/OFL.txt)
+Source: https://rsms.me/inter/ (via https://fontsource.org/fonts/inter)
+
 Feather icons, (C) 2013-2017 Cole Bemis
 License: MIT
 Source: https://feathericons.com/
