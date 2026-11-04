@@ -301,14 +301,13 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 			</button>
 			<?php
 			$menu_args = [
-				'theme_location' => 'menu-1',
-				'menu_id'        => $menu_id,
-				'menu_class'     => $menu_class . ' ele-dropdown-reveal-' . sanitize_html_class( $args['reveal'] ),
-				'container'      => '',
-				'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-				'link_after'     => $args['link_after'],
-				'depth'          => absint( $args['depth'] ),
-				'fallback_cb'    => $args['fallback_cb'],
+				'menu_id'     => $menu_id,
+				'menu_class'  => $menu_class . ' ele-dropdown-reveal-' . sanitize_html_class( $args['reveal'] ),
+				'container'   => '',
+				'items_wrap'  => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+				'link_after'  => $args['link_after'],
+				'depth'       => absint( $args['depth'] ),
+				'fallback_cb' => $args['fallback_cb'],
 			];
 			// A page walker only fits the page-list fallback; nav menus keep core's walker.
 			if ( $args['walker'] instanceof \Walker_Page ) {
@@ -316,7 +315,8 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 			} elseif ( ! empty( $args['walker'] ) ) {
 				$menu_args['walker'] = $args['walker'];
 			}
-			wp_nav_menu( $menu_args );
+			// theme_location is passed inline so Theme Check can see it.
+			wp_nav_menu( [ 'theme_location' => 'menu-1' ] + $menu_args );
 			?>
 		</nav>
 		<?php
