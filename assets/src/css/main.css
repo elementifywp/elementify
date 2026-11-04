@@ -5779,13 +5779,13 @@ nav .ele-submenu-icon {
 	width: var(--ele-font-size);
 }
 
-.ele-breadcrumb-trail a[rel="home"] span[itemprop="name"] {
+.ele-breadcrumb-trail a[rel="home"] > span:first-child {
 	display: inline-flex;
 	align-items: center;
 	gap: 3px;
 }
 
-.ele-breadcrumb-trail a[rel="home"] span[itemprop="name"] .ele-svg-icon {
+.ele-breadcrumb-trail a[rel="home"] > span:first-child .ele-svg-icon {
 	flex-shrink: 0;
 	color: var(--ele-link-color);
 }
@@ -5793,7 +5793,7 @@ nav .ele-submenu-icon {
 .ele-breadcrumb-trail
 	li:hover
 	a[rel="home"]
-	span[itemprop="name"]
+	> span:first-child
 	.ele-svg-icon,
 .ele-breadcrumb-trail .trail-items li:hover a {
 	color: var(--ele-link-hover-color);

@@ -47,13 +47,41 @@ class Customizer {
 	 * registers the matching selective refresh partials when the manager
 	 * supports them.
 	 *
-	 * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+	 * @param \WP_Customize_Manager $wp_customize Theme Customizer object.
 	 * @return void
 	 */
 	public function customizer( $wp_customize ) {
 		$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 		$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
 		$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
+
+		$wp_customize->add_section(
+			'elementify_schema',
+			[
+				'title'       => esc_html__( 'Schema Markup', 'elementify' ),
+				'description' => esc_html__( 'Describe the site to search engines with schema.org microdata: the header, navigation, sidebar and footer, each post\'s headline, image, author and dates, comments and breadcrumbs. Turn this off if an SEO plugin already prints a complete schema graph.', 'elementify' ),
+				'priority'    => 160,
+			]
+		);
+
+		$wp_customize->add_setting(
+			'elementify_schema_org_markup',
+			[
+				// Setting defaults are typed as strings; '1' reads as on, matching
+				// the `true` fallback in Utils::has_schema_org_markup().
+				'default'           => '1',
+				'sanitize_callback' => 'wp_validate_boolean',
+			]
+		);
+
+		$wp_customize->add_control(
+			'elementify_schema_org_markup',
+			[
+				'type'    => 'checkbox',
+				'section' => 'elementify_schema',
+				'label'   => esc_html__( 'Enable schema.org markup', 'elementify' ),
+			]
+		);
 
 		if ( isset( $wp_customize->selective_refresh ) ) {
 			$wp_customize->selective_refresh->add_partial(

@@ -17,7 +17,7 @@ $copyright .= sprintf(
 	'<a href="' . esc_url( 'https://www.elementifythemes.com/' ) . '" rel="nofollow noopener" target="_self">' . esc_html__( 'Elementify Themes', 'elementify' ) . '</a>'
 );
 ?>
-<footer id="colophon" class="site-footer ele-site-footer">
+<footer id="colophon" class="site-footer ele-site-footer"<?php echo \Elementify\Inc\Utils::microdata_attr( 'footer' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>>
 	<div class="ele-footer-row ele-footer-row-main ele-position-absolute-after ele-d-flex ele-align-items-center" data-row="main">
 		<div class="ele-container ele-mx-auto ele-position-relative ele-z-10">
 			<div class="ele-builder-column ele-d-flex ele-flex-row ele-flex-wrap ele-builder-column-1">

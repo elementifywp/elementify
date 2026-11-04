@@ -26,9 +26,12 @@ if ( ! has_post_thumbnail() ) {
 			elementify_the_post_thumbnail(
 				$the_post_id,
 				'large',
-				[
-					'class' => 'attachment-featured-large size-featured-image',
-				]
+				array_merge(
+					[
+						'class' => 'attachment-featured-large size-featured-image',
+					],
+					\Elementify\Inc\Utils::schema_org_attributes( 'image' )
+				)
 			);
 		} else {
 			?>
@@ -38,9 +41,12 @@ if ( ! has_post_thumbnail() ) {
 				elementify_the_post_thumbnail(
 					$the_post_id,
 					'medium',
-					[
-						'class' => 'attachment-featured-large size-featured-image',
-					]
+					array_merge(
+						[
+							'class' => 'attachment-featured-large size-featured-image',
+						],
+						\Elementify\Inc\Utils::schema_org_attributes( 'image' )
+					)
 				);
 				?>
 			</a><!-- .post-thumbnail -->

@@ -301,113 +301,286 @@ class Utils {
 	}
 
 	/**
-	 * Get any necessary schema definition.
+	 * Whether schema.org microdata should be printed.
 	 *
-	 * Recognised contexts are html, header, navigation, logo, article,
-	 * post-author, comment-body, comment-author, sidebar, footer and video.
-	 * The html and article types are filterable.
+	 * Controlled by the "Schema Markup" Customizer setting, and filterable so
+	 * an SEO plugin that prints its own JSON-LD graph can switch it off.
+	 *
+	 * @return bool
+	 */
+	public static function has_schema_org_markup() {
+		$enabled = (bool) get_theme_mod( 'elementify_schema_org_markup', true );
+
+		/**
+		 * Filters whether the theme prints schema.org microdata.
+		 *
+		 * @param bool $enabled Whether microdata is enabled.
+		 */
+		return (bool) apply_filters( 'elementify_has_schema_org_markup', $enabled );
+	}
+
+	/**
+	 * The schema.org type of the whole document, printed on <html>.
+	 *
+	 * @return string A schema.org type name, e.g. "Blog".
+	 */
+	public static function schema_org_page_type() {
+		$type = 'WebPage';
+
+		if ( is_search() ) {
+			$type = 'SearchResultsPage';
+		} elseif ( is_author() ) {
+			$type = 'ProfilePage';
+		} elseif ( function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) {
+			$type = 'CollectionPage';
+		} elseif ( function_exists( 'is_product' ) && is_product() ) {
+			// WooCommerce prints the Product itself as JSON-LD; an empty
+			// microdata Product here would only add a second, invalid one.
+			$type = 'ItemPage';
+		} elseif ( is_home() || is_category() || is_tag() || is_date() || is_singular( 'post' ) ) {
+			$type = 'Blog';
+		} elseif ( is_archive() ) {
+			$type = 'CollectionPage';
+		}
+
+		/**
+		 * Filters the schema.org type printed on the <html> element.
+		 *
+		 * @param string $type Schema.org type name.
+		 */
+		return (string) apply_filters( 'elementify_html_itemtype', $type );
+	}
+
+	/**
+	 * The schema.org type of a post's own item (cards, single post content).
+	 *
+	 * @param \WP_Post|int|null $post Post object or ID. Defaults to the current post.
+	 * @return string A schema.org type name, e.g. "BlogPosting".
+	 */
+	public static function schema_org_article_type( $post = null ) {
+		$post = get_post( $post );
+		$type = ( $post && 'post' === $post->post_type ) ? 'BlogPosting' : 'CreativeWork';
+
+		/**
+		 * Filters the schema.org type of a post item.
+		 *
+		 * @param string        $type Schema.org type name.
+		 * @param \WP_Post|null $post The post.
+		 */
+		return (string) apply_filters( 'elementify_article_itemtype', $type, $post );
+	}
+
+	/**
+	 * Whether the current view wraps its main content in its own post item.
+	 *
+	 * True for single posts, attachments and custom post types. Pages are
+	 * left out: their headline and text describe the page itself, so they
+	 * attach to the WebPage item on <html>. WooCommerce products are left
+	 * out because WooCommerce describes them in JSON-LD.
+	 *
+	 * @return bool
+	 */
+	public static function is_schema_org_article_view() {
+		if ( ! is_singular() || is_page() ) {
+			return false;
+		}
+
+		if ( function_exists( 'is_product' ) && is_product() ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get the schema.org microdata attributes for a place in the markup.
+	 *
+	 * Modelled on Blocksy's blocksy_schema_org_definitions() and Kadence's
+	 * microdata component. Item contexts open a new itemscope:
+	 *
+	 *   html, header, navigation, logo, sidebar, footer, breadcrumb,
+	 *   breadcrumb-item, article, content-area, post-author, comment-body,
+	 *   comment-author, video
+	 *
+	 * Property contexts add an itemprop to the nearest enclosing item:
+	 *
+	 *   headline, name, description, url, image, logo-image, text, excerpt,
+	 *   publish-date, modified-date, author-name, author-url, comment-text,
+	 *   comment-date, position, item
+	 *
+	 * Returns an empty array when microdata is disabled or the context is
+	 * unknown.
 	 *
 	 * @param string $context The element to target.
-	 * @return string|null Our final attribute to add to the element, or null
-	 *                     when the context has no definition.
+	 * @return array<string, string> Attribute values keyed by attribute name.
+	 *                               `itemscope` is a boolean attribute and has
+	 *                               an empty value.
+	 */
+	public static function schema_org_attributes( $context ) {
+		if ( ! self::has_schema_org_markup() ) {
+			return [];
+		}
+
+		$scope = static function ( $type, $prop = '' ) {
+			$attrs = [];
+			if ( '' !== $prop ) {
+				$attrs['itemprop'] = $prop;
+			}
+			$attrs['itemscope'] = '';
+			$attrs['itemtype']  = 'https://schema.org/' . $type;
+
+			return $attrs;
+		};
+
+		$props = [
+			'headline'      => 'headline',
+			'name'          => 'name',
+			'description'   => 'description',
+			'url'           => 'url',
+			'image'         => 'image',
+			'logo-image'    => 'logo',
+			'text'          => 'text',
+			'excerpt'       => 'description',
+			'publish-date'  => 'datePublished',
+			'modified-date' => 'dateModified',
+			'author-name'   => 'name',
+			'author-url'    => 'url',
+			'comment-text'  => 'text',
+			'comment-date'  => 'dateCreated',
+			'position'      => 'position',
+			'item'          => 'item',
+		];
+
+		$attrs = [];
+
+		switch ( $context ) {
+			case 'html':
+				$attrs = $scope( self::schema_org_page_type() );
+				break;
+			case 'header':
+				$attrs = $scope( 'WPHeader' );
+				break;
+			case 'navigation':
+				$attrs = $scope( 'SiteNavigationElement' );
+				break;
+			case 'logo':
+				$attrs = $scope( 'Organization' );
+				break;
+			case 'sidebar':
+				$attrs = $scope( 'WPSideBar' );
+				break;
+			case 'footer':
+				$attrs = $scope( 'WPFooter' );
+				break;
+			case 'breadcrumb':
+				$attrs = $scope( 'BreadcrumbList' );
+				break;
+			case 'breadcrumb-item':
+				$attrs = $scope( 'ListItem', 'itemListElement' );
+				break;
+			case 'article':
+				$attrs = $scope( self::schema_org_article_type() );
+				break;
+			case 'content-area':
+				// The single-view wrapper that holds the hero (title, meta,
+				// image), the content and the comments.
+				if ( self::is_schema_org_article_view() ) {
+					$attrs = $scope( self::schema_org_article_type() );
+				}
+				break;
+			case 'post-author':
+			case 'comment-author':
+				$attrs = $scope( 'Person', 'author' );
+				break;
+			case 'comment-body':
+				$attrs = $scope( 'Comment', 'comment' );
+				break;
+			case 'video':
+				$attrs = $scope( 'VideoObject', 'video' );
+				break;
+			default:
+				if ( isset( $props[ $context ] ) ) {
+					$attrs = [ 'itemprop' => $props[ $context ] ];
+				}
+		}
+
+		/**
+		 * Filters the microdata attributes for a context.
+		 *
+		 * @param array<string, string> $attrs   Attribute values keyed by name.
+		 * @param string                $context The element context.
+		 */
+		return (array) apply_filters( "elementify_{$context}_schema_attributes", $attrs, $context );
+	}
+
+	/**
+	 * Get the schema.org microdata attributes for a place in the markup as an
+	 * HTML attribute string, e.g. `itemscope itemtype="https://schema.org/WPHeader"`.
+	 *
+	 * @param string $context The element to target. See schema_org_attributes().
+	 * @return string The escaped attribute string, or '' when there is none.
 	 */
 	public static function schema_org_definitions( $context ) {
-		$data = false;
+		$html = [];
 
-		if ( 'html' === $context ) {
-			$type = 'WebPage';
+		foreach ( self::schema_org_attributes( $context ) as $name => $value ) {
+			$name = preg_replace( '/[^a-zA-Z0-9_-]/', '', (string) $name );
 
-			if ( class_exists( 'woocommerce' ) && is_product() ) {
-				$type = 'IndividualProduct';
-			} elseif ( is_home() || is_archive() || is_attachment() || is_tax() || is_single() ) {
-				$type = 'Blog';
-			} elseif ( is_author() ) {
-				$type = 'ProfilePage';
+			if ( '' === $name ) {
+				continue;
 			}
 
-			if ( is_search() ) {
-				$type = 'SearchResultsPage';
-			}
-
-			$type = apply_filters( 'elementify_html_itemtype', $type );
-
-			$data = sprintf(
-				'itemtype="https://schema.org/%s" itemscope',
-				esc_html( $type )
-			);
+			$html[] = ( 'itemscope' === $name && '' === (string) $value )
+				? $name
+				: $name . '="' . esc_attr( (string) $value ) . '"';
 		}
 
-		if ( 'header' === $context ) {
-			$data = 'itemtype="https://schema.org/WPHeader" itemscope';
+		$data = implode( ' ', $html );
+
+		if ( '' === $data ) {
+			return '';
 		}
 
-		if ( 'navigation' === $context ) {
-			$data = 'itemtype="https://schema.org/SiteNavigationElement" itemscope';
-		}
-
-		if ( 'logo' === $context ) {
-			$data = 'itemtype="https://schema.org/Organization" itemscope';
-		}
-
-		if ( 'article' === $context ) {
-			$type = apply_filters( 'elementify_article_itemtype', 'CreativeWork' );
-
-			$data = sprintf(
-				'itemtype="https://schema.org/%s" itemscope',
-				esc_html( $type )
-			);
-		}
-
-		if ( 'post-author' === $context ) {
-			$data = 'itemprop="author" itemtype="https://schema.org/Person" itemscope';
-		}
-
-		if ( 'comment-body' === $context ) {
-			$data = 'itemtype="https://schema.org/Comment" itemscope';
-		}
-
-		if ( 'comment-author' === $context ) {
-			$data = 'itemprop="author" itemtype="https://schema.org/Person" itemscope';
-		}
-
-		if ( 'sidebar' === $context ) {
-			$data = 'itemtype="https://schema.org/WPSideBar" itemscope';
-		}
-
-		if ( 'footer' === $context ) {
-			$data = 'itemtype="https://schema.org/WPFooter" itemscope';
-		}
-		if ( 'video' === $context ) {
-			$data = 'itemprop="video" itemtype="http://schema.org/VideoObject" itemscope';
-		}
-
-		if ( $data ) {
-			return apply_filters( "elementify_{$context}_schema", $data );
-		}
+		/**
+		 * Filters the microdata attribute string for a context.
+		 *
+		 * The returned string is printed inside an HTML tag unescaped.
+		 *
+		 * @param string $data The attribute string.
+		 */
+		return (string) apply_filters( "elementify_{$context}_schema", $data );
 	}
+
 	/**
 	 * Echo the schema.org microdata attributes for an element.
 	 *
-	 * Despite the parameter name, the value is the element context passed
-	 * straight to schema_org_definitions().
-	 *
-	 * @param string $attributes The element context, e.g. 'header'.
+	 * @param string $context The element context, e.g. 'header'.
 	 * @return void
 	 */
-	public static function the_microdata( $attributes ) {
-		echo self::schema_org_definitions( $attributes ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in schema_org_definitions().
+	public static function the_microdata( $context ) {
+		echo self::schema_org_definitions( $context ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in schema_org_definitions().
 	}
 
 	/**
 	 * Return the schema.org microdata attributes for an element.
 	 *
-	 * Despite the parameter name, the value is the element context passed
-	 * straight to schema_org_definitions().
-	 *
-	 * @param string $attributes The element context, e.g. 'header'.
-	 * @return string|false The attributes, or false when the context is unknown.
+	 * @param string $context The element context, e.g. 'header'.
+	 * @return string The attributes, or '' when there are none.
 	 */
-	public static function microdata( $attributes ) {
-		return self::schema_org_definitions( $attributes );
+	public static function microdata( $context ) {
+		return self::schema_org_definitions( $context );
+	}
+
+	/**
+	 * Return the microdata attributes with a leading space, ready to append
+	 * after another attribute inside a tag built with sprintf()/echo.
+	 *
+	 * @param string $context The element context, e.g. 'header'.
+	 * @return string ' itemprop="…"', or '' when there is none.
+	 */
+	public static function microdata_attr( $context ) {
+		$data = self::schema_org_definitions( $context );
+
+		return '' === $data ? '' : ' ' . $data;
 	}
 }

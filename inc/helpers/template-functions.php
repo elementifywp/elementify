@@ -216,6 +216,22 @@ if ( ! function_exists( 'elementify_header_site_overlay' ) ) {
 	}
 }
 
+add_filter( 'get_custom_logo_image_attributes', 'elementify_custom_logo_schema_attributes' );
+
+if ( ! function_exists( 'elementify_custom_logo_schema_attributes' ) ) {
+
+	/**
+	 * Mark the custom logo image as the "logo" of the site's Organization item,
+	 * which the header's .site-branding wrapper opens.
+	 *
+	 * @param array $attributes Custom logo image attributes.
+	 * @return array
+	 */
+	function elementify_custom_logo_schema_attributes( $attributes ) {
+		return array_merge( (array) $attributes, \Elementify\Inc\Utils::schema_org_attributes( 'logo-image' ) );
+	}
+}
+
 /*
 |--------------------------------------------------------------------------
 | Site Content Hooks
@@ -239,7 +255,7 @@ if ( ! function_exists( 'elementify_site_content_start' ) ) {
 	function elementify_site_content_start() {
 		echo '<div id="content" class="site-content ele-position-relative ele-position-absolute-after">';
 		echo '<div class="ele-container ele-mx-auto">';
-		echo '<div id="primary" class="content-area primary ele-position-relative ele-z-10">';
+		echo '<div id="primary" class="content-area primary ele-position-relative ele-z-10"' . \Elementify\Inc\Utils::microdata_attr( 'content-area' ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 	}
 }
 
@@ -340,7 +356,7 @@ if ( ! function_exists( 'elementify_sidebar_area' ) ) {
 	 */
 	function elementify_sidebar_area() {
 
-		echo '<aside class="widget-area" data-layout="1" data-title-type="1" data-link-type="1">';
+		echo '<aside class="widget-area" data-layout="1" data-title-type="1" data-link-type="1"' . \Elementify\Inc\Utils::microdata_attr( 'sidebar' ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 		echo '<div class="ele-sidebar ele-position-relative">';
 
 		/**
@@ -677,6 +693,7 @@ if ( ! function_exists( 'elementify_comments_element' ) ) {
 					[
 						'style'      => 'ol',
 						'short_ping' => true,
+						'walker'     => new \Elementify\Inc\Walker_Comment(),
 					]
 				);
 				?>

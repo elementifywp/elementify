@@ -84,35 +84,39 @@ if ( $page_title ) : ?>
 							$title_text = [ 'desktop' => ( function_exists( 'is_shop' ) && is_shop() ) ? esc_html__( 'Products', 'elementify' ) : esc_html__( 'Home', 'elementify' ) ];
 							if ( $title_text && array_key_exists( 'desktop', $title_text ) ) {
 								printf(
-									'<%1$s class="page-title ele-w-100">%2$s</%1$s><!-- .page-title -->',
+									'<%1$s class="page-title ele-w-100"%3$s>%2$s</%1$s><!-- .page-title -->',
 									esc_attr( $title_tags['desktop'] ),
-									esc_html( $title_text['desktop'] )
+									esc_html( $title_text['desktop'] ),
+									\Elementify\Inc\Utils::microdata_attr( 'name' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 								);
 							}
 						} elseif ( is_archive() ) {
 							printf(
-								'<%1$s class="page-title ele-w-100">%2$s</%1$s><!-- .page-title -->',
+								'<%1$s class="page-title ele-w-100"%3$s>%2$s</%1$s><!-- .page-title -->',
 								esc_attr( $title_tags['desktop'] ),
-								wp_kses_post( get_the_archive_title() )
+								wp_kses_post( get_the_archive_title() ),
+								\Elementify\Inc\Utils::microdata_attr( 'name' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 							);
 						} elseif ( is_search() ) {
 							printf(
-								'<%1$s class="page-title ele-w-100">%2$s</%1$s><!-- .page-title -->',
+								'<%1$s class="page-title ele-w-100"%3$s>%2$s</%1$s><!-- .page-title -->',
 								esc_attr( $title_tags['desktop'] ),
-								wp_kses_post( get_search_query() )
+								wp_kses_post( get_search_query() ),
+								\Elementify\Inc\Utils::microdata_attr( 'name' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 							);
 						} elseif ( is_singular() ) {
 							printf(
-								'<%1$s class="page-title ele-w-100">%2$s</%1$s><!-- .page-title -->',
+								'<%1$s class="page-title ele-w-100"%3$s>%2$s</%1$s><!-- .page-title -->',
 								esc_attr( $title_tags['desktop'] ),
-								wp_kses_post( get_the_title() )
+								wp_kses_post( get_the_title() ),
+								\Elementify\Inc\Utils::microdata_attr( 'headline' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 							);
 						}
 					}
 
 					// Description.
 					if ( 'excerpt' === $value ) {
-						the_archive_description( '<div class="archive-description">', '</div>' );
+						the_archive_description( '<div class="archive-description"' . \Elementify\Inc\Utils::microdata_attr( 'description' ) . '>', '</div>' );
 					}
 
 					// Breadcrumb.

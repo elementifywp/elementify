@@ -44,14 +44,21 @@ if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $meta
 						]
 					);
 					?>
-					<li class="ele-post-meta post-author ele-d-flex ele-flex-wrap ele-align-items-center">
+					<li class="ele-post-meta post-author ele-d-flex ele-flex-wrap ele-align-items-center"<?php echo \Elementify\Inc\Utils::microdata_attr( 'post-author' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>>
 						<span class="screen-reader-text"><?php esc_html_e( 'Post Author', 'elementify' ); ?></span>
 						<span class="ele-meta-text">
 							<?php
+							// An itemprop on the link itself would take its href as the
+							// value, so the name gets its own element.
+							$author_name_attr = \Elementify\Inc\Utils::microdata_attr( 'author-name' );
+							$author_name_html = '' !== $author_name_attr
+								? '<span' . $author_name_attr . '>' . esc_html( $author_name ) . '</span>'
+								: esc_html( $author_name );
 							printf(
-								'<a href="%1$s">%2$s</a>',
+								'<a href="%1$s"%3$s>%2$s</a>',
 								esc_url( $author_url ),
-								esc_html( $author_name )
+								$author_name_html, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Name escaped above; attributes escaped in Utils::schema_org_definitions().
+								\Elementify\Inc\Utils::microdata_attr( 'author-url' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 							);
 							?>
 						</span><!-- .ele-meta-text -->
@@ -68,10 +75,21 @@ if ( in_array( get_post_type( $the_post_id ), [ 'page' ], true ) || empty( $meta
 					<span class="ele-meta-text">
 						<?php
 						printf(
-							'<a href="%1$s">%2$s</a>',
+							'<a href="%1$s"><time datetime="%3$s"%4$s>%2$s</time></a>',
 							esc_url( get_month_link( get_the_time( 'Y', $the_post_id ), get_the_time( 'm', $the_post_id ) ) ),
-							esc_html( get_the_date( $date_format, $the_post_id ) )
+							esc_html( get_the_date( $date_format, $the_post_id ) ),
+							esc_attr( get_the_date( DATE_W3C, $the_post_id ) ),
+							\Elementify\Inc\Utils::microdata_attr( 'publish-date' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 						);
+
+						$modified_attr = \Elementify\Inc\Utils::microdata_attr( 'modified-date' );
+						if ( '' !== $modified_attr ) {
+							printf(
+								'<meta%1$s content="%2$s" />',
+								$modified_attr, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
+								esc_attr( get_the_modified_date( DATE_W3C, $the_post_id ) )
+							);
+						}
 						?>
 					</span><!-- .ele-meta-text -->
 				</li>

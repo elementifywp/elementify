@@ -55,28 +55,10 @@ parameters:
 			path: inc/classes/class-breadcrumb-trail.php
 
 		-
-			message: '#^Access to property \$selective_refresh on an unknown class Elementify\\Inc\\WP_Customize_Manager\.$#'
-			identifier: class.notFound
-			count: 3
-			path: inc/classes/class-customizer.php
-
-		-
-			message: '#^Call to method get_setting\(\) on an unknown class Elementify\\Inc\\WP_Customize_Manager\.$#'
-			identifier: class.notFound
-			count: 3
-			path: inc/classes/class-customizer.php
-
-		-
-			message: '#^Parameter \$wp_customize of method Elementify\\Inc\\Customizer\:\:customizer\(\) has invalid type Elementify\\Inc\\WP_Customize_Manager\.$#'
-			identifier: class.notFound
+			message: '#^Property WP_Customize_Manager\:\:\$selective_refresh \(WP_Customize_Selective_Refresh\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
 			count: 1
 			path: inc/classes/class-customizer.php
-
-		-
-			message: '#^Method Elementify\\Inc\\Utils\:\:schema_org_definitions\(\) should return string\|null but return statement is missing\.$#'
-			identifier: return.missing
-			count: 1
-			path: inc/classes/class-utils.php
 
 		-
 			message: '#^Parameter \#1 \$prefix of function uniqid expects string, int given\.$#'

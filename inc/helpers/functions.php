@@ -292,7 +292,7 @@ if ( ! function_exists( 'elementify_primary_navigation' ) ) {
 		}
 		?>
 
-		<nav id="<?php echo esc_attr( $nav_id ); ?>" class="<?php echo esc_attr( implode( ' ', $main_navigation ) ); ?>" data-layout="<?php echo esc_attr( $args['layout'] ); ?>" aria-label="<?php esc_attr_e( 'Primary menu', 'elementify' ); ?>"<?php echo $nav_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above. ?>>
+		<nav id="<?php echo esc_attr( $nav_id ); ?>" class="<?php echo esc_attr( implode( ' ', $main_navigation ) ); ?>" data-layout="<?php echo esc_attr( $args['layout'] ); ?>" aria-label="<?php esc_attr_e( 'Primary menu', 'elementify' ); ?>"<?php echo Utils::microdata_attr( 'navigation' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?><?php echo $nav_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above. ?>>
 			<button type="button" class="menu-toggle" aria-controls="<?php echo esc_attr( $menu_id ); ?>" aria-expanded="false">
 				<span class="screen-reader-text"><?php esc_html_e( 'Menu', 'elementify' ); ?></span>
 				<span class="ele-trigger-menu ele-d-block ele-z-30" aria-hidden="true">

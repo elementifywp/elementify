@@ -169,21 +169,32 @@ class Breadcrumb_Trail {
 				);
 			}
 
+			// Microdata: the list is a standalone schema.org BreadcrumbList. It
+			// deliberately has no itemprop="breadcrumb": on single posts the
+			// trail sits inside the post's own item, where "breadcrumb" is not a
+			// valid property. Every attribute is empty when microdata is off.
+			$schema          = Utils::has_schema_org_markup();
+			$list_attr       = Utils::microdata_attr( 'breadcrumb' );
+			$list_item_attr  = Utils::microdata_attr( 'breadcrumb-item' );
+			$name_attr       = Utils::microdata_attr( 'name' );
+			$item_attr       = Utils::microdata_attr( 'item' );
+			$position_attr   = Utils::microdata_attr( 'position' );
+			$title_is_listed = ! ( true === $this->args['show_title'] );
+
 			// Open the unordered list.
 			$breadcrumb .= sprintf(
-				'<%1$s class="trail-items ele-list-style-none ele-m-0 ele-p-0 ele-d-inline-flex ele-flex-wrap ele-align-items-center" data-link-type="%2$s" itemscope itemtype="http://schema.org/BreadcrumbList">',
+				'<%1$s class="trail-items ele-list-style-none ele-m-0 ele-p-0 ele-d-inline-flex ele-flex-wrap ele-align-items-center" data-link-type="%2$s"%3$s>',
 				tag_escape( $this->args['list_tag'] ),
 				esc_attr( $this->args['link_type'] ),
+				$list_attr
 			);
 
-			// Add the number of items and item list order schema.
-			// Modified.
-			if ( true === $this->args['show_title'] ) {
-				$breadcrumb .= sprintf( '<meta name="numberOfItems" content="%d" />', absint( $item_count - 1 ) );
-			} else {
-				$breadcrumb .= sprintf( '<meta name="numberOfItems" content="%d" />', absint( $item_count ) );
+			// Add the number of items and item list order schema. With
+			// show_title, the last item is printed as plain text, not a ListItem.
+			if ( $schema ) {
+				$breadcrumb .= sprintf( '<meta itemprop="numberOfItems" content="%d" />', absint( $title_is_listed ? $item_count : $item_count - 1 ) );
+				$breadcrumb .= '<meta itemprop="itemListOrder" content="https://schema.org/ItemListOrderAscending" />';
 			}
-			$breadcrumb .= '<meta name="itemListOrder" content="Ascending" />';
 
 			// Loop through the items and add them to the list.
 			foreach ( $this->items as $item ) {
@@ -193,14 +204,6 @@ class Breadcrumb_Trail {
 
 				// Check if the item is linked.
 				preg_match( '/(<a.*?>)(.*?)(<\/a>)/i', $item, $matches );
-
-				// Wrap the item text with appropriate itemprop.
-				$item = ! empty( $matches ) ? sprintf( '%s<span itemprop="name">%s</span>%s', $matches[1], $matches[2], $matches[3] ) : sprintf( '<span itemprop="name">%s</span>', $item );
-
-				// Wrap the item with its itemprop.
-				$item = ! empty( $matches )
-					? preg_replace( '/(<a.*?)([\'"])>/i', '$1$2 itemprop=$2item$2 class="ele-d-inline-flex ele-position-relative ele-position-absolute-after">', $item )
-					: sprintf( '<span itemprop="item">%s</span>', $item );
 
 				// Add list item classes.
 				$item_class = 'trail-item ele-d-inline-flex ele-align-items-center';
@@ -212,21 +215,41 @@ class Breadcrumb_Trail {
 					$item_class .= ' trail-end';
 				}
 
+				// show_title: the current page's title closes the trail as plain
+				// text, outside the BreadcrumbList, so it carries no microdata.
+				$is_title_item = ! $title_is_listed && $item_count === $item_position;
+				$crumb_name    = $is_title_item ? '' : $name_attr;
+				$crumb_item    = $is_title_item ? '' : $item_attr;
+
+				if ( ! empty( $matches ) ) {
+					// A linked crumb: the link is the ListItem's "item" (its URL).
+					$item = sprintf( '%s<span%s>%s</span>%s', $matches[1], $crumb_name, $matches[2], $matches[3] );
+					$item = preg_replace(
+						'/(<a.*?)([\'"])>/i',
+						'$1$2' . $crumb_item . ' class="ele-d-inline-flex ele-position-relative ele-position-absolute-after">',
+						$item,
+						1
+					);
+				} else {
+					// An unlinked crumb (the current page) has no URL to give as
+					// "item"; Google accepts the last crumb without one.
+					$item = sprintf( '<span><span%s>%s</span></span>', $crumb_name, $item );
+				}
+
+				if ( $is_title_item ) {
+					$breadcrumb .= sprintf( '<%1$s class="%2$s">%3$s</%1$s>', tag_escape( $this->args['item_tag'] ), esc_attr( $item_class ), $item );
+					continue;
+				}
+
 				// Create list item attributes.
-				$attributes = 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="' . $item_class . '"';
+				$attributes = 'class="' . esc_attr( $item_class ) . '"' . $list_item_attr;
 
 				// Build the meta position HTML.
-				$meta = sprintf( '<meta itemprop="position" content="%s" />', absint( $item_position ) );
-
-				// Modified.
-				$orginal_title = $item;
+				$meta = $schema ? sprintf( '<meta%s content="%d" />', $position_attr, absint( $item_position ) ) : '';
 
 				// Build the list item.
-				// Modified.
-				if ( true === $this->args['show_title'] && $item_count === $item_position ) {
-					$breadcrumb .= sprintf( '<%1$s class="' . $item_class . '">%2$s</%1$s>', tag_escape( $this->args['item_tag'] ), $orginal_title );
-				} elseif ( true === $this->args['show_separator'] ) {
-						$breadcrumb .= sprintf( '<%1$s %2$s>%3$s<span class="ele-separator ele-d-inline-flex">%5$s</span>%4$s</%1$s>', tag_escape( $this->args['item_tag'] ), $attributes, $item, $meta, $this->args['item_sept'] );
+				if ( true === $this->args['show_separator'] ) {
+					$breadcrumb .= sprintf( '<%1$s %2$s>%3$s<span class="ele-separator ele-d-inline-flex">%5$s</span>%4$s</%1$s>', tag_escape( $this->args['item_tag'] ), $attributes, $item, $meta, $this->args['item_sept'] );
 				} else {
 					$breadcrumb .= sprintf( '<%1$s %2$s>%3$s%4$s</%1$s>', tag_escape( $this->args['item_tag'] ), $attributes, $item, $meta );
 				}
@@ -237,7 +260,7 @@ class Breadcrumb_Trail {
 
 			// Wrap the breadcrumb trail.
 			$breadcrumb = sprintf(
-				'<%1$s role="navigation" aria-label="%2$s" class="ele-breadcrumb-trail breadcrumbs %3$s" itemprop="breadcrumb" data-layout="%4$s">%5$s%6$s%7$s</%1$s>',
+				'<%1$s role="navigation" aria-label="%2$s" class="ele-breadcrumb-trail breadcrumbs %3$s" data-layout="%4$s">%5$s%6$s%7$s</%1$s>',
 				tag_escape( $this->args['container'] ),
 				esc_attr( $this->labels['aria_label'] ),
 				( true === $this->args['show_separator'] ? 'ele-has-separator' : 'ele-has-no-separator' ),

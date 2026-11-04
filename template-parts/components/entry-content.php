@@ -11,7 +11,7 @@ $content_classes   = [ 'ele-post-content' ];
 $content_classes[] = ( is_singular() ) ? 'entry-content' : 'entry-excerpt';
 ?>
 
-<div class="<?php echo esc_attr( implode( ' ', $content_classes ) ); ?>">
+<div class="<?php echo esc_attr( implode( ' ', $content_classes ) ); ?>"<?php echo \Elementify\Inc\Utils::microdata_attr( is_singular() ? 'text' : 'excerpt' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>>
 
 	<?php
 	if ( is_singular() ) {

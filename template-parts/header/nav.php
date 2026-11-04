@@ -7,14 +7,16 @@
  * @package Elementify
  */
 
+use Elementify\Inc\Utils;
+
 ?>
-<header id="masthead" class="site-header ele-position-relative ele-w-100 ele-site-header">
+<header id="masthead" class="site-header ele-position-relative ele-w-100 ele-site-header"<?php echo Utils::microdata_attr( 'header' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>>
 	<div class="ele-header-row ele-position-absolute-before ele-header-row-main ele-d-flex ele-align-items-center ele-position-absolute-after" data-row="main">
 		<div class="ele-container ele-mx-auto ele-position-relative ele-z-10 ele-z-20">
 			<div class="ele-builder-column ele-builder-column-2">
 				<div class="ele-builder-column-items ele-d-flex ele-flex-wrap ele-builder-col-0">
 					<div class="ele-header-logo-wrap ele-d-flex">
-						<div class="site-branding ele-site-branding ele-d-flex ele-flex-wrap">
+						<div class="site-branding ele-site-branding ele-d-flex ele-flex-wrap"<?php echo Utils::microdata_attr( 'logo' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>>
 							<div class="ele-site-identity">
 								<?php
 								the_custom_logo();
@@ -23,17 +25,17 @@
 									<?php
 									if ( is_front_page() && is_home() ) :
 										?>
-										<h1 class="ele-site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+										<h1 class="ele-site-title"<?php echo Utils::microdata_attr( 'name' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"<?php echo Utils::microdata_attr( 'url' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>><?php bloginfo( 'name' ); ?></a></h1>
 										<?php
 									else :
 										?>
-										<p class="ele-site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+										<p class="ele-site-title"<?php echo Utils::microdata_attr( 'name' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"<?php echo Utils::microdata_attr( 'url' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>><?php bloginfo( 'name' ); ?></a></p>
 										<?php
 									endif;
 									$elementify_description = get_bloginfo( 'description', 'display' );
 									if ( $elementify_description || is_customize_preview() ) :
 										?>
-										<p class="ele-site-description">
+										<p class="ele-site-description"<?php echo Utils::microdata_attr( 'description' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>>
 										<?php
 										echo $elementify_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										?>

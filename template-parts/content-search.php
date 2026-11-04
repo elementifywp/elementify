@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'ele-column' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'ele-column' ); ?><?php echo \Elementify\Inc\Utils::microdata_attr( 'article' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions(). ?>>
 
 	<?php
 	/**
