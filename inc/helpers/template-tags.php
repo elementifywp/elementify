@@ -153,9 +153,30 @@ if ( ! function_exists( 'elementify_the_excerpt' ) ) {
 			return;
 		}
 
-		// Render blocks/shortcodes, then reduce to normalized plain text.
+		// Reduce the content to its text-bearing blocks before rendering, as
+		// core's wp_trim_excerpt() does. Rendering the full post_content would
+		// run Query Loops, embeds, galleries etc. for every card in a listing,
+		// only to strip their markup below.
 		$text = strip_shortcodes( $post->post_content );
+		$text = excerpt_remove_blocks( $text );
+		if ( function_exists( 'excerpt_remove_footnotes' ) ) {
+			$text = excerpt_remove_footnotes( $text );
+		}
+
+		// excerpt_remove_blocks() already rendered the blocks it kept, and the
+		// image attributes added by wp_filter_content_tags() are stripped below.
+		$filter_block_removed = remove_filter( 'the_content', 'do_blocks', 9 );
+		$filter_image_removed = remove_filter( 'the_content', 'wp_filter_content_tags', 12 );
+
 		$text = apply_filters( 'the_content', $text ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter.
+
+		if ( $filter_block_removed ) {
+			add_filter( 'the_content', 'do_blocks', 9 );
+		}
+		if ( $filter_image_removed ) {
+			add_filter( 'the_content', 'wp_filter_content_tags', 12 );
+		}
+
 		$text = str_replace( ']]>', ']]&gt;', $text );
 		$text = wp_strip_all_tags( $text, true ); // Strips tags + <script>/<style>, breaks to spaces.
 		$text = trim( preg_replace( '/\s+/', ' ', $text ) );
