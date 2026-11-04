@@ -525,9 +525,9 @@ if ( ! function_exists( 'elementify_breadcrumb' ) ) {
 			'show_browse' => false,
 			'echo'        => true,
 		];
-		$args     = apply_filters( 'breadcrumb_trail_args', $defaults ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Library filter.
+		$args     = Elementify\Inc\Breadcrumb_Trail::filter( 'breadcrumb_trail_args', $defaults );
 
-		$breadcrumb = apply_filters( 'breadcrumb_trail_object', null, $args ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Library filter.
+		$breadcrumb = Elementify\Inc\Breadcrumb_Trail::filter( 'breadcrumb_trail_object', null, $args );
 
 		if ( ! is_object( $breadcrumb ) ) {
 
@@ -726,7 +726,10 @@ if ( ! function_exists( 'elementify_html_attributes' ) ) {
 		$attrs = [
 			'data-save-color-scheme' => 'no',
 			'data-blog-id'           => elementify_blog_id(),
-			'data-theme'             => isset( $_COOKIE['darkMode'] ) ? 'dark' : 'light',
+			// Always light on the server, so full-page caches serve one copy.
+			// A colour-mode switcher (e.g. the Elementify Framework's ColorMode
+			// module) changes it through this filter and a <head> script.
+			'data-theme'             => 'light',
 		];
 
 		Utils::print_attribute_string( apply_filters( 'elementify_html_attributes', $attrs ) );

@@ -145,18 +145,6 @@ parameters:
 			path: inc/helpers/template-tags.php
 
 		-
-			message: '#^Parameter \#1 \$author_id of function get_author_posts_url expects int, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: template-parts/components/blog/entry-meta.php
-
-		-
-			message: '#^Variable \$metas in empty\(\) always exists and is not falsy\.$#'
-			identifier: empty.variable
-			count: 1
-			path: template-parts/components/blog/entry-meta.php
-
-		-
 			message: '#^Call to function array_key_exists\(\) with ''desktop'' and array\{desktop\: ''1''\} will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 2

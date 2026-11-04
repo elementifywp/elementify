@@ -79,7 +79,10 @@ if ( $page_title ) : ?>
 
 					// Title.
 					if ( 'title' === $value ) {
-						$title_tags = [ 'desktop' => 'h2' ];
+						// The page title is the document's main heading on every view that
+						// shows the hero (the site title is only an h1 on the front page,
+						// where the hero is hidden).
+						$title_tags = [ 'desktop' => 'h1' ];
 						if ( is_home() && is_front_page() ) {
 							$title_text = [ 'desktop' => ( function_exists( 'is_shop' ) && is_shop() ) ? esc_html__( 'Products', 'elementify' ) : esc_html__( 'Home', 'elementify' ) ];
 							if ( $title_text && array_key_exists( 'desktop', $title_text ) ) {

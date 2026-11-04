@@ -87,14 +87,14 @@ class Customizer {
 			$wp_customize->selective_refresh->add_partial(
 				'blogname',
 				[
-					'selector'        => '.site-title a',
+					'selector'        => '.ele-site-title a',
 					'render_callback' => [ $this, 'customize_partial_blogname' ],
 				]
 			);
 			$wp_customize->selective_refresh->add_partial(
 				'blogdescription',
 				[
-					'selector'        => '.site-description',
+					'selector'        => '.ele-site-description',
 					'render_callback' => [ $this, 'customize_partial_blogdescription' ],
 				]
 			);

@@ -5688,6 +5688,15 @@ nav .ele-submenu-icon {
 	justify-content: var(--ele-v-align, center);
 }
 
+/*
+ * The hero title is the page's h1, but keeps the h2 scale it was designed
+ * at. Set through the --ele-* vars main.css reads on headings, so a
+ * Customizer title typography setting can still override it.
+ */
+.ele-hero-section .page-title {
+	--ele-font-size: 1.5em;
+}
+
 .error-404 .ele-card-content {
 	justify-content: var(--ele-v-align, start);
 }

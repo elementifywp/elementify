@@ -83,6 +83,29 @@ class Breadcrumb_Trail {
 	}
 
 	/**
+	 * Apply one of the trail's filters.
+	 *
+	 * The library's hooks are prefixed (`elementify_breadcrumb_trail_*`). The
+	 * original Breadcrumb Trail names still run, through
+	 * apply_filters_deprecated(), for callbacks written against them; they
+	 * also collide with the Breadcrumb Trail plugin, hence the rename.
+	 *
+	 * @param string $legacy_hook Original hook name, e.g. 'breadcrumb_trail_args'.
+	 * @param mixed  $value       The value to filter.
+	 * @param mixed  ...$args     Additional arguments passed to callbacks.
+	 * @return mixed The filtered value.
+	 */
+	public static function filter( $legacy_hook, $value, ...$args ) {
+		$value = apply_filters( "elementify_{$legacy_hook}", $value, ...$args );
+
+		if ( has_filter( $legacy_hook ) ) {
+			$value = apply_filters_deprecated( $legacy_hook, array_merge( [ $value ], $args ), '1.0.0', "elementify_{$legacy_hook}" );
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Sets up the breadcrumb trail properties.  Calls the `Breadcrumb_Trail::add_items()` method
 	 * to creat the array of breadcrumb items.
 	 *
@@ -130,7 +153,7 @@ class Breadcrumb_Trail {
 		];
 
 		// Parse the arguments with the default.
-		$this->args = apply_filters( 'breadcrumb_trail_args', wp_parse_args( $args, $defaults ) );
+		$this->args = self::filter( 'breadcrumb_trail_args', wp_parse_args( $args, $defaults ) );
 
 		// Set the labels and post taxonomy properties.
 		$this->set_labels();
@@ -272,7 +295,7 @@ class Breadcrumb_Trail {
 		}
 
 		// Allow developers to filter the breadcrumb trail HTML.
-		$breadcrumb = apply_filters( 'breadcrumb_trail', $breadcrumb, $this->args );
+		$breadcrumb = self::filter( 'breadcrumb_trail', $breadcrumb, $this->args );
 
 		if ( false === $this->args['echo'] ) {
 			return $breadcrumb;
@@ -317,7 +340,7 @@ class Breadcrumb_Trail {
 			'archive_year'        => '%s',
 		];
 
-		$this->labels = apply_filters( 'breadcrumb_trail_labels', wp_parse_args( $this->args['labels'], $defaults ) );
+		$this->labels = self::filter( 'breadcrumb_trail_labels', wp_parse_args( $this->args['labels'], $defaults ) );
 	}
 
 	/**
@@ -337,7 +360,7 @@ class Breadcrumb_Trail {
 			$defaults['post'] = 'category';
 		}
 
-		$this->post_taxonomy = apply_filters( 'breadcrumb_trail_post_taxonomy', wp_parse_args( $this->args['post_taxonomy'], $defaults ) );
+		$this->post_taxonomy = self::filter( 'breadcrumb_trail_post_taxonomy', wp_parse_args( $this->args['post_taxonomy'], $defaults ) );
 	}
 
 	/**
@@ -409,7 +432,7 @@ class Breadcrumb_Trail {
 		$this->add_paged_items();
 
 		// Allow developers to overwrite the items for the breadcrumb trail.
-		$this->items = array_unique( apply_filters( 'breadcrumb_trail_items', $this->items, $this->args ) );
+		$this->items = array_unique( self::filter( 'breadcrumb_trail_items', $this->items, $this->args ) );
 	}
 
 	/**
@@ -628,7 +651,7 @@ class Breadcrumb_Trail {
 							$label = ! empty( $post_type_object->labels->archive_title ) ? $post_type_object->labels->archive_title : $post_type_object->labels->name;
 
 							// Core filter hook.
-							$label = apply_filters( 'post_type_archive_title', $label, $post_type_object->name );
+							$label = apply_filters( 'post_type_archive_title', $label, $post_type_object->name ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter.
 
 							// Add the post type archive link to the trail.
 							$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( $post_type_object->name ) ), $label );
@@ -661,7 +684,7 @@ class Breadcrumb_Trail {
 				$label = ! empty( $post_type_object->labels->archive_title ) ? $post_type_object->labels->archive_title : $post_type_object->labels->name;
 
 				// Core filter hook.
-				$label = apply_filters( 'post_type_archive_title', $label, $post_type_object->name );
+				$label = apply_filters( 'post_type_archive_title', $label, $post_type_object->name ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter.
 
 				$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( $post_type_object->name ) ), $label );
 			}
@@ -1065,7 +1088,7 @@ class Breadcrumb_Trail {
 			$label = ! empty( $post_type_object->labels->archive_title ) ? $post_type_object->labels->archive_title : $post_type_object->labels->name;
 
 			// Core filter hook.
-			$label = apply_filters( 'post_type_archive_title', $label, $post_type_object->name );
+			$label = apply_filters( 'post_type_archive_title', $label, $post_type_object->name ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core filter.
 
 			$this->items[] = sprintf( '<a href="%s">%s</a>', esc_url( get_post_type_archive_link( $post_type ) ), $label );
 		}

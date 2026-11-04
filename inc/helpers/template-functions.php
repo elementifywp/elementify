@@ -741,14 +741,15 @@ if ( ! function_exists( 'elementify_404_conent' ) ) {
 
 			<div
 				class="ele-column ele-card-content ele-d-flex ele-flex-column ele-justify-content-initial ele-align-items-initial">
-				<h6 class="entry-sub-title">ERROR CODE: 404</h6><!-- .entry-title -->
-				<h1 class="entry-title">OOOPS!!</h1><!-- .entry-title -->
+				<h6 class="entry-sub-title"><?php esc_html_e( 'Error code: 404', 'elementify' ); ?></h6><!-- .entry-sub-title -->
+				<h1 class="entry-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'elementify' ); ?></h1><!-- .entry-title -->
 				<p><?php esc_html_e( 'This is not the page you are looking for', 'elementify' ); ?>
 				</p>
 			</div>
 			<div class="ele-column ele-featured-image-wrap ele-overflow-hidden">
 				<figure class="ele-featured-image ele-position-relative ele-position-absolute-after" data-ratio="4x3">
-					<img class="post-thumbnail ele-d-block"
+					<?php // Decorative: the heading above already says what happened. ?>
+					<img class="post-thumbnail ele-d-block" alt=""
 						src="<?php echo esc_url( get_template_directory_uri() . '/assets/build/images/404.webp' ); ?>">
 				</figure><!-- .ele-featured-image -->
 			</div>
