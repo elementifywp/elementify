@@ -37,6 +37,29 @@ class Customizer {
 		 * Actions
 		 */
 		add_action( 'customize_register', [ $this, 'customizer' ] );
+		// After Elementify Framework registers its panels (priority 20).
+		add_action( 'customize_register', [ $this, 'move_schema_section' ], 25 );
+	}
+
+	/**
+	 * Move the Schema Markup section into the Elementify Framework "General" panel.
+	 *
+	 * The panel is registered by the plugin, so the section only moves when
+	 * that panel exists; without the plugin it stays a top-level section.
+	 *
+	 * @param \WP_Customize_Manager $wp_customize Theme Customizer object.
+	 * @return void
+	 */
+	public function move_schema_section( $wp_customize ) {
+		$panel_id = 'ele_custom_elementify_framework_general';
+		$section  = $wp_customize->get_section( 'elementify_schema' );
+
+		if ( ! $section || ! $wp_customize->get_panel( $panel_id ) ) {
+			return;
+		}
+
+		$section->panel    = $panel_id;
+		$section->priority = 60;
 	}
 
 	/**
