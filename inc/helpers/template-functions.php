@@ -356,6 +356,10 @@ if ( ! function_exists( 'elementify_sidebar_area' ) ) {
 	 */
 	function elementify_sidebar_area() {
 
+		if ( is_404() ) {
+			return;
+		}
+
 		echo '<aside class="widget-area" data-layout="1" data-title-type="1" data-link-type="1"' . \Elementify\Inc\Utils::microdata_attr( 'sidebar' ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in Utils::schema_org_definitions().
 		echo '<div class="ele-sidebar ele-position-relative">';
 
@@ -495,8 +499,8 @@ if ( ! function_exists( 'elementify_loop_entry_post_card' ) ) {
 					}
 					get_template_part( 'template-parts/components/entry-image' );
 				} elseif ( ! $content_open ) {
-						$content_open = true;
-						echo '<div class="ele-card-content ele-d-flex ele-flex-column ele-justify-content-inherit">';
+					$content_open = true;
+					echo '<div class="ele-card-content ele-d-flex ele-flex-column ele-justify-content-inherit">';
 				}
 				// Categories.
 				if ( 'cats' === $value ) {

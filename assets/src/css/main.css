@@ -3558,7 +3558,7 @@ object {
 
 .ele-has-transparent-header .site-header.ele-header-contain {
 	top: var(--ele-transition-header-offset, 10px);
-	width: var(--ele-container-width);
+	/* width: var(--ele-container-width); */
 	padding: 0 var(--ele-content-h-gap, 10px);
 }
 
@@ -10503,7 +10503,7 @@ html.sr .ele-has-scroll-reveal .ele-pagination-wrap {
 	.ele-container,
 	.ele-container-contain,
 	.ele-header-search-enable .ele-modal .ele-modal-content {
-		width: var(--ele-container-width);
+		/* width: var(--ele-container-width); */
 		padding: 0 var(--ele-content-h-gap, 10px);
 	}
 
