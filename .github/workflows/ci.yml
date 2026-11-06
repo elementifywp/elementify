@@ -38,7 +38,7 @@ jobs:
           php-version: '8.4'
           coverage: none
           tools: cs2pr
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@v4
       - run: composer run lint:syntax
       - run: vendor/bin/phpcs -q --report=checkstyle | cs2pr
       - run: composer run phpstan -- --no-progress --error-format=github
