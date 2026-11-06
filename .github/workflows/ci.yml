@@ -14,7 +14,7 @@ jobs:
     name: Build and lint JS/CSS
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
         with:
@@ -32,7 +32,7 @@ jobs:
     name: PHP lint and static analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: js
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
         with:
