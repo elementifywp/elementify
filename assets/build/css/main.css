@@ -3578,7 +3578,7 @@ object {
 /*
 Header: Builder
 /*----------------------------------*/
-[data-row="main"].ele-header-row {
+.ele-header-row-main{
 	--ele-header-row-min-height: 80px;
 }
 
