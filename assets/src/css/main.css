@@ -3293,9 +3293,14 @@ object {
 	.ele-featured-image-wrap.ele-alignwide,
 [data-prefix="single-post"][data-sidebar="none"] .entry-content .alignwide,
 [data-prefix="single-page"][data-sidebar="none"] .entry-content .alignwide {
-	width: var(--alignwide-width, calc(100% + 120px));
-	max-width: var(--alignwide-width, calc(100% + 120px));
-	margin-left: var(--alignwide-margin, -60px) !important;
+	/*
+	 * Break out up to 60px each side, but never past the viewport minus the
+	 * content gutter; a fixed 120px overflowed (horizontal scroll) whenever
+	 * the content column came within 60px of the screen edge.
+	 */
+	width: var(--alignwide-width, min(calc(100% + 120px), calc(100vw - var(--ele-content-h-gap, 15px) * 2)));
+	max-width: var(--alignwide-width, min(calc(100% + 120px), calc(100vw - var(--ele-content-h-gap, 15px) * 2)));
+	margin-left: var(--alignwide-margin, max(-60px, calc(50% - 50vw + var(--ele-content-h-gap, 15px)))) !important;
 }
 
 [data-prefix="single-post"][data-sidebar="none"]

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-04T05:51:18+00:00\n"
+"POT-Creation-Date: 2026-11-13T07:31:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: elementify\n"
@@ -142,15 +142,15 @@ msgctxt "weekly archives date format"
 msgid "W"
 msgstr ""
 
-#: inc/classes/class-customizer.php:61
+#: inc/classes/class-customizer.php:84
 msgid "Schema Markup"
 msgstr ""
 
-#: inc/classes/class-customizer.php:62
+#: inc/classes/class-customizer.php:85
 msgid "Describe the site to search engines with schema.org microdata: the header, navigation, sidebar and footer, each post's headline, image, author and dates, comments and breadcrumbs. Turn this off if an SEO plugin already prints a complete schema graph."
 msgstr ""
 
-#: inc/classes/class-customizer.php:82
+#: inc/classes/class-customizer.php:105
 msgid "Enable schema.org markup"
 msgstr ""
 
@@ -260,29 +260,29 @@ msgstr ""
 msgid "Skip to content"
 msgstr ""
 
-#: inc/helpers/template-functions.php:674
+#: inc/helpers/template-functions.php:678
 msgid "One Comment"
 msgstr ""
 
 #. translators: %s: The count of comments.
-#: inc/helpers/template-functions.php:677
+#: inc/helpers/template-functions.php:681
 #, php-format
 msgid "%s Comments"
 msgstr ""
 
-#: inc/helpers/template-functions.php:708
+#: inc/helpers/template-functions.php:712
 msgid "Comments are closed."
 msgstr ""
 
-#: inc/helpers/template-functions.php:744
+#: inc/helpers/template-functions.php:748
 msgid "Error code: 404"
 msgstr ""
 
-#: inc/helpers/template-functions.php:745
+#: inc/helpers/template-functions.php:749
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: inc/helpers/template-functions.php:746
+#: inc/helpers/template-functions.php:750
 msgid "This is not the page you are looking for"
 msgstr ""
 
