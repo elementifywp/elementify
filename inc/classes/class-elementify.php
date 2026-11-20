@@ -83,10 +83,6 @@ class Elementify {
 		add_theme_support(
 			'custom-logo',
 			[
-				'header-text' => [
-					'site-title',
-					'site-description',
-				],
 				'height'      => 100,
 				'width'       => 400,
 				'flex-height' => true,
