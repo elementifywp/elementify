@@ -3189,9 +3189,9 @@ object {
 	/* height: calc(100vh - var(--wp-admin-bar-height, 0px)); */
 }
 
-.site::after {
+/* .site::after {
 	background-color: var(--ele-base-200);
-}
+} */
 
 .ele-has-boxed .site {
 	max-width: var(--ele-container-max-width);
@@ -4185,6 +4185,7 @@ Footer: Site Logo & Description.
 
 	/* Keep the header (and the open menu panel) above page content. */
 	z-index: 100;
+	background: var(--ele-base-100);
 }
 
 .main-navigation {
