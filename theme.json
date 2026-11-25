@@ -34,7 +34,7 @@
 				},
 				{
 					"name": "Text",
-					"slug": "text",
+					"slug": "body-text",
 					"color": "var(--ele-text-color, #334155)"
 				},
 				{
@@ -157,7 +157,7 @@
 	"styles": {
 		"color": {
 			"background": "var(--wp--preset--color--base-200)",
-			"text": "var(--wp--preset--color--text)"
+			"text": "var(--wp--preset--color--body-text)"
 		},
 		"typography": {
 			"fontFamily": "var(--wp--preset--font-family--system-sans)",
