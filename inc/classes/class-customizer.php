@@ -42,24 +42,60 @@ class Customizer {
 	}
 
 	/**
-	 * Move the Schema Markup section into the Elementify Framework "General" panel.
+	 * Move the Schema Markup switch into the Elementify Framework
+	 * "Performance" section (Customizer → Global → Performance).
 	 *
-	 * The panel is registered by the plugin, so the section only moves when
-	 * that panel exists; without the plugin it stays a top-level section.
+	 * The section and the switch control are the plugin's, so the move only
+	 * happens when both exist; without the plugin the theme's own top-level
+	 * "Schema Markup" section and checkbox stay. The setting itself remains
+	 * the theme's `elementify_schema_org_markup` either way.
 	 *
 	 * @param \WP_Customize_Manager $wp_customize Theme Customizer object.
 	 * @return void
 	 */
 	public function move_schema_section( $wp_customize ) {
-		$panel_id = 'ele_custom_elementify_framework_general';
-		$section  = $wp_customize->get_section( 'elementify_schema' );
+		$section_id    = 'elementify_framework_performance';
+		$toggle_class  = '\\ElementifyFramework\\Modules\\Customize\\Controls\\Toggle';
+		$heading_class = '\\ElementifyFramework\\Modules\\Customize\\Controls\\Blank';
 
-		if ( ! $section || ! $wp_customize->get_panel( $panel_id ) ) {
+		if ( ! $wp_customize->get_section( $section_id ) || ! class_exists( $toggle_class ) || ! class_exists( $heading_class ) ) {
 			return;
 		}
 
-		$section->panel    = $panel_id;
-		$section->priority = 60;
+		$wp_customize->remove_control( 'elementify_schema_org_markup' );
+		$wp_customize->remove_section( 'elementify_schema' );
+
+		// The plugin's controls all bind to a setting, headings included,
+		// so the heading reads the schema setting it introduces.
+		$wp_customize->add_control(
+			new $heading_class(
+				$wp_customize,
+				'elementify_schema_org_markup_heading',
+				[
+					'section'     => $section_id,
+					'settings'    => 'elementify_schema_org_markup',
+					'priority'    => 20,
+					'label'       => esc_html__( 'Schema Markup', 'elementify' ),
+					'input_attrs' => [
+						'class' => 'uppercase text-sm font-bold text-gray-700 tracking-wider',
+					],
+				]
+			)
+		);
+
+		$wp_customize->add_control(
+			new $toggle_class(
+				$wp_customize,
+				'elementify_schema_org_markup',
+				[
+					'section'     => $section_id,
+					'priority'    => 25,
+					'label'       => esc_html__( 'Enable schema.org markup', 'elementify' ),
+					'description' => esc_html__( 'Describe the site to search engines with schema.org microdata: the header, navigation, sidebar and footer, each post\'s headline, image, author and dates, comments and breadcrumbs. Turn this off if an SEO plugin already prints a complete schema graph.', 'elementify' ),
+					'default'     => true,
+				]
+			)
+		);
 	}
 
 	/**

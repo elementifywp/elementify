@@ -13,8 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'elementify_get_the_post_thumbnail' ) ) {
 
 	/**
-	 * Gets the thumbnail with Lazy Load.
+	 * Gets the post thumbnail.
 	 * Should be called in the WordPress Loop.
+	 *
+	 * No `loading` attribute is forced: WordPress decides, leaving the first
+	 * images of the main loop (likely above the fold, often the page's
+	 * largest paint) eager with `fetchpriority="high"` on the first, and lazy
+	 * loading the rest. Pass `loading` in $additional_attributes to override.
 	 *
 	 * @param int|null $post_id               Post ID.
 	 * @param string   $size                  The registered image size.
@@ -30,17 +35,11 @@ if ( ! function_exists( 'elementify_get_the_post_thumbnail' ) ) {
 		}
 
 		if ( has_post_thumbnail( $post_id ) ) {
-			$default_attributes = [
-				'loading' => 'lazy',
-			];
-
-			$attributes = array_merge( $additional_attributes, $default_attributes );
-
 			$custom_thumbnail = wp_get_attachment_image(
 				get_post_thumbnail_id( $post_id ),
 				$size,
 				false,
-				$attributes
+				$additional_attributes
 			);
 		}
 
@@ -51,7 +50,7 @@ if ( ! function_exists( 'elementify_get_the_post_thumbnail' ) ) {
 if ( ! function_exists( 'elementify_the_post_thumbnail' ) ) {
 
 	/**
-	 * Renders Custom Thumbnail with Lazy Load.
+	 * Renders the post thumbnail (see elementify_get_the_post_thumbnail()).
 	 *
 	 * @param int    $post_id               Post ID.
 	 * @param string $size                  The registered image size.

@@ -3238,6 +3238,111 @@ object {
 	row-gap: 50px;
 }
 
+/*
+ * "Nothing Found" (template-parts/content-none.php). It prints inside the
+ * posts grid (.ele-posts-wrap), so span every column, then centre a card.
+ */
+.ele-posts-wrap > .no-results {
+	grid-column: 1 / -1;
+}
+
+.no-results {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.no-results .ele-no-results-inner {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 640px;
+	padding: clamp(32px, 6vw, 56px) clamp(20px, 5vw, 48px);
+	text-align: center;
+	background: var(--ele-base-100);
+	border: 1px solid var(--ele-base-300);
+	border-radius: 16px;
+}
+
+.no-results .ele-no-results-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	margin-bottom: 20px;
+	color: var(--ele-primary-color);
+	background: color-mix(in srgb, var(--ele-primary-color) 10%, transparent);
+	border-radius: 50%;
+}
+
+.no-results .ele-no-results-icon svg {
+	width: 28px;
+	height: 28px;
+}
+
+.no-results .page-header {
+	margin: 0 0 12px;
+	padding: 0;
+}
+
+.no-results .page-title {
+	margin: 0;
+	font-size: clamp(26px, 4vw, 34px);
+	line-height: 1.2;
+	color: var(--ele-heading-color);
+}
+
+.no-results .page-content > p {
+	max-width: 480px;
+	margin: 0 auto 24px;
+	color: var(--ele-text-color);
+	overflow-wrap: anywhere;
+}
+
+.no-results .ele-no-results-query {
+	color: var(--ele-heading-color);
+}
+
+.no-results .search-form {
+	display: flex;
+	align-items: stretch;
+	gap: 10px;
+	width: 100%;
+	max-width: 480px;
+	margin: 0 auto;
+}
+
+.no-results .search-form > label {
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+}
+
+.no-results .search-form .search-field {
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	min-height: 46px;
+}
+
+.no-results .search-form .search-submit {
+	flex: 0 0 auto;
+	min-height: 46px;
+	margin: 0;
+}
+
+.no-results .page-content > .ele-no-results-home {
+	margin: 24px auto 0;
+	font-size: 15px;
+}
+
+@media (max-width: 480px) {
+
+	.no-results .search-form {
+		flex-direction: column;
+	}
+}
+
 .ele-container,
 .ele-header-search-enable .ele-modal .ele-modal-content {
 	width: 100%;
@@ -6995,10 +7100,10 @@ Comments
 /* The offset, padding and fill only apply to the label that sits inside the field. */
 [data-form-label="inside"] .comment-form p:not(.comment-form-cookies-consent) label {
 	right: 12px;
-	background-color: var(
+	/* background-color: var(
 		--ele-form-field-background-initial-color,
 		var(--ele-base-300)
-	);
+	); */
 	padding: 5px;
 	transition: all 0.3s ease 0s;
 }
@@ -8950,8 +9055,21 @@ form textarea {
 	color: var(--ele-base-100);
 }
 
-[data-form-layout="2"] input:not(.submit),
-[data-form-layout="2"] textarea {
+/* Comments Form → Preset Layout 2 (underlined fields): comment form fields only. */
+[data-form-layout="2"]
+	.comment-form
+	:is(
+		input[type="text"],
+		input[type="email"],
+		input[type="url"],
+		input[type="tel"],
+		input[type="number"],
+		input[type="password"],
+		input[type="date"],
+		input[type="time"],
+		input[type="datetime-local"],
+		textarea
+	) {
 	border-width: 0 0 var(--ele-form-field-border-width, 1px);
 }
 
