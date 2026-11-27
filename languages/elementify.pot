@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-25T14:03:00+00:00\n"
+"POT-Creation-Date: 2026-11-26T15:52:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: elementify\n"
@@ -142,16 +142,19 @@ msgctxt "weekly archives date format"
 msgid "W"
 msgstr ""
 
-#: inc/classes/class-customizer.php:84
+#: inc/classes/class-customizer.php:78
+#: inc/classes/class-customizer.php:120
 msgid "Schema Markup"
 msgstr ""
 
-#: inc/classes/class-customizer.php:85
-msgid "Describe the site to search engines with schema.org microdata: the header, navigation, sidebar and footer, each post's headline, image, author and dates, comments and breadcrumbs. Turn this off if an SEO plugin already prints a complete schema graph."
+#: inc/classes/class-customizer.php:93
+#: inc/classes/class-customizer.php:141
+msgid "Enable schema.org markup"
 msgstr ""
 
-#: inc/classes/class-customizer.php:105
-msgid "Enable schema.org markup"
+#: inc/classes/class-customizer.php:94
+#: inc/classes/class-customizer.php:121
+msgid "Describe the site to search engines with schema.org microdata: the header, navigation, sidebar and footer, each post's headline, image, author and dates, comments and breadcrumbs. Turn this off if an SEO plugin already prints a complete schema graph."
 msgstr ""
 
 #: inc/classes/class-menus.php:53
@@ -247,7 +250,7 @@ msgid "Previous"
 msgstr ""
 
 #: inc/helpers/functions.php:456
-#: inc/helpers/template-tags.php:293
+#: inc/helpers/template-tags.php:292
 msgid "Next"
 msgstr ""
 
@@ -287,63 +290,63 @@ msgid "This is not the page you are looking for"
 msgstr ""
 
 #. translators: %s: Post date.
-#: inc/helpers/template-tags.php:96
+#: inc/helpers/template-tags.php:95
 #, php-format
 msgctxt "post date"
 msgid "Posted on %s"
 msgstr ""
 
 #. translators: %s: Post author.
-#: inc/helpers/template-tags.php:114
+#: inc/helpers/template-tags.php:113
 #, php-format
 msgctxt "post author"
 msgid " by %s"
 msgstr ""
 
-#: inc/helpers/template-tags.php:227
+#: inc/helpers/template-tags.php:226
 #: template-parts/components/entry-read-more.php:10
 msgid "Read more"
 msgstr ""
 
-#: inc/helpers/template-tags.php:283
+#: inc/helpers/template-tags.php:282
 msgid "First"
 msgstr ""
 
-#: inc/helpers/template-tags.php:292
+#: inc/helpers/template-tags.php:291
 msgid "Prev"
 msgstr ""
 
-#: inc/helpers/template-tags.php:299
+#: inc/helpers/template-tags.php:298
 msgid "Last"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/helpers/template-tags.php:388
+#: inc/helpers/template-tags.php:387
 #: template-parts/components/entry-meta.php:107
 msgid ", "
 msgstr ""
 
 #. translators: 1: list of categories.
-#: inc/helpers/template-tags.php:391
+#: inc/helpers/template-tags.php:390
 #, php-format
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/helpers/template-tags.php:395
+#: inc/helpers/template-tags.php:394
 #: template-parts/components/entry-tags.php:23
 msgctxt "list item separator"
 msgid ", "
 msgstr ""
 
 #. translators: 1: list of tags.
-#: inc/helpers/template-tags.php:398
+#: inc/helpers/template-tags.php:397
 #, php-format
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: Name of current post. Only visible to screen readers
-#: inc/helpers/template-tags.php:406
+#: inc/helpers/template-tags.php:405
 #: template-parts/components/entry-content.php:45
 #: template-parts/components/entry-footer.php:15
 #, php-format
@@ -391,22 +394,32 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: template-parts/content-none.php:14
+#: template-parts/content-none.php:19
 msgid "Nothing Found"
 msgstr ""
 
 #. translators: 1: link to WP admin new post page.
-#: template-parts/content-none.php:24
+#: template-parts/content-none.php:29
 #, php-format
 msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
 msgstr ""
 
-#: template-parts/content-none.php:37
+#. translators: %s: the search terms.
+#: template-parts/content-none.php:48
+#, php-format
+msgid "Sorry, nothing matched %s. Please try again with some different keywords."
+msgstr ""
+
+#: template-parts/content-none.php:52
 msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
 msgstr ""
 
-#: template-parts/content-none.php:44
+#: template-parts/content-none.php:62
 msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+#: template-parts/content-none.php:71
+msgid "Back to the homepage"
 msgstr ""
 
 #: template-parts/footer/copyright.php:10
